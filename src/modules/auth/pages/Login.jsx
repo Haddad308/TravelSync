@@ -10,16 +10,18 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../context/AuthProvider";
 import userLogin from "../handlers/login.handler";
 import ForgetPassword from "../components/ForgetPassword";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState('');
   const [, SetToken] = useContext(auth);
   const navigate = useNavigate();
-  
+
   const formHandler = useFormik({
     initialValues: {
       email: '',
@@ -44,14 +46,14 @@ const Login = () => {
 
         <div className={`border-2 rounded-lg  p-10 w-1/2 flex flex-col gap-2`}>
 
-          <h2 className="text-2xl font-semibold">Welcome Back!</h2>
-          <h1 className="text-[32px] font-bold">Sign In</h1>
+          <h2 className="text-2xl font-semibold">{t("WelcomeMessage")}!</h2>
+          <h1 className="text-[32px] font-bold">{t("signin")}</h1>
 
           <div className='flex flex-col mt-5 items-start gap-5' >
             <div className="flex flex-col gap-3 w-full " >
               <Input
                 isClearable
-                label="Email"
+                label={t("email")}
                 name="email"
                 placeholder="Enter your email"
                 onClear={() => formHandler.setFieldValue("email", "")}
@@ -62,7 +64,7 @@ const Login = () => {
                 errorMessage={formHandler.touched.email && formHandler.errors.email}
               />
               <Input
-                label="password"
+                label={t("password")}
                 name="password"
                 placeholder="Enter your password"
                 endContent={
@@ -81,21 +83,21 @@ const Login = () => {
                 isInvalid={formHandler.touched.password && formHandler.errors.password}
                 errorMessage={formHandler.touched.password && formHandler.errors.password}
               />
-            <ForgetPassword/>
+              <ForgetPassword />
             </div>
             <Button
               className="bg-main text-white font-semibold w-full"
               type="submit"
               isLoading={isLoading}
             >
-              Login
+              {t("signin")}
             </Button>
             <div className="flex justify-center w-full" >
               {apiError ? <Alert text={'Wrong Email or Password.'} /> : ''}
             </div>
           </div>
         </div>
-        
+
       </div>
     </form>
   )
