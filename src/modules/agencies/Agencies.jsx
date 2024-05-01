@@ -14,7 +14,6 @@ const columns = [
     { name: "ACTIONS", uid: "actions" },
 ];
 
-
 const Agencies = () => {
 
     const [agencies, SetAgencies] = useState([]);

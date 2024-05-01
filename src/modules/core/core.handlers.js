@@ -1,6 +1,6 @@
 import { instance } from "../../network/axios";
 
-async function uploadImage(imagesList, setIsLoading, setApiErrorImg) {
+async function uploadImage(imagesList, setIsLoading, setApiErrorImg,status) {
     setIsLoading(true); // Set loading state to true
     try {
         setApiErrorImg(""); // Clear any previous image upload error
@@ -20,6 +20,10 @@ async function uploadImage(imagesList, setIsLoading, setApiErrorImg) {
         return uploadedImageIds;
 
     } catch (error) {
+        
+        if (status === "edit")
+            return;
+
         setApiErrorImg("Error uploading image. Please try again.");
         throw error; // Re-throw the error to propagate it to the calling code
     } finally {

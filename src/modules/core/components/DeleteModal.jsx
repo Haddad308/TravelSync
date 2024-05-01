@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
-import { DeleteIcon } from "../../agencies/components/DeleteIcon";
+import { DeleteIcon } from "./icons/DeleteIcon";
 
 export default function DeleteModal({ deleteFun, text }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();

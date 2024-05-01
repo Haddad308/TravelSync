@@ -20,13 +20,13 @@ import {
     Tooltip,
 } from "@nextui-org/react";
 
-import { SearchIcon } from "./SearchIcon";
-import { ChevronDownIcon } from "./ChevronDownIcon";
-import { capitalize } from "./utils";
-import { EditIcon } from "./EditIcon";
+import { SearchIcon } from "../../core/components/icons/SearchIcon";
+import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
+import { capitalize } from "../utils";
 import DeleteModal from "../../core/components/DeleteModal";
 import { DeleteAgency } from "../Agencies.handlers";
-import AgenciesForm from "./Agencies.Form";
+import AgenciesForm from "./Agencies.Add.Form";
+import AgenciesFormEdit from "./Agencies.edit.Form";
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "city", "postalCode", "actions"];
 
@@ -86,7 +86,7 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
             case "name":
                 return (
                     <User
-                        avatarProps={{ radius: "full", size: "sm", src: "https://i.pravatar.cc/150?u=a042581f4e29026024d" }}
+                        avatarProps={{ radius: "full", size: "sm",isBordered:"true" ,  src: user.profilePhoto?.imageUrl }}
                         classNames={{
                             description: "text-default-500",
                         }}
@@ -99,11 +99,8 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
             case "actions":
                 return (
                     <div className="relative flex items-center gap-2">
-
                         <Tooltip content="Edit user">
-                            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                                <EditIcon />
-                            </span>
+                            <AgenciesFormEdit handleUpdate={handleUpdate} agencyId={user.id} />
                         </Tooltip>
                         <Tooltip color="danger" content="Delete user">
                             <DeleteModal deleteFun={() => { DeleteAgency(user.id, handleUpdate) }} text={"agency"} />

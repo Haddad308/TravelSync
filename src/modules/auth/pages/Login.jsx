@@ -5,12 +5,12 @@ import { useContext, useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "../../core/components/icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "../../core/components/icons/EyeFilledIcon";
-import Alert from "../components/Alert";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../context/AuthProvider";
 import userLogin from "../handlers/login.handler";
 import ForgetPassword from "../components/ForgetPassword";
 import { useTranslation } from "react-i18next";
+import Alert from "../../core/components/Alert";
 
 const Login = () => {
 

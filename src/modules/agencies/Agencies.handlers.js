@@ -44,6 +44,8 @@ async function DeleteAgency(id, callback) {
 }
 
 async function addAgency(values, setIsLoading, callback) {
+
+    console.log(values);
     // Set loading state to true
     setIsLoading(true);
 
@@ -63,19 +65,15 @@ async function addAgency(values, setIsLoading, callback) {
     } finally {
         // Set loading state to false regardless of success or failure
         setIsLoading(false);
-        
+
     }
 }
 
-async function editAgency(values, id, setIsLoading, setApiError) {
+async function editAgency(values, id, setIsLoading, callback) {
     // Set loading state to true
     setIsLoading(true);
-    // Clear any previous API error
-    setApiError("");
-    
+
     try {
-        console.log("check Values from edit", values);
-        console.log("check id", id);
         // Make POST request to add a user
         await instance.patch(`http://localhost:3000/api/v1/travel-offices/${id}`, values, {
             headers: {
@@ -83,20 +81,15 @@ async function editAgency(values, id, setIsLoading, setApiError) {
             }
         });
         // If successful, clear API error and log success message
-        setApiError("");
-        console.log("hello from success");
+        callback();
+        edited();
     } catch (error) {
         // If error occurs, log error response data, set API error state, and throw the error
-        if (error.response.data?.message)
-            setApiError(error.response.data?.message);
-        else
-            setApiError("Email is already exists")
+        console.error(error)
         throw error; // Throw the error for further handling if needed
     } finally {
         // Set loading state to false regardless of success or failure
         setIsLoading(false);
-        getAgencies(token);
-        edited();
     }
 }
 

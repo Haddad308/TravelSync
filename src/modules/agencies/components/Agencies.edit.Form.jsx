@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
 import * as Yup from 'yup'; // For validation. 
 import { useFormik } from "formik";
 import ImagesUploader from "../../core/components/ImageUploader/ImageUploader";
 import { useState } from "react";
 import { uploadImage } from "../../core/core.handlers";
-import { addAgency } from "../Agencies.handlers";
+import { editAgency } from "../Agencies.handlers";
+import { EditIcon } from "../../core/components/icons/EditIcon";
 
-export default function AgenciesForm({ handleUpdate }) {
+import Alert from "../../core/components/Alert";
+import { RemoveEmptyValues } from "../utils";
+
+export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const [agencyImage, setAgencyImage] = useState([])
     const [isLoading, setIsLoading] = useState("")
@@ -31,39 +34,37 @@ export default function AgenciesForm({ handleUpdate }) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email regex
 
             return Yup.object({
-                name: Yup.string().required('Required'),
-                state: Yup.string().required('Required'),
-                city: Yup.string().required('Required'),
-                email: Yup.string().matches(emailRegex, 'Invalid email address').required('Required'),
-                phone: Yup.string().matches(phoneRegex, 'Invalid Egyptian phone number').required('Required'),
-                address: Yup.string().required('Required'),
-                country: Yup.string().required('Required'),
-                postalCode: Yup.string().required('Required'),
+                name: Yup.string(),
+                state: Yup.string(),
+                city: Yup.string(),
+                email: Yup.string().matches(emailRegex, 'Invalid email address'),
+                phone: Yup.string().matches(phoneRegex, 'Invalid Egyptian phone number'),
+                address: Yup.string(),
+                country: Yup.string(),
+                postalCode: Yup.string(),
             })
         },
 
-        onSubmit: (values) => {
-            uploadImage(agencyImage, setIsLoading, setApiError).then((id) => {
+        onSubmit: (values, { resetForm }) => {
+            values = RemoveEmptyValues(values);
+            uploadImage(agencyImage, setIsLoading, setApiError, "edit").then((id) => {
                 console.log("checking the Image.", id); // Check if image is properly updated
                 values['profilePhotoId'] = id ? id[0] : null
-                addAgency(values, setIsLoading, handleUpdate).then(() => {
+                editAgency(values, agencyId, setIsLoading, handleUpdate).then(() => {
                     onClose();
+                    resetForm();
                 })
             })
         }
     });
 
-
     return (
         <div className="flex flex-col gap-2" >
-            <Button
-                className="bg-foreground text-background"
-                onPress={onOpen}
-                endContent={<PlusIcon />}
-                size="sm"
-            >
-                Add New
-            </Button>
+            <span
+                onClick={onOpen}
+                className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <EditIcon />
+            </span>
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -213,8 +214,9 @@ export default function AgenciesForm({ handleUpdate }) {
                                             ) : null}
                                         </div>
 
-                                        {apiError ? apiError : ""}
-
+                                        <div className="col-span-2" >
+                                            {apiError ? <Alert text={apiError} /> : ""}
+                                        </div>
 
                                     </div>
                                 </div>
@@ -226,8 +228,8 @@ export default function AgenciesForm({ handleUpdate }) {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
-                                <Button isLoading={isLoading} color="success" type="submit" className="text-white">
-                                    Add
+                                <Button isLoading={isLoading} color="secondary" type="submit" className="text-white">
+                                    Edit
                                 </Button>
                             </ModalFooter>
                         </form>
