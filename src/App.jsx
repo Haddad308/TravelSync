@@ -10,6 +10,7 @@ import { useContext, useEffect } from "react"
 import ProtectRoutes from "./network/ProtectRoutes"
 import Redirection from "./network/Redirection"
 import { useTranslation } from "react-i18next"
+import { Toaster } from "react-hot-toast"
 
 const routers = createBrowserRouter([
   {
@@ -43,9 +44,12 @@ function App() {
       document.getElementsByTagName('html')[0].setAttribute("dir", "ltr");
   }, [i18n.resolvedLanguage])
 
-  
+
   return (
-    <RouterProvider router={routers} />
+    <>
+      <Toaster />
+      <RouterProvider router={routers} />
+    </>
   )
 }
 

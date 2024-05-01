@@ -1,18 +1,23 @@
-import { LuLayoutDashboard } from "react-icons/lu";
+import { HiMiniPresentationChartBar } from "react-icons/hi2";
 import { FaLocationDot } from "react-icons/fa6";
 import NavItem from "./components/NavItem";
 import { Avatar } from "@nextui-org/react";
 import ChangeLocale from "./components/ChangeLocale";
 import Logout from "../auth/components/Logout";
+import { IoPeopleSharp } from "react-icons/io5";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
 const ADMIN_ITEMS = [
     {
         "title": "Dashboard",
-        "path": "/dashboard",
-        "icon": <LuLayoutDashboard className={ICON_STYLE} />
+        "path": "/Dashboard",
+        "icon": <HiMiniPresentationChartBar className={ICON_STYLE} />
     },
-    { "title": "", "path": "/" },
+    {
+        "title": "Agencies",
+        "path": "/Agencies",
+        "icon": <IoPeopleSharp className={ICON_STYLE} />
+    },
     { "title": "", "path": "/" },
     { "title": "", "path": "/" },
     { "title": "", "path": "/" },
