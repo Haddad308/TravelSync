@@ -1,5 +1,7 @@
+import Cookies from 'js-cookie';
+
 const logout = (navigate) => {
-    localStorage.removeItem("userToken");
+    Cookies.remove('userToken')
     navigate("/login")
 }
 

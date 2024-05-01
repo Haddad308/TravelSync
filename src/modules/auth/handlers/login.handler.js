@@ -1,6 +1,7 @@
 import { instance } from "../../../network/axios";
+import Cookies from 'js-cookie';
 
-export default async function userLogin(values, setIsLoading, setApiError, navigate, SetToken) {
+export default async function userLogin(values, setIsLoading, setApiError, navigate) {
     setIsLoading(true);
     setApiError('');
 
@@ -10,8 +11,7 @@ export default async function userLogin(values, setIsLoading, setApiError, navig
             const { token } = response.data;
             setIsLoading(false);
             navigate('/');
-            SetToken(token);
-            localStorage.setItem('userToken', token);
+            Cookies.set('userToken', token, { expires: 7, secure: true });
         }
     } catch (error) {
         console.error('Login error:', error);

@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Navigate, useLocation } from "react-router-dom"
+import Cookies from 'js-cookie';
 
 export default function ProtectRoutes({ allowedRoles, children }) {
-    const auth = localStorage.getItem("userToken");
+    const auth = Cookies.get('userToken');
     const role = "admin"; 
     const location = useLocation();
 

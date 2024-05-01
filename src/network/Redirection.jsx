@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 export default function Redirection() {
-    const auth = localStorage.getItem("userToken");
+    const auth = Cookies.get('userToken');
     const role = "Admin";
-    console.log("hello from Redirection", role);
+    
     if (auth) {
         if (role === "Admin")
             return <Navigate to={"/Dashboard"} replace />

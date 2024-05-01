@@ -1,11 +1,12 @@
 import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
 
 const deleted = () => toast.success('The agency deleted successfully.');
 const added = () => toast.success('The agency added successfully.');
 const edited = () => toast.success('The agency edited successfully.');
 
-const token = localStorage.getItem("userToken")
+const token = Cookies.get('userToken');
 
 async function getAgencies(SetAgencies, setIsLoading) {
     setIsLoading(true)

@@ -5,6 +5,8 @@ import { Avatar } from "@nextui-org/react";
 import ChangeLocale from "./components/ChangeLocale";
 import Logout from "../auth/components/Logout";
 import { IoPeopleSharp } from "react-icons/io5";
+import { SiOnlyoffice } from "react-icons/si";
+
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
 const ADMIN_ITEMS = [
@@ -16,12 +18,13 @@ const ADMIN_ITEMS = [
     {
         "title": "Agencies",
         "path": "/Agencies",
+        "icon": <SiOnlyoffice className={ICON_STYLE} />
+    },
+    {
+        "title": "Users",
+        "path": "/Users",
         "icon": <IoPeopleSharp className={ICON_STYLE} />
     },
-    { "title": "", "path": "/" },
-    { "title": "", "path": "/" },
-    { "title": "", "path": "/" },
-    { "title": "", "path": "/" },
 ]
 
 // eslint-disable-next-line no-unused-vars

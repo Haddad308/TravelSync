@@ -5,12 +5,12 @@ import NotFound from "./modules/auth/pages/NotFound"
 import Layout from "./modules/core/Layout"
 import Dashboard from "./modules/dashboard/Dashboard"
 import Agencies from "./modules/agencies/Agencies"
-import { auth } from "./modules/auth/context/AuthProvider"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 import ProtectRoutes from "./network/ProtectRoutes"
 import Redirection from "./network/Redirection"
 import { useTranslation } from "react-i18next"
 import { Toaster } from "react-hot-toast"
+import Users from "./modules/users/Users"
 
 const routers = createBrowserRouter([
   {
@@ -18,6 +18,7 @@ const routers = createBrowserRouter([
       { index: true, element: <Redirection /> },
       { path: "dashboard", element: <ProtectRoutes allowedRoles={['admin']} ><Dashboard /></ProtectRoutes> },
       { path: "agencies", element: <ProtectRoutes allowedRoles={['admin']} ><Agencies /></ProtectRoutes> },
+      { path: "users", element: <ProtectRoutes allowedRoles={['admin']} ><Users /></ProtectRoutes> },
     ]
   },
   { path: "login", element: <Login /> },
@@ -30,10 +31,10 @@ function App() {
 
   // *Make it hook. 
   // check if token is exists in localStorage. 
-  let [token, setToken] = useContext(auth);
-  useEffect(() => {
-    if (localStorage.getItem("userToken")) setToken(localStorage.getItem("userToken"));
-  }, [token, setToken])
+  // let [token, setToken] = useContext(auth);
+  // useEffect(() => {
+  //   if (localStorage.getItem("userToken")) setToken(localStorage.getItem("userToken"));
+  // }, [token, setToken])
 
   const { i18n } = useTranslation();
 
