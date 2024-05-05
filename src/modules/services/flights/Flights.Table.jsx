@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
@@ -14,7 +15,6 @@ import {
     Dropdown,
     DropdownMenu,
     DropdownItem,
-    User,
     Pagination,
     Spinner,
     Tooltip,
@@ -22,15 +22,31 @@ import {
 
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
-import DeleteModal from "../../core/components/DeleteModal";
-import { DeleteAgency } from "../Agencies.handlers";
-import AgenciesForm from "./Agencies.Add.Form";
-import AgenciesFormEdit from "./Agencies.edit.Form";
 import { capitalize } from "../../core/utils";
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "city", "postalCode", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["airline", "NAME", "quantityAvailable", "arrivalTime", "actions"];
 
-export default function AgenciesTable({ columns, users, isLoading, handleUpdate }) {
+export default function FlightsTable({ data, isLoading, handleUpdate }) {
+
+
+
+    const columns = [
+        { name: "ID", uid: "id", sortable: true },
+        { name: "NAME", uid: "name", sortable: true },
+        { name: "price", uid: "price" },
+        { name: "quantityAvailable", uid: "quantityAvailable" },
+        { name: "savings", uid: "savings", sortable: true },
+        { name: "airline", uid: "airline", sortable: true },
+        { name: "departureAddress", uid: "departureAddress", sortable: true },
+        { name: "seatType", uid: "seatType", sortable: true },
+        { name: "arrivalAddress", uid: "arrivalAddress" },
+        { name: "arrivalTime", uid: "arrivalTime" },
+        { name: "departureCity", uid: "departureCity" },
+        { name: "arrivalCity", uid: "arrivalCity" },
+        { name: "DESCRIPTION", uid: "description" },
+        { name: "ACTIONS", uid: "actions" },
+    ];
+
 
     const [filterValue, setFilterValue] = React.useState("");
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -42,7 +58,7 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
     });
     const [page, setPage] = React.useState(1);
 
-    const pages = Math.ceil(users.length / rowsPerPage);
+    const pages = Math.ceil(data?.length / rowsPerPage);
 
     const hasSearchFilter = Boolean(filterValue);
 
@@ -53,7 +69,7 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
     }, [visibleColumns]);
 
     const filteredItems = React.useMemo(() => {
-        let filteredUsers = [...users];
+        let filteredUsers = [...data];
 
         if (hasSearchFilter) {
             filteredUsers = filteredUsers.filter((user) =>
@@ -61,7 +77,7 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
             );
         }
         return filteredUsers;
-    }, [users, filterValue]);
+    }, [data, filterValue]);
 
     const items = React.useMemo(() => {
         const start = (page - 1) * rowsPerPage;
@@ -83,27 +99,56 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
     const renderCell = React.useCallback((user, columnKey) => {
         const cellValue = user[columnKey];
         switch (columnKey) {
-            case "name":
+            case "airline":
                 return (
-                    <User
-                        avatarProps={{ radius: "full", size: "sm",isBordered:"true" ,  src: user.profilePhoto?.imageUrl }}
-                        classNames={{
-                            description: "text-default-500",
-                        }}
-                        description={user.email}
-                        name={cellValue}
-                    >
-                        {user.email}
-                    </User>
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.airline}
+                    </div>
+                );
+            case "departureAddress":
+                return (
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.departureAddress}
+                    </div>
+                );
+            case "seatType":
+                return (
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.seatType}
+                    </div>
+                );
+            case "arrivalAddress":
+                return (
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.arrivalAddress}
+                    </div>
+                );
+            case "arrivalTime":
+                return (
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.arrivalTime}
+                    </div>
+                );
+            case "departureCity":
+                return (
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.departureCity}
+                    </div>
+                );
+            case "arrivalCity":
+                return (
+                    <div className="relative flex items-center   gap-2">
+                        {user.flight?.arrivalCity}
+                    </div>
                 );
             case "actions":
                 return (
                     <div className="relative flex items-center gap-2">
                         <Tooltip content="Edit user">
-                            <AgenciesFormEdit handleUpdate={handleUpdate} agencyId={user.id} />
+                            {/* <AgenciesFormEdit handleUpdate={handleUpdate} agencyId={user.id} /> */}
                         </Tooltip>
                         <Tooltip color="danger" content="Delete user">
-                            <DeleteModal deleteFun={() => { DeleteAgency(user.id, handleUpdate) }} text={"agency"} />
+                            {/* <DeleteModal deleteFun={() => { DeleteAgency(user.id, handleUpdate) }} text={"agency"} /> */}
                         </Tooltip>
                     </div>
                 );
@@ -171,11 +216,11 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        <AgenciesForm handleUpdate={handleUpdate} />
+                        {/* <AgenciesForm handleUpdate={handleUpdate} /> */}
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <span className="text-default-400 text-small">Total {users.length} users</span>
+                    <span className="text-default-400 text-small">Total {data.length} users</span>
                     <label className="flex items-center text-default-400 text-small">
                         Rows per page:
                         <select
@@ -195,7 +240,7 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
         visibleColumns,
         onSearchChange,
         onRowsPerPageChange,
-        users.length,
+        data.length,
         hasSearchFilter,
     ]);
 
@@ -239,13 +284,16 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
 
     return (
         <Table
+            className="mt-5"
             removeWrapper
             bottomContent={bottomContent}
             bottomContentPlacement="outside"
             aria-label="Agencies Table."
             checkboxesProps={{
                 classNames: {
-                    wrapper: "after:bg-foreground after:text-background text-background",
+                    wrapper: " after:bg-foreground after:text-background text-background",
+                    base: "overflow-scroll",
+                    table: "overflow-scroll",
                 },
             }}
             classNames={classNames}
@@ -267,7 +315,7 @@ export default function AgenciesTable({ columns, users, isLoading, handleUpdate 
                     </TableColumn>
                 )}
             </TableHeader>
-            <TableBody isLoading={isLoading} loadingContent={<Spinner label="Loading..." />} emptyContent={"No agencies found"} items={sortedItems}>
+            <TableBody isLoading={isLoading} loadingContent={<Spinner label="Loading..." />} emptyContent={"No hotels found"} items={sortedItems}>
                 {(item) => (
                     <TableRow key={item.id}>
                         {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

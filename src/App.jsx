@@ -11,6 +11,7 @@ import Redirection from "./network/Redirection"
 import { useTranslation } from "react-i18next"
 import { Toaster } from "react-hot-toast"
 import Users from "./modules/users/Users"
+import Services from "./modules/services/Services"
 
 const routers = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const routers = createBrowserRouter([
       { path: "dashboard", element: <ProtectRoutes allowedRoles={['admin']} ><Dashboard /></ProtectRoutes> },
       { path: "agencies", element: <ProtectRoutes allowedRoles={['admin']} ><Agencies /></ProtectRoutes> },
       { path: "users", element: <ProtectRoutes allowedRoles={['admin']} ><Users /></ProtectRoutes> },
+      { path: "services", element: <ProtectRoutes allowedRoles={['admin']} ><Services /></ProtectRoutes> },
     ]
   },
   { path: "login", element: <Login /> },

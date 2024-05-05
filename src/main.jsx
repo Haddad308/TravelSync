@@ -20,9 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 // TODO 
 //* 1- Edit the color palette.
-//* 2- Prettier and Eslint config.
+//* 2- Add security feature (Don't login with out right token).
+//* 3- Continue sideBar information.
 
-
-// ? MY NOTES
-// * Login is done. 
 

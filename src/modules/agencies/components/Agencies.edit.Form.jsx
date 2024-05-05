@@ -9,7 +9,7 @@ import { editAgency } from "../Agencies.handlers";
 import { EditIcon } from "../../core/components/icons/EditIcon";
 
 import Alert from "../../core/components/Alert";
-import { RemoveEmptyValues } from "../utils";
+import { RemoveEmptyValues } from "../../core/utils";
 
 export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
