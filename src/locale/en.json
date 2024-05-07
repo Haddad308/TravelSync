@@ -1,8 +1,8 @@
 {
-    "Logout":"Logout",
-    "WelcomeMessage": "Welcome Back",
-    "signin":"Sing In",
-    "email":"Email",
-    "password":"Password",
-    "forgetPassword":"Forget Password ?"
+  "Logout": "Logout",
+  "WelcomeMessage": "Welcome Back",
+  "signin": "Sing In",
+  "email": "Email",
+  "password": "Password",
+  "forgetPassword": "Forget Password ?"
 }

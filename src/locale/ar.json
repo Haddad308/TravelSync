@@ -1,8 +1,8 @@
 {
-    "Logout": "تسجيل الخروج",
-    "WelcomeMessage": "مرحبا بعودتك",
-    "signin": "تسجيل الدخول",
-    "email": "البريد الالكتروني",
-    "password": "كلمة السر",
-    "forgetPassword": "هل نسيت كلمة السر ؟"
+  "Logout": "تسجيل الخروج",
+  "WelcomeMessage": "مرحبا بعودتك",
+  "signin": "تسجيل الدخول",
+  "email": "البريد الالكتروني",
+  "password": "كلمة السر",
+  "forgetPassword": "هل نسيت كلمة السر ؟"
 }
