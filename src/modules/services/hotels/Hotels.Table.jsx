@@ -23,6 +23,10 @@ import {
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
+import HotelsForm from "./Hotels.Add.Form";
+import HotelsFormEdit from "./Hotels.Edit.Form";
+import DeleteModal from "../../core/components/DeleteModal";
+import { DeleteService } from "../services.handlers";
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "city", "email", "website", "description", "actions"];
 
@@ -101,10 +105,10 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
                 return (
                     <div className="relative flex items-center gap-2">
                         <Tooltip content="Edit user">
-                            {/* <AgenciesFormEdit handleUpdate={handleUpdate} agencyId={user.id} /> */}
+                            <HotelsFormEdit handleUpdate={handleUpdate} hotelID={user.id} />
                         </Tooltip>
                         <Tooltip color="danger" content="Delete user">
-                            {/* <DeleteModal deleteFun={() => { DeleteAgency(user.id, handleUpdate) }} text={"agency"} /> */}
+                            <DeleteModal deleteFun={() => { DeleteService(user.id, handleUpdate, "hotels") }} text={"hotel"} />
                         </Tooltip>
                     </div>
                 );
@@ -171,7 +175,7 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
                                 ))}
                             </DropdownMenu>
                         </Dropdown>
-                        {/* <AgenciesForm handleUpdate={handleUpdate} /> */}
+                        <HotelsForm handleUpdate={handleUpdate} />
                     </div>
                 </div>
                 <div className="flex justify-between items-center">

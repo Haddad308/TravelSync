@@ -7,7 +7,6 @@ import { useState } from "react";
 import { uploadImage } from "../../core/core.handlers";
 import { editAgency } from "../Agencies.handlers";
 import { EditIcon } from "../../core/components/icons/EditIcon";
-
 import Alert from "../../core/components/Alert";
 import { RemoveEmptyValues } from "../../core/utils";
 

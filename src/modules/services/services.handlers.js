@@ -26,38 +26,18 @@ async function getService(SetService, setIsLoading,service) {
     }
 }
 
-async function DeleteHotel(id, callback) {
-    let data = await instance.delete(`/api/v1/travel-offices/${id}`, {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    }
-    ).catch((error) => {
-        console.error(error.message);
-    });
-
-    console.log(data);
-
-    if (data?.status === 204) {
-        deleted();
-        callback();
-    }
-}
-
-async function addHotel(values, setIsLoading, callback) {
-
-    console.log(values);
-    // Set loading state to true
+async function addService(values, setIsLoading, callback, service) {
+    
     setIsLoading(true);
 
     try {
         // Make POST request to add a user
-        await instance.post("/api/v1/travel-offices", values, {
+        await instance.post(`/api/v1/${service}`, values, {
             headers: {
                 Authorization: "Bearer " + token, // Include bearer token in the header
             }
         });
-        callback();
+        callback(service);
         added();
     } catch (error) {
         // If error occurs, log error response data, set API error state, and throw the error
@@ -70,19 +50,19 @@ async function addHotel(values, setIsLoading, callback) {
     }
 }
 
-async function editHotel(values, id, setIsLoading, callback) {
+async function editService(values, id, setIsLoading, callback, service) {
     // Set loading state to true
     setIsLoading(true);
 
     try {
         // Make POST request to add a user
-        await instance.patch(`http://localhost:3000/api/v1/travel-offices/${id}`, values, {
+        await instance.patch(`http://localhost:3000/api/v1/${service}/${id}`, values, {
             headers: {
                 Authorization: "Bearer " + token, // Include bearer token in the header
             }
         });
         // If successful, clear API error and log success message
-        callback();
+        callback(service);
         edited();
     } catch (error) {
         // If error occurs, log error response data, set API error state, and throw the error
@@ -94,9 +74,30 @@ async function editHotel(values, id, setIsLoading, callback) {
     }
 }
 
+async function DeleteService(id, callback, service) {
+    let data = await instance.delete(`/api/v1/${service}/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+    ).catch((error) => {
+        console.error(error.message);
+    });
+
+    console.log(data);
+
+    if (data?.status === 204) {
+        deleted();
+        callback(service);
+    }
+}
+
+
+
+
 export {
     getService,
-    DeleteHotel,
-    addHotel,
-    editHotel
+    DeleteService,
+    addService,
+    editService
 }

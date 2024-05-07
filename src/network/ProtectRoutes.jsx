@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 export default function ProtectRoutes({ allowedRoles, children }) {
     const auth = Cookies.get('userToken');
-    const role = "admin"; 
+    const role = "admin";
     const location = useLocation();
 
     if (auth) {
