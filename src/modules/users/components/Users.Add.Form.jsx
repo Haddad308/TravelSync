@@ -9,61 +9,61 @@ import {
   useDisclosure,
   Select,
   SelectItem,
-  Input
-} from '@nextui-org/react';
-import { PlusIcon } from '../../core/components/icons/PlusIcon';
-import * as Yup from 'yup'; // For validation.
-import { useFormik } from 'formik';
-import ImagesUploader from '../../core/components/ImageUploader/ImageUploader';
-import { useState } from 'react';
-import { uploadImage } from '../../core/core.handlers';
-import { addUser } from '../Users.handlers';
-import { getAgencies } from '../../agencies/Agencies.handlers';
-import Alert from '../../core/components/Alert';
+  Input,
+} from "@nextui-org/react";
+import { PlusIcon } from "../../core/components/icons/PlusIcon";
+import * as Yup from "yup"; // For validation.
+import { useFormik } from "formik";
+import ImagesUploader from "../../core/components/ImageUploader/ImageUploader";
+import { useState } from "react";
+import { uploadImage } from "../../core/core.handlers";
+import { addUser } from "../Users.handlers";
+import { getAgencies } from "../../agencies/Agencies.handlers";
+import Alert from "../../core/components/Alert";
 
 export default function UsersForm({ handleUpdate }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [userImage, setUserImage] = useState([]);
-  const [isLoading, setIsLoading] = useState('');
-  const [apiError, setApiError] = useState('');
+  const [isLoading, setIsLoading] = useState("");
+  const [apiError, setApiError] = useState("");
 
   const [agencies, setAgencies] = useState([]);
 
   const handleUpdateAgencies = () => {
     getAgencies(setAgencies, setIsLoading);
-    console.log('Agencies:', agencies);
+    console.log("Agencies:", agencies);
   };
 
   const formHandler = useFormik({
     initialValues: {
-      email: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      travelOfficeId: ''
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      travelOfficeId: "",
     },
     validationSchema: () => {
       return Yup.object({
-        email: Yup.string().email('Invalid email address').required('Required'),
+        email: Yup.string().email("Invalid email address").required("Required"),
         password: Yup.string()
-          .required('Required')
-          .min(6, 'Password must be at least 6 characters'),
-        firstName: Yup.string().required('Required'),
-        lastName: Yup.string().required('Required'),
-        travelOfficeId: Yup.number().required('please select an agency')
+          .required("Required")
+          .min(6, "Password must be at least 6 characters"),
+        firstName: Yup.string().required("Required"),
+        lastName: Yup.string().required("Required"),
+        travelOfficeId: Yup.number().required("please select an agency"),
       });
     },
     onSubmit: (values, { resetForm }) => {
       uploadImage(userImage, setIsLoading, setApiError).then((id) => {
-        console.log('checking the Image.', id); // Check if image is properly updated
-        values['profilePhotoId'] = id ? id[0] : null;
-        console.log('checking the values.', values); // Check if values are properly updated
+        console.log("checking the Image.", id); // Check if image is properly updated
+        values["profilePhotoId"] = id ? id[0] : null;
+        console.log("checking the values.", values); // Check if values are properly updated
         addUser(values, setIsLoading, handleUpdate).then(() => {
           onClose();
           resetForm();
         });
       });
-    }
+    },
   });
 
   return (
@@ -72,7 +72,8 @@ export default function UsersForm({ handleUpdate }) {
         className="bg-foreground text-background"
         onPress={onOpen}
         endContent={<PlusIcon />}
-        size="sm">
+        size="sm"
+      >
         Add New
       </Button>
       <Modal
@@ -80,11 +81,14 @@ export default function UsersForm({ handleUpdate }) {
         onOpenChange={onOpenChange}
         scrollBehavior="inside"
         backdrop="blur"
-        size="5xl">
+        size="5xl"
+      >
         <ModalContent>
           {(onClose) => (
             <form onSubmit={formHandler.handleSubmit}>
-              <ModalHeader className="flex flex-col gap-1">Add new User</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Add new User
+              </ModalHeader>
               <ModalBody className="flex flex-row items-center">
                 <div className="w-1/2">
                   <div className="grid grid-cols-2 gap-3">
@@ -100,8 +104,11 @@ export default function UsersForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.firstName}
                       />
-                      {formHandler.touched.firstName && formHandler.errors.firstName ? (
-                        <div className="text-red-600">{formHandler.errors.firstName}</div>
+                      {formHandler.touched.firstName &&
+                      formHandler.errors.firstName ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.firstName}
+                        </div>
                       ) : null}
                     </div>
 
@@ -117,8 +124,11 @@ export default function UsersForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.lastName}
                       />
-                      {formHandler.touched.lastName && formHandler.errors.lastName ? (
-                        <div className="text-red-600">{formHandler.errors.lastName}</div>
+                      {formHandler.touched.lastName &&
+                      formHandler.errors.lastName ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.lastName}
+                        </div>
                       ) : null}
                     </div>
 
@@ -130,15 +140,19 @@ export default function UsersForm({ handleUpdate }) {
                         className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
                         value={formHandler.values.travelOfficeId}
                         onClick={handleUpdateAgencies}
-                        onChange={formHandler.handleChange('travelOfficeId')}>
+                        onChange={formHandler.handleChange("travelOfficeId")}
+                      >
                         {agencies.map(({ id, name }) => (
                           <SelectItem key={id} value={id}>
                             {name}
                           </SelectItem>
                         ))}
                       </Select>
-                      {formHandler.touched.travelOfficeId && formHandler.errors.travelOfficeId ? (
-                        <div className="text-red-600">{formHandler.errors.travelOfficeId}</div>
+                      {formHandler.touched.travelOfficeId &&
+                      formHandler.errors.travelOfficeId ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.travelOfficeId}
+                        </div>
                       ) : null}
                     </div>
 
@@ -155,7 +169,9 @@ export default function UsersForm({ handleUpdate }) {
                         value={formHandler.values.email}
                       />
                       {formHandler.touched.email && formHandler.errors.email ? (
-                        <div className="text-red-600">{formHandler.errors.email}</div>
+                        <div className="text-red-600">
+                          {formHandler.errors.email}
+                        </div>
                       ) : null}
                     </div>
 
@@ -170,11 +186,16 @@ export default function UsersForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.password}
                       />
-                      {formHandler.touched.password && formHandler.errors.password ? (
-                        <div className="text-red-600">{formHandler.errors.password}</div>
+                      {formHandler.touched.password &&
+                      formHandler.errors.password ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.password}
+                        </div>
                       ) : null}
                     </div>
-                    <div className="col-span-2">{apiError ? <Alert text={apiError} /> : ''}</div>
+                    <div className="col-span-2">
+                      {apiError ? <Alert text={apiError} /> : ""}
+                    </div>
                   </div>
                 </div>
                 <div className="w-1/2">
@@ -190,7 +211,12 @@ export default function UsersForm({ handleUpdate }) {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button isLoading={isLoading} color="success" type="submit" className="text-white">
+                <Button
+                  isLoading={isLoading}
+                  color="success"
+                  type="submit"
+                  className="text-white"
+                >
                   Add
                 </Button>
               </ModalFooter>

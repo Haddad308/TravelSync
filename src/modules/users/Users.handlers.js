@@ -1,20 +1,20 @@
-import { instance } from '../../network/axios';
-import toast from 'react-hot-toast';
-import Cookies from 'js-cookie';
+import { instance } from "../../network/axios";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
-const deleted = () => toast.success('The agency deleted successfully.');
-const added = () => toast.success('The agency added successfully.');
-const edited = () => toast.success('The agency edited successfully.');
+const deleted = () => toast.success("The agency deleted successfully.");
+const added = () => toast.success("The agency added successfully.");
+const edited = () => toast.success("The agency edited successfully.");
 
-const token = Cookies.get('userToken');
+const token = Cookies.get("userToken");
 
 async function getUsers(SetUsers, setIsLoading) {
   setIsLoading(true);
   let data = await instance
-    .get('/api/v1/users', {
+    .get("/api/v1/users", {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error);
@@ -37,12 +37,13 @@ async function getAgenciesUsers(SetUsers, setIsLoading) {
   // let queryString = Object.keys(filters)
   //   .map((key) => key + '=' + filters[key])
   //   .join('&');
-  let url = '/api/v1/users?filters=%7B%22roles%22%3A%5B%7B%22id%22%3A4%7D%5D%7D';
+  let url =
+    "/api/v1/users?filters=%7B%22roles%22%3A%5B%7B%22id%22%3A4%7D%5D%7D";
   let data = await instance
     .get(url, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error);
@@ -50,7 +51,7 @@ async function getAgenciesUsers(SetUsers, setIsLoading) {
     });
 
   if (data?.status === 200) {
-    console.log(data.data.data, 'heeeeeere');
+    console.log(data.data.data, "heeeeeere");
     SetUsers(data.data.data);
     setIsLoading(false);
   }
@@ -60,8 +61,8 @@ async function DeleteUser(id, callback) {
   let data = await instance
     .delete(`/api/v1/users/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error.message);
@@ -79,14 +80,14 @@ async function addUser(values, setIsLoading, callback) {
   console.log(values);
   // Set loading state to true
   setIsLoading(true);
-  values['role'] = { id: 4 };
+  values["role"] = { id: 4 };
 
   try {
     // Make POST request to add a user
-    await instance.post('/api/v1/users', values, {
+    await instance.post("/api/v1/users", values, {
       headers: {
-        Authorization: 'Bearer ' + token // Include bearer token in the header
-      }
+        Authorization: "Bearer " + token, // Include bearer token in the header
+      },
     });
     callback();
     added();
@@ -108,8 +109,8 @@ async function editUser(values, id, setIsLoading, callback) {
     // Make POST request to add a user
     await instance.patch(`http://localhost:3000/api/v1/users/${id}`, values, {
       headers: {
-        Authorization: 'Bearer ' + token // Include bearer token in the header
-      }
+        Authorization: "Bearer " + token, // Include bearer token in the header
+      },
     });
     // If successful, clear API error and log success message
     callback();

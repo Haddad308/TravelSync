@@ -1,20 +1,20 @@
-import { instance } from '../../network/axios';
-import toast from 'react-hot-toast';
-import Cookies from 'js-cookie';
+import { instance } from "../../network/axios";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
-const deleted = () => toast.success('The Hotel deleted successfully.');
-const added = () => toast.success('The Hotel added successfully.');
-const edited = () => toast.success('The Hotel edited successfully.');
+const deleted = () => toast.success("The Hotel deleted successfully.");
+const added = () => toast.success("The Hotel added successfully.");
+const edited = () => toast.success("The Hotel edited successfully.");
 
-const token = Cookies.get('userToken');
+const token = Cookies.get("userToken");
 
 async function getService(SetService, setIsLoading, service) {
   setIsLoading(true);
   let data = await instance
     .get(`/api/v1/${service}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error);
@@ -34,8 +34,8 @@ async function addService(values, setIsLoading, callback, service) {
     // Make POST request to add a user
     await instance.post(`/api/v1/${service}`, values, {
       headers: {
-        Authorization: 'Bearer ' + token // Include bearer token in the header
-      }
+        Authorization: "Bearer " + token, // Include bearer token in the header
+      },
     });
     callback(service);
     added();
@@ -55,11 +55,15 @@ async function editService(values, id, setIsLoading, callback, service) {
 
   try {
     // Make POST request to add a user
-    await instance.patch(`http://localhost:3000/api/v1/${service}/${id}`, values, {
-      headers: {
-        Authorization: 'Bearer ' + token // Include bearer token in the header
-      }
-    });
+    await instance.patch(
+      `http://localhost:3000/api/v1/${service}/${id}`,
+      values,
+      {
+        headers: {
+          Authorization: "Bearer " + token, // Include bearer token in the header
+        },
+      },
+    );
     // If successful, clear API error and log success message
     callback(service);
     edited();
@@ -77,8 +81,8 @@ async function DeleteService(id, callback, service) {
   let data = await instance
     .delete(`/api/v1/${service}/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error.message);

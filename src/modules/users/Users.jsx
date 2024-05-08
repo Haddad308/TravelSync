@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
-import UsersTable from './components/Users.Table';
-import { getAgenciesUsers } from './Users.handlers';
+import { useEffect, useState } from "react";
+import UsersTable from "./components/Users.Table";
+import { getAgenciesUsers } from "./Users.handlers";
 
 const columns = [
-  { name: 'ID', uid: 'id', sortable: true },
-  { name: 'Name', uid: 'name', sortable: true },
-  { name: 'AGENCY', uid: 'travelOffice', sortable: true },
-  { name: 'EMAIL', uid: 'email', sortable: true },
-  { name: 'ACTIONS', uid: 'actions' }
+  { name: "ID", uid: "id", sortable: true },
+  { name: "Name", uid: "name", sortable: true },
+  { name: "AGENCY", uid: "travelOffice", sortable: true },
+  { name: "EMAIL", uid: "email", sortable: true },
+  { name: "ACTIONS", uid: "actions" },
 ];
 
 const Users = () => {

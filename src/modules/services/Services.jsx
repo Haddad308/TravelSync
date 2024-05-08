@@ -1,25 +1,25 @@
 /* eslint-disable no-unused-vars */
-import { Tabs, Tab } from '@nextui-org/react';
-import { FaCar, FaHotel } from 'react-icons/fa6';
-import HotelsTable from './hotels/Hotels.Table';
-import { useEffect, useMemo, useState } from 'react';
-import { RiHotelBedFill } from 'react-icons/ri';
-import { BiSolidPlaneAlt } from 'react-icons/bi';
-import { FaHouseTsunami } from 'react-icons/fa6';
-import { MdOutlineDirectionsBoat } from 'react-icons/md';
-import { FiPackage } from 'react-icons/fi';
-import { getService } from './services.handlers';
-import RoomsTable from './rooms/Rooms.Table';
-import FlightsTable from './flights/Flights.Table';
-import SafariTable from './safari/Safari.Table';
-import CruisesTable from './cruises/Cruises.Table';
-import TransportationTable from './transportation/Transportation.Table';
-import PackagesTable from './packages/Packages.Table';
+import { Tabs, Tab } from "@nextui-org/react";
+import { FaCar, FaHotel } from "react-icons/fa6";
+import HotelsTable from "./hotels/Hotels.Table";
+import { useEffect, useMemo, useState } from "react";
+import { RiHotelBedFill } from "react-icons/ri";
+import { BiSolidPlaneAlt } from "react-icons/bi";
+import { FaHouseTsunami } from "react-icons/fa6";
+import { MdOutlineDirectionsBoat } from "react-icons/md";
+import { FiPackage } from "react-icons/fi";
+import { getService } from "./services.handlers";
+import RoomsTable from "./rooms/Rooms.Table";
+import FlightsTable from "./flights/Flights.Table";
+import SafariTable from "./safari/Safari.Table";
+import CruisesTable from "./cruises/Cruises.Table";
+import TransportationTable from "./transportation/Transportation.Table";
+import PackagesTable from "./packages/Packages.Table";
 
 // ! Last 4 services need to specify the the columns.
 
 export default function Services() {
-  const [selected, setSelected] = useState('hotels');
+  const [selected, setSelected] = useState("hotels");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,7 +50,11 @@ export default function Services() {
             </div>
           }
         >
-          <HotelsTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <HotelsTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
         <Tab
           key="hotel-rooms"
@@ -61,7 +65,11 @@ export default function Services() {
             </div>
           }
         >
-          <RoomsTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <RoomsTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
         <Tab
           key="flights"
@@ -72,7 +80,11 @@ export default function Services() {
             </div>
           }
         >
-          <FlightsTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <FlightsTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
         <Tab
           key="safari"
@@ -83,7 +95,11 @@ export default function Services() {
             </div>
           }
         >
-          <SafariTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <SafariTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
         <Tab
           key="cruises"
@@ -94,7 +110,11 @@ export default function Services() {
             </div>
           }
         >
-          <CruisesTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <CruisesTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
         <Tab
           key="transportations"
@@ -105,7 +125,11 @@ export default function Services() {
             </div>
           }
         >
-          <TransportationTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <TransportationTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
         <Tab
           key="standard-packages"
@@ -116,7 +140,11 @@ export default function Services() {
             </div>
           }
         >
-          <PackagesTable data={data} isLoading={isLoading} handleUpdate={handleUpdate} />
+          <PackagesTable
+            data={data}
+            isLoading={isLoading}
+            handleUpdate={handleUpdate}
+          />
         </Tab>
       </Tabs>
       {/* </div> */}

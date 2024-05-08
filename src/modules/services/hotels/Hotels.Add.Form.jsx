@@ -7,71 +7,73 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Input
-} from '@nextui-org/react';
-import { PlusIcon } from '../../core/components/icons/PlusIcon';
-import * as Yup from 'yup'; // For validation.
-import { useFormik } from 'formik';
-import ImagesUploader from '../../core/components/ImageUploader/ImageUploader';
-import { useState } from 'react';
-import { uploadImage } from '../../core/core.handlers';
-import Alert from '../../core/components/Alert';
-import { addService } from '../services.handlers';
+  Input,
+} from "@nextui-org/react";
+import * as Yup from "yup"; // For validation.
+import { useFormik } from "formik";
+import { useState } from "react";
+import ImagesUploader from "../../core/components/ImageUploader/ImageUploader";
+import { PlusIcon } from "../../core/components/icons/PlusIcon";
+import { uploadImage } from "../../core/core.handlers";
+import Alert from "../../core/components/Alert";
+import { addService } from "../services.handlers";
 
 export default function HotelsForm({ handleUpdate }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [agencyImage, setAgencyImage] = useState([]);
-  const [isLoading, setIsLoading] = useState('');
-  const [apiError, setApiError] = useState('');
+  const [isLoading, setIsLoading] = useState("");
+  const [apiError, setApiError] = useState("");
 
   const formHandler = useFormik({
     initialValues: {
-      name: '',
-      address: '',
-      stars: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      mobileNumber: '',
-      phoneNumber: '',
-      website: '',
-      email: '',
-      description: '',
-      WholesalerId: 1
+      name: "",
+      address: "",
+      stars: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      mobileNumber: "",
+      phoneNumber: "",
+      website: "",
+      email: "",
+      description: "",
+      WholesalerId: 1,
     },
     validationSchema: () => {
       const phoneRegex = /^\+20(1[0125]\d{8})$/; // Egyptian phone number regex
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email regex
 
       return Yup.object({
-        name: Yup.string().required('Required'),
-        address: Yup.string().required('Required'),
-        stars: Yup.number().integer().required('Required'),
-        city: Yup.string().required('Required'),
-        state: Yup.string().required('Required'),
-        zipCode: Yup.string().required('Required'),
-        mobileNumber: Yup.string().required('Required'),
+        name: Yup.string().required("Required"),
+        address: Yup.string().required("Required"),
+        stars: Yup.number().integer().required("Required"),
+        city: Yup.string().required("Required"),
+        state: Yup.string().required("Required"),
+        zipCode: Yup.string().required("Required"),
+        mobileNumber: Yup.string().required("Required"),
         phoneNumber: Yup.string()
-          .matches(phoneRegex, 'Invalid Egyptian phoneNumber number')
-          .required('Required'),
-        website: Yup.string().required('Required'),
-        email: Yup.string().matches(emailRegex, 'Invalid email address').required('Required'),
-        description: Yup.string().required('Required')
+          .matches(phoneRegex, "Invalid Egyptian phoneNumber number")
+          .required("Required"),
+        website: Yup.string().required("Required"),
+        email: Yup.string()
+          .matches(emailRegex, "Invalid email address")
+          .required("Required"),
+        description: Yup.string().required("Required"),
       });
     },
 
     onSubmit: (values, { resetForm }) => {
-      console.log('Is hre?', values);
+      console.log("Is hre?", values);
       uploadImage(agencyImage, setIsLoading, setApiError).then((id) => {
-        console.log('checking the Image.', id); // Check if image is properly updated
-        values['imageIds'] = id ? id : null;
-        values['stars'] = Number(values['stars']);
-        addService(values, setIsLoading, handleUpdate, 'hotels').then(() => {
+        console.log("checking the Image.", id); // Check if image is properly updated
+        values.imageIds = id || null;
+        values.stars = Number(values.stars);
+        addService(values, setIsLoading, handleUpdate, "hotels").then(() => {
           onClose();
           resetForm();
         });
       });
-    }
+    },
   });
 
   return (
@@ -80,7 +82,8 @@ export default function HotelsForm({ handleUpdate }) {
         className="bg-foreground text-background"
         onPress={onOpen}
         endContent={<PlusIcon />}
-        size="sm">
+        size="sm"
+      >
         Add New
       </Button>
       <Modal
@@ -88,11 +91,14 @@ export default function HotelsForm({ handleUpdate }) {
         onOpenChange={onOpenChange}
         scrollBehavior="outside"
         backdrop="blur"
-        size="5xl">
+        size="5xl"
+      >
         <ModalContent>
           {(onClose) => (
             <form onSubmit={formHandler.handleSubmit}>
-              <ModalHeader className="flex flex-col gap-1">Add new Agency</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">
+                Add new Agency
+              </ModalHeader>
               <ModalBody className="flex flex-row items-center">
                 <div className="w-1/2">
                   <div className="grid grid-cols-2 gap-3">
@@ -109,7 +115,9 @@ export default function HotelsForm({ handleUpdate }) {
                         value={formHandler.values.name}
                       />
                       {formHandler.touched.name && formHandler.errors.name ? (
-                        <div className="text-red-600">{formHandler.errors.name}</div>
+                        <div className="text-red-600">
+                          {formHandler.errors.name}
+                        </div>
                       ) : null}
                     </div>
 
@@ -126,7 +134,9 @@ export default function HotelsForm({ handleUpdate }) {
                         value={formHandler.values.stars}
                       />
                       {formHandler.touched.stars && formHandler.errors.stars ? (
-                        <div className="text-red-600">{formHandler.errors.stars}</div>
+                        <div className="text-red-600">
+                          {formHandler.errors.stars}
+                        </div>
                       ) : null}
                     </div>
 
@@ -142,8 +152,11 @@ export default function HotelsForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.zipCode}
                       />
-                      {formHandler.touched.zipCode && formHandler.errors.zipCode ? (
-                        <div className="text-red-600">{formHandler.errors.zipCode}</div>
+                      {formHandler.touched.zipCode &&
+                      formHandler.errors.zipCode ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.zipCode}
+                        </div>
                       ) : null}
                     </div>
 
@@ -160,7 +173,9 @@ export default function HotelsForm({ handleUpdate }) {
                         value={formHandler.values.state}
                       />
                       {formHandler.touched.state && formHandler.errors.state ? (
-                        <div className="text-red-600">{formHandler.errors.state}</div>
+                        <div className="text-red-600">
+                          {formHandler.errors.state}
+                        </div>
                       ) : null}
                     </div>
 
@@ -177,7 +192,9 @@ export default function HotelsForm({ handleUpdate }) {
                         value={formHandler.values.city}
                       />
                       {formHandler.touched.city && formHandler.errors.city ? (
-                        <div className="text-red-600">{formHandler.errors.city}</div>
+                        <div className="text-red-600">
+                          {formHandler.errors.city}
+                        </div>
                       ) : null}
                     </div>
 
@@ -193,7 +210,9 @@ export default function HotelsForm({ handleUpdate }) {
                         value={formHandler.values.email}
                       />
                       {formHandler.touched.email && formHandler.errors.email ? (
-                        <div className="text-red-600">{formHandler.errors.email}</div>
+                        <div className="text-red-600">
+                          {formHandler.errors.email}
+                        </div>
                       ) : null}
                     </div>
 
@@ -209,8 +228,11 @@ export default function HotelsForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.phoneNumber}
                       />
-                      {formHandler.touched.phoneNumber && formHandler.errors.phoneNumber ? (
-                        <div className="text-red-600">{formHandler.errors.phoneNumber}</div>
+                      {formHandler.touched.phoneNumber &&
+                      formHandler.errors.phoneNumber ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.phoneNumber}
+                        </div>
                       ) : null}
                     </div>
 
@@ -226,8 +248,11 @@ export default function HotelsForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.mobileNumber}
                       />
-                      {formHandler.touched.mobileNumber && formHandler.errors.mobileNumber ? (
-                        <div className="text-red-600">{formHandler.errors.mobileNumber}</div>
+                      {formHandler.touched.mobileNumber &&
+                      formHandler.errors.mobileNumber ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.mobileNumber}
+                        </div>
                       ) : null}
                     </div>
 
@@ -243,8 +268,11 @@ export default function HotelsForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.address}
                       />
-                      {formHandler.touched.address && formHandler.errors.address ? (
-                        <div className="text-red-600">{formHandler.errors.address}</div>
+                      {formHandler.touched.address &&
+                      formHandler.errors.address ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.address}
+                        </div>
                       ) : null}
                     </div>
 
@@ -260,8 +288,11 @@ export default function HotelsForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.website}
                       />
-                      {formHandler.touched.website && formHandler.errors.website ? (
-                        <div className="text-red-600">{formHandler.errors.website}</div>
+                      {formHandler.touched.website &&
+                      formHandler.errors.website ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.website}
+                        </div>
                       ) : null}
                     </div>
 
@@ -277,19 +308,24 @@ export default function HotelsForm({ handleUpdate }) {
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.description}
                       />
-                      {formHandler.touched.description && formHandler.errors.description ? (
-                        <div className="text-red-600">{formHandler.errors.description}</div>
+                      {formHandler.touched.description &&
+                      formHandler.errors.description ? (
+                        <div className="text-red-600">
+                          {formHandler.errors.description}
+                        </div>
                       ) : null}
                     </div>
 
-                    <div className="col-span-2">{apiError ? <Alert text={apiError} /> : ''}</div>
+                    <div className="col-span-2">
+                      {apiError ? <Alert text={apiError} /> : ""}
+                    </div>
                   </div>
                 </div>
                 <div className="w-1/2">
                   <ImagesUploader
                     files={agencyImage}
                     setFiles={setAgencyImage}
-                    isMultiple={true}
+                    isMultiple
                     isOnly={false}
                   />
                 </div>
@@ -298,7 +334,12 @@ export default function HotelsForm({ handleUpdate }) {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button isLoading={isLoading} color="success" type="submit" className="text-white">
+                <Button
+                  isLoading={isLoading}
+                  color="success"
+                  type="submit"
+                  className="text-white"
+                >
                   Add
                 </Button>
               </ModalFooter>

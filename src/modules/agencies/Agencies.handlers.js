@@ -1,20 +1,20 @@
-import { instance } from '../../network/axios';
-import toast from 'react-hot-toast';
-import Cookies from 'js-cookie';
+import { instance } from "../../network/axios";
+import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
-const deleted = () => toast.success('The agency deleted successfully.');
-const added = () => toast.success('The agency added successfully.');
-const edited = () => toast.success('The agency edited successfully.');
+const deleted = () => toast.success("The agency deleted successfully.");
+const added = () => toast.success("The agency added successfully.");
+const edited = () => toast.success("The agency edited successfully.");
 
-const token = Cookies.get('userToken');
+const token = Cookies.get("userToken");
 
 async function getAgencies(SetAgencies, setIsLoading) {
   setIsLoading(true);
   let data = await instance
-    .get('/api/v1/travel-offices', {
+    .get("/api/v1/travel-offices", {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error);
@@ -31,8 +31,8 @@ async function DeleteAgency(id, callback) {
   let data = await instance
     .delete(`/api/v1/travel-offices/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
     .catch((error) => {
       console.error(error.message);
@@ -53,10 +53,10 @@ async function addAgency(values, setIsLoading, callback) {
 
   try {
     // Make POST request to add a user
-    await instance.post('/api/v1/travel-offices', values, {
+    await instance.post("/api/v1/travel-offices", values, {
       headers: {
-        Authorization: 'Bearer ' + token // Include bearer token in the header
-      }
+        Authorization: "Bearer " + token, // Include bearer token in the header
+      },
     });
     callback();
     added();
@@ -76,11 +76,15 @@ async function editAgency(values, id, setIsLoading, callback) {
 
   try {
     // Make POST request to add a user
-    await instance.patch(`http://localhost:3000/api/v1/travel-offices/${id}`, values, {
-      headers: {
-        Authorization: 'Bearer ' + token // Include bearer token in the header
-      }
-    });
+    await instance.patch(
+      `http://localhost:3000/api/v1/travel-offices/${id}`,
+      values,
+      {
+        headers: {
+          Authorization: "Bearer " + token, // Include bearer token in the header
+        },
+      },
+    );
     // If successful, clear API error and log success message
     callback();
     edited();

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React from "react";
 import {
   Table,
   TableHeader,
@@ -17,43 +17,52 @@ import {
   DropdownItem,
   Pagination,
   Spinner,
-  Tooltip
-} from '@nextui-org/react';
+  Tooltip,
+} from "@nextui-org/react";
 
-import { SearchIcon } from '../../core/components/icons/SearchIcon';
-import { ChevronDownIcon } from '../../core/components/icons/ChevronDownIcon';
-import { capitalize } from '../../core/utils';
-import HotelsForm from './Hotels.Add.Form';
-import HotelsFormEdit from './Hotels.Edit.Form';
-import DeleteModal from '../../core/components/DeleteModal';
-import { DeleteService } from '../services.handlers';
+import { SearchIcon } from "../../core/components/icons/SearchIcon";
+import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
+import { capitalize } from "../../core/utils";
+import HotelsForm from "./Hotels.Add.Form";
+import HotelsFormEdit from "./Hotels.Edit.Form";
+import DeleteModal from "../../core/components/DeleteModal";
+import { DeleteService } from "../services.handlers";
 
-const INITIAL_VISIBLE_COLUMNS = ['name', 'city', 'email', 'website', 'description', 'actions'];
+const INITIAL_VISIBLE_COLUMNS = [
+  "name",
+  "city",
+  "email",
+  "website",
+  "description",
+  "actions",
+];
 
 export default function HotelsTable({ data, isLoading, handleUpdate }) {
   const columns = [
-    { name: 'ID', uid: 'id', sortable: true },
-    { name: 'NAME', uid: 'name', sortable: true },
-    { name: 'PHONE', uid: 'phoneNumber', sortable: true },
-    { name: 'ADDRESS', uid: 'address' },
-    { name: 'CITY', uid: 'city' },
-    { name: 'STATE', uid: 'state', sortable: true },
-    { name: 'ZIP CODE', uid: 'zipCode', sortable: true },
-    { name: 'STARS', uid: 'stars', sortable: true },
-    { name: 'MOBILE NUMBER', uid: 'mobileNumber', sortable: true },
-    { name: 'WEBSITE', uid: 'website' },
-    { name: 'EMAIL', uid: 'email' },
-    { name: 'DESCRIPTION', uid: 'description' },
-    { name: 'ACTIONS', uid: 'actions' }
+    { name: "ID", uid: "id", sortable: true },
+    { name: "NAME", uid: "name", sortable: true },
+    { name: "PHONE", uid: "phoneNumber", sortable: true },
+    { name: "ADDRESS", uid: "address" },
+    { name: "CITY", uid: "city" },
+    { name: "STATE", uid: "state", sortable: true },
+    { name: "ZIP CODE", uid: "zipCode", sortable: true },
+    { name: "STARS", uid: "stars", sortable: true },
+    { name: "MOBILE NUMBER", uid: "mobileNumber", sortable: true },
+    { name: "WEBSITE", uid: "website" },
+    { name: "EMAIL", uid: "email" },
+    { name: "DESCRIPTION", uid: "description" },
+    { name: "ACTIONS", uid: "actions" },
   ];
 
-  const [filterValue, setFilterValue] = React.useState('');
+  const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [visibleColumns, setVisibleColumns] = React.useState(
+    new Set(INITIAL_VISIBLE_COLUMNS),
+  );
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: 'age',
-    direction: 'ascending'
+    column: "age",
+    direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
 
@@ -62,9 +71,11 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
   const hasSearchFilter = Boolean(filterValue);
 
   const headerColumns = React.useMemo(() => {
-    if (visibleColumns === 'all') return columns;
+    if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid),
+    );
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
@@ -72,7 +83,7 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+        user.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     return filteredUsers;
@@ -91,14 +102,14 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
       const second = b[sortDescriptor.column];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
-      return sortDescriptor.direction === 'descending' ? -cmp : cmp;
+      return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
     switch (columnKey) {
-      case 'actions':
+      case "actions":
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Edit user">
@@ -107,9 +118,9 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
             <Tooltip color="danger" content="Delete user">
               <DeleteModal
                 deleteFun={() => {
-                  DeleteService(user.id, handleUpdate, 'hotels');
+                  DeleteService(user.id, handleUpdate, "hotels");
                 }}
-                text={'hotel'}
+                text={"hotel"}
               />
             </Tooltip>
           </div>
@@ -129,7 +140,7 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
       setFilterValue(value);
       setPage(1);
     } else {
-      setFilterValue('');
+      setFilterValue("");
     }
   }, []);
 
@@ -140,15 +151,15 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
           <Input
             isClearable
             classNames={{
-              base: 'w-full sm:max-w-[44%]',
-              inputWrapper: 'border-1'
+              base: "w-full sm:max-w-[44%]",
+              inputWrapper: "border-1",
             }}
             placeholder="Search by name..."
             size="sm"
             startContent={<SearchIcon className="text-default-300" />}
             value={filterValue}
             variant="bordered"
-            onClear={() => setFilterValue('')}
+            onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
@@ -181,7 +192,9 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {data.length} users</span>
+          <span className="text-default-400 text-small">
+            Total {data.length} users
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -202,7 +215,7 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
     onSearchChange,
     onRowsPerPageChange,
     data.length,
-    hasSearchFilter
+    hasSearchFilter,
   ]);
 
   const bottomContent = React.useMemo(() => {
@@ -211,7 +224,7 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
         <Pagination
           showControls
           classNames={{
-            cursor: 'bg-foreground text-background'
+            cursor: "bg-foreground text-background",
           }}
           color="default"
           isDisabled={hasSearchFilter}
@@ -226,21 +239,21 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
 
   const classNames = React.useMemo(
     () => ({
-      wrapper: ['max-h-[382px]', 'max-w-3xl'],
-      th: ['bg-transparent', 'text-default-500', 'border-b', 'border-divider'],
+      wrapper: ["max-h-[382px]", "max-w-3xl"],
+      th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
       td: [
         // changing the rows border radius
         // first
-        'group-data-[first=true]:first:before:rounded-none',
-        'group-data-[first=true]:last:before:rounded-none',
+        "group-data-[first=true]:first:before:rounded-none",
+        "group-data-[first=true]:last:before:rounded-none",
         // middle
-        'group-data-[middle=true]:before:rounded-none',
+        "group-data-[middle=true]:before:rounded-none",
         // last
-        'group-data-[last=true]:first:before:rounded-none',
-        'group-data-[last=true]:last:before:rounded-none'
-      ]
+        "group-data-[last=true]:first:before:rounded-none",
+        "group-data-[last=true]:last:before:rounded-none",
+      ],
     }),
-    []
+    [],
   );
 
   return (
@@ -249,11 +262,11 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
       removeWrapper
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      aria-label="Agencies Table."
+      aria-label="Hotels Table."
       checkboxesProps={{
         classNames: {
-          wrapper: 'after:bg-foreground after:text-background text-background'
-        }
+          wrapper: "after:bg-foreground after:text-background text-background",
+        },
       }}
       classNames={classNames}
       selectedKeys={selectedKeys}
@@ -267,7 +280,7 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
         {(column) => (
           <TableColumn
             key={column.uid}
-            align={column.uid === 'actions' ? 'center' : 'end'}
+            align={column.uid === "actions" ? "center" : "end"}
             allowsSorting={column.sortable}
           >
             {column.name}
@@ -277,12 +290,14 @@ export default function HotelsTable({ data, isLoading, handleUpdate }) {
       <TableBody
         isLoading={isLoading}
         loadingContent={<Spinner label="Loading..." />}
-        emptyContent={'No hotels found'}
+        emptyContent={"No hotels found"}
         items={sortedItems}
       >
         {(item) => (
           <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>

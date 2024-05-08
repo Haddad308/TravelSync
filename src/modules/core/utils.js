@@ -10,11 +10,16 @@ export function RemoveEmptyValues(obj) {
       if (
         obj[key] !== undefined &&
         obj[key] !== null &&
-        obj[key] !== '' &&
+        obj[key] !== "" &&
         !(Array.isArray(obj[key]) && obj[key].length === 0) &&
-        !(typeof obj[key] === 'object' && Object.keys(obj[key]).length === 0)
+        !(typeof obj[key] === "object" && Object.keys(obj[key]).length === 0)
       ) {
-        newObj[key] = obj[key];
+        // If the value is an object, recursively remove empty values from it
+        if (typeof obj[key] === "object") {
+          newObj[key] = RemoveEmptyValues(obj[key]);
+        } else {
+          newObj[key] = obj[key];
+        }
       }
     }
   }

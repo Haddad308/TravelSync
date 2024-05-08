@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React from "react";
 import {
   Table,
   TableHeader,
@@ -16,27 +16,34 @@ import {
   User,
   Pagination,
   Spinner,
-  Tooltip
-} from '@nextui-org/react';
+  Tooltip,
+} from "@nextui-org/react";
 
-import { SearchIcon } from '../../core/components/icons/SearchIcon';
-import { ChevronDownIcon } from '../../core/components/icons/ChevronDownIcon';
-import { capitalize } from '../utils';
-import DeleteModal from '../../core/components/DeleteModal';
-import { DeleteUser } from '../Users.handlers';
-import UsersForm from './Users.Add.Form';
-import UsersFormEdit from './Users.edit.Form';
+import { SearchIcon } from "../../core/components/icons/SearchIcon";
+import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
+import { capitalize } from "../utils";
+import DeleteModal from "../../core/components/DeleteModal";
+import { DeleteUser } from "../Users.handlers";
+import UsersForm from "./Users.Add.Form";
+import UsersFormEdit from "./Users.edit.Form";
 
-const INITIAL_VISIBLE_COLUMNS = ['name', 'email', 'travelOffice', 'actions'];
+const INITIAL_VISIBLE_COLUMNS = ["name", "email", "travelOffice", "actions"];
 
-export default function UsersTable({ columns, users, isLoading, handleUpdate }) {
-  const [filterValue, setFilterValue] = React.useState('');
+export default function UsersTable({
+  columns,
+  users,
+  isLoading,
+  handleUpdate,
+}) {
+  const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [visibleColumns, setVisibleColumns] = React.useState(
+    new Set(INITIAL_VISIBLE_COLUMNS),
+  );
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: 'age',
-    direction: 'ascending'
+    column: "age",
+    direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
 
@@ -45,9 +52,11 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
   const hasSearchFilter = Boolean(filterValue);
 
   const headerColumns = React.useMemo(() => {
-    if (visibleColumns === 'all') return columns;
+    if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid),
+    );
   }, [visibleColumns]);
 
   console.log(typeof users);
@@ -57,7 +66,7 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) => {
-        let name = (user.firstName + ' ' + user.lastName).toLowerCase();
+        let name = (user.firstName + " " + user.lastName).toLowerCase();
         return name.includes(filterValue.toLowerCase());
       });
     }
@@ -77,31 +86,32 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
       const second = b[sortDescriptor.column];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
-      return sortDescriptor.direction === 'descending' ? -cmp : cmp;
+      return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
     switch (columnKey) {
-      case 'name':
+      case "name":
         return (
           <User
             avatarProps={{
-              radius: 'full',
-              size: 'sm',
-              isBordered: 'true',
-              src: user.profilePhoto?.imageUrl
+              radius: "full",
+              size: "sm",
+              isBordered: "true",
+              src: user.profilePhoto?.imageUrl,
             }}
             classNames={{
-              description: 'text-default-500'
+              description: "text-default-500",
             }}
             description={user.email}
-            name={user.firstName + ' ' + user.lastName}>
+            name={user.firstName + " " + user.lastName}
+          >
             {user.email}
           </User>
         );
-      case 'actions':
+      case "actions":
         return (
           <div className="relative flex items-center gap-2">
             <Tooltip content="Edit user">
@@ -112,13 +122,13 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
                 deleteFun={() => {
                   DeleteUser(user.id, handleUpdate);
                 }}
-                text={'user'}
+                text={"user"}
               />
             </Tooltip>
           </div>
         );
-      case 'travelOffice':
-        console.log(user.travelOffice?.name, 'travelOffice');
+      case "travelOffice":
+        console.log(user.travelOffice?.name, "travelOffice");
         return user.travelOffice?.name;
       default:
         return cellValue;
@@ -135,7 +145,7 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
       setFilterValue(value);
       setPage(1);
     } else {
-      setFilterValue('');
+      setFilterValue("");
     }
   }, []);
 
@@ -146,15 +156,15 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
           <Input
             isClearable
             classNames={{
-              base: 'w-full sm:max-w-[44%]',
-              inputWrapper: 'border-1'
+              base: "w-full sm:max-w-[44%]",
+              inputWrapper: "border-1",
             }}
             placeholder="Search by name..."
             size="sm"
             startContent={<SearchIcon className="text-default-300" />}
             value={filterValue}
             variant="bordered"
-            onClear={() => setFilterValue('')}
+            onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
@@ -163,7 +173,8 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
-                  variant="flat">
+                  variant="flat"
+                >
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -173,7 +184,8 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
                 closeOnSelect={false}
                 selectedKeys={visibleColumns}
                 selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}>
+                onSelectionChange={setVisibleColumns}
+              >
                 {columns.map((column) => (
                   <DropdownItem key={column.uid} className="capitalize">
                     {capitalize(column.name)}
@@ -185,12 +197,15 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} users</span>
+          <span className="text-default-400 text-small">
+            Total {users.length} users
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
               className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}>
+              onChange={onRowsPerPageChange}
+            >
               <option value="5">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
@@ -205,7 +220,7 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
     onSearchChange,
     onRowsPerPageChange,
     users.length,
-    hasSearchFilter
+    hasSearchFilter,
   ]);
 
   const bottomContent = React.useMemo(() => {
@@ -214,7 +229,7 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
         <Pagination
           showControls
           classNames={{
-            cursor: 'bg-foreground text-background'
+            cursor: "bg-foreground text-background",
           }}
           color="default"
           isDisabled={hasSearchFilter}
@@ -229,21 +244,21 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
 
   const classNames = React.useMemo(
     () => ({
-      wrapper: ['max-h-[382px]', 'max-w-3xl'],
-      th: ['bg-transparent', 'text-default-500', 'border-b', 'border-divider'],
+      wrapper: ["max-h-[382px]", "max-w-3xl"],
+      th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
       td: [
         // changing the rows border radius
         // first
-        'group-data-[first=true]:first:before:rounded-none',
-        'group-data-[first=true]:last:before:rounded-none',
+        "group-data-[first=true]:first:before:rounded-none",
+        "group-data-[first=true]:last:before:rounded-none",
         // middle
-        'group-data-[middle=true]:before:rounded-none',
+        "group-data-[middle=true]:before:rounded-none",
         // last
-        'group-data-[last=true]:first:before:rounded-none',
-        'group-data-[last=true]:last:before:rounded-none'
-      ]
+        "group-data-[last=true]:first:before:rounded-none",
+        "group-data-[last=true]:last:before:rounded-none",
+      ],
     }),
-    []
+    [],
   );
 
   return (
@@ -254,8 +269,8 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
       aria-label="Users Table."
       checkboxesProps={{
         classNames: {
-          wrapper: 'after:bg-foreground after:text-background text-background'
-        }
+          wrapper: "after:bg-foreground after:text-background text-background",
+        },
       }}
       classNames={classNames}
       selectedKeys={selectedKeys}
@@ -263,13 +278,15 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
       topContent={topContent}
       topContentPlacement="outside"
       onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}>
+      onSortChange={setSortDescriptor}
+    >
       <TableHeader columns={headerColumns}>
         {(column) => (
           <TableColumn
             key={column.uid}
-            align={column.uid === 'actions' ? 'center' : 'end'}
-            allowsSorting={column.sortable}>
+            align={column.uid === "actions" ? "center" : "end"}
+            allowsSorting={column.sortable}
+          >
             {column.name}
           </TableColumn>
         )}
@@ -277,11 +294,14 @@ export default function UsersTable({ columns, users, isLoading, handleUpdate }) 
       <TableBody
         isLoading={isLoading}
         loadingContent={<Spinner label="Loading..." />}
-        emptyContent={'No users found'}
-        items={sortedItems}>
+        emptyContent={"No users found"}
+        items={sortedItems}
+      >
         {(item) => (
           <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>

@@ -1,8 +1,8 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const logout = (navigate) => {
-  Cookies.remove('userToken');
-  navigate('/login');
+  Cookies.remove("userToken");
+  navigate("/login");
 };
 
 export { logout };
