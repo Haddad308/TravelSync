@@ -1,12 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { NextUIProvider } from '@nextui-org/react'
-import AuthProvider from './modules/auth/context/AuthProvider.jsx'
-import App from './App.jsx'
-import './index.css'
-import './i18n';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { NextUIProvider } from "@nextui-org/react";
+import AuthProvider from "./modules/auth/context/AuthProvider.jsx";
+import App from "./App.jsx";
+import "./index.css";
+import "./i18n";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <NextUIProvider>
       <AuthProvider>
@@ -16,11 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 );
 
-// 
+//
 
-// TODO 
+// TODO
 //* 1- Edit the color palette.
-//* 2- Add security feature (Don't login with out right token).
-//* 3- Continue sideBar information.
+//* 2- Prettier and Eslint config.
 
-
+// ? MY NOTES
+// * Login is done.

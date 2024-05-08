@@ -8,10 +8,10 @@ const edited = () => toast.success('The agency edited successfully.');
 
 const token = Cookies.get('userToken');
 
-async function getAgencies(SetAgencies, setIsLoading) {
+async function getUsers(SetUsers, setIsLoading) {
   setIsLoading(true);
   let data = await instance
-    .get('/api/v1/travel-offices', {
+    .get('/api/v1/users', {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -22,14 +22,43 @@ async function getAgencies(SetAgencies, setIsLoading) {
     });
 
   if (data?.status === 200) {
-    SetAgencies(data.data);
+    SetUsers(data.data.data);
     setIsLoading(false);
   }
 }
 
-async function DeleteAgency(id, callback) {
+async function getAgenciesUsers(SetUsers, setIsLoading) {
+  setIsLoading(true);
+  // let filters = {
+  //   filters: {
+  //     roles: [{ id: 1 }],
+  //   },
+  // };
+  // let queryString = Object.keys(filters)
+  //   .map((key) => key + '=' + filters[key])
+  //   .join('&');
+  let url = '/api/v1/users?filters=%7B%22roles%22%3A%5B%7B%22id%22%3A4%7D%5D%7D';
   let data = await instance
-    .delete(`/api/v1/travel-offices/${id}`, {
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      setIsLoading(false);
+    });
+
+  if (data?.status === 200) {
+    console.log(data.data.data, 'heeeeeere');
+    SetUsers(data.data.data);
+    setIsLoading(false);
+  }
+}
+
+async function DeleteUser(id, callback) {
+  let data = await instance
+    .delete(`/api/v1/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -46,14 +75,15 @@ async function DeleteAgency(id, callback) {
   }
 }
 
-async function addAgency(values, setIsLoading, callback) {
+async function addUser(values, setIsLoading, callback) {
   console.log(values);
   // Set loading state to true
   setIsLoading(true);
+  values['role'] = { id: 4 };
 
   try {
     // Make POST request to add a user
-    await instance.post('/api/v1/travel-offices', values, {
+    await instance.post('/api/v1/users', values, {
       headers: {
         Authorization: 'Bearer ' + token // Include bearer token in the header
       }
@@ -70,13 +100,13 @@ async function addAgency(values, setIsLoading, callback) {
   }
 }
 
-async function editAgency(values, id, setIsLoading, callback) {
+async function editUser(values, id, setIsLoading, callback) {
   // Set loading state to true
   setIsLoading(true);
 
   try {
     // Make POST request to add a user
-    await instance.patch(`http://localhost:3000/api/v1/travel-offices/${id}`, values, {
+    await instance.patch(`http://localhost:3000/api/v1/users/${id}`, values, {
       headers: {
         Authorization: 'Bearer ' + token // Include bearer token in the header
       }
@@ -94,4 +124,4 @@ async function editAgency(values, id, setIsLoading, callback) {
   }
 }
 
-export { getAgencies, DeleteAgency, addAgency, editAgency };
+export { getUsers, DeleteUser, addUser, editUser, getAgenciesUsers };
