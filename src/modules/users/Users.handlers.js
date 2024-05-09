@@ -29,14 +29,7 @@ async function getUsers(SetUsers, setIsLoading) {
 
 async function getAgenciesUsers(SetUsers, setIsLoading) {
   setIsLoading(true);
-  // let filters = {
-  //   filters: {
-  //     roles: [{ id: 1 }],
-  //   },
-  // };
-  // let queryString = Object.keys(filters)
-  //   .map((key) => key + '=' + filters[key])
-  //   .join('&');
+
   let url =
     "/api/v1/users?filters=%7B%22roles%22%3A%5B%7B%22id%22%3A4%7D%5D%7D";
   let data = await instance
