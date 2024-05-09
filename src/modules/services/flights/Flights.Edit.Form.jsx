@@ -32,7 +32,6 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
     initialValues: {
       service: {
         name: data?.name,
-        type: "flights",
         description: data?.description,
         price: data?.price,
         quantityAvailable: data?.quantityAvailable,
@@ -55,27 +54,55 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
     validationSchema: () => {
       return Yup.object({
         service: Yup.object({
-          name: Yup.string().min(5).max(500),
-          type: Yup.string(),
-          description: Yup.string(),
-          price: Yup.number().max(999999).min(0),
-          quantityAvailable: Yup.number().min(0).max(9999),
-          savings: Yup.number(),
-          isOffer: Yup.boolean(),
-          cancellationPolicy: Yup.string(),
+          name: Yup.string().min(5).max(500).required("Required"),
+          description: Yup.string().required("Required"),
+          price: Yup.number().max(999999).min(0).required("Required"),
+          quantityAvailable: Yup.number()
+            .min(0)
+            .max(9999)
+            .required("Required")
+            .integer("Must be a number"),
+          savings: Yup.number().min(0).max(9999).required("Required"),
+          isOffer: Yup.boolean().required("Required"),
+          cancellationPolicy: Yup.string().min(2).max(500).required("Required"),
         }),
         flight: Yup.object({
-          airline: Yup.string(),
-          departureAddress: Yup.string(),
-          departureCity: Yup.string(),
-          arrivalAddress: Yup.string(),
-          arrivalCity: Yup.string(),
-          departureTime: Yup.string(),
-          arrivalTime: Yup.string(),
-          seatType: Yup.string(),
+          airline: Yup.string().min(3).max(60).required("Required"),
+          departureAddress: Yup.string().min(3).max(250).required("Required"),
+          departureCity: Yup.string().min(3).max(60).required("Required"),
+          arrivalAddress: Yup.string().min(3).max(250).required("Required"),
+          arrivalCity: Yup.string().min(3).max(60).required("Required"),
+          departureTime: Yup.string().required("Required"),
+          arrivalTime: Yup.string().required("Required"),
+          seatType: Yup.string().required("Required"),
         }),
       });
     },
+
+    // validationSchema: () => {
+    //   return Yup.object({
+    //     service: Yup.object({
+    //       name: Yup.string().min(5).max(500),
+    //       type: Yup.string(),
+    //       description: Yup.string(),
+    //       price: Yup.number().max(999999).min(0),
+    //       quantityAvailable: Yup.number().min(0).max(9999),
+    //       savings: Yup.number(),
+    //       isOffer: Yup.boolean(),
+    //       cancellationPolicy: Yup.string(),
+    //     }),
+    //     flight: Yup.object({
+    //       airline: Yup.string(),
+    //       departureAddress: Yup.string(),
+    //       departureCity: Yup.string(),
+    //       arrivalAddress: Yup.string(),
+    //       arrivalCity: Yup.string(),
+    //       departureTime: Yup.string(),
+    //       arrivalTime: Yup.string(),
+    //       seatType: Yup.string(),
+    //     }),
+    //   });
+    // },
 
     onSubmit: async (values, { resetForm }) => {
       // values = RemoveEmptyValues(values);
@@ -148,60 +175,34 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         type="text"
                         name="service.name"
                         label="Title"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.service.name}
+                        isInvalid={
+                          formHandler.errors.service?.name &&
+                          formHandler.touched.service?.name
+                        }
+                        errorMessage={formHandler.errors.service?.name}
                       />
-                      {formHandler.touched.service?.name &&
-                      formHandler.errors.service?.name ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.name}
-                        </div>
-                      ) : null}
                     </div>
 
-                    <div>
-                      <Input
-                        id="service.type"
-                        type="type"
-                        label="Service Type"
-                        name="service.type"
-                        variant="bordered"
-                        labelPlacement="outside"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.service.type}
-                      />
-                      {formHandler.touched.service?.type &&
-                      formHandler.errors.service?.type ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.type}
-                        </div>
-                      ) : null}
-                    </div>
                     <div>
                       <Textarea
                         id="service.description"
                         name="service.description"
                         type="text"
                         label="Description"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.service.description}
+                        isInvalid={
+                          formHandler.errors.service?.description &&
+                          formHandler.touched.service?.description
+                        }
+                        errorMessage={formHandler.errors.service?.description}
                       />
-                      {formHandler.touched.service?.description &&
-                      formHandler.errors.service?.description ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.description}
-                        </div>
-                      ) : null}
                     </div>
                     <div>
                       <Input
@@ -209,9 +210,7 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="service.price"
                         type="number"
                         label="Price"
-                        variant="bordered"
                         placeholder="0.00"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={(e) => {
                           if (e.target.value === "") {
@@ -231,13 +230,12 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                             </span>
                           </div>
                         }
+                        isInvalid={
+                          formHandler.errors.service?.price &&
+                          formHandler.touched.service?.price
+                        }
+                        errorMessage={formHandler.errors.service?.price}
                       />
-                      {formHandler.touched.service?.price &&
-                      formHandler.errors.service?.price ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.price}
-                        </div>
-                      ) : null}
                     </div>
                     <div>
                       <Input
@@ -245,9 +243,7 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="service.savings"
                         type="number"
                         label="savings"
-                        variant="bordered"
                         placeholder="0.00"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={(e) => {
                           if (e.target.value === "") {
@@ -267,13 +263,12 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                             </span>
                           </div>
                         }
+                        isInvalid={
+                          formHandler.errors.service?.savings &&
+                          formHandler.touched.service?.savings
+                        }
+                        errorMessage={formHandler.errors.service?.savings}
                       />
-                      {formHandler.touched.service?.savings &&
-                      formHandler.errors.service?.savings ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.savings}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -282,8 +277,6 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="service.quantityAvailable"
                         type="number"
                         label="Quantity Available"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={(e) => {
                           if (e.target.value === "") {
@@ -302,13 +295,14 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         }}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.service.quantityAvailable}
+                        isInvalid={
+                          formHandler.errors.service?.quantityAvailable &&
+                          formHandler.touched.service?.quantityAvailable
+                        }
+                        errorMessage={
+                          formHandler.errors.service?.quantityAvailable
+                        }
                       />
-                      {formHandler.touched.service?.quantityAvailable &&
-                      formHandler.errors.service?.quantityAvailable ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.quantityAvailable}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -317,19 +311,18 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="service.cancellationPolicy"
                         type="text"
                         label="Cancelation Policy"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.service.cancellationPolicy}
+                        isInvalid={
+                          formHandler.errors.service?.cancellationPolicy &&
+                          formHandler.touched.service?.cancellationPolicy
+                        }
+                        errorMessage={
+                          formHandler.errors.service?.cancellationPolicy
+                        }
                       />
-                      {formHandler.touched.service?.cancellationPolicy &&
-                      formHandler.errors.service?.cancellationPolicy ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.service?.cancellationPolicy}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -338,19 +331,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.airline"
                         type="text"
                         label="Airline"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight?.airline}
+                        isInvalid={
+                          formHandler.errors.flight?.airline &&
+                          formHandler.touched.flight?.airline
+                        }
+                        errorMessage={formHandler.errors.flight?.airline}
                       />
-                      {formHandler.touched.flight?.airline &&
-                      formHandler.errors.flight?.airline ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.airline}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -359,19 +349,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.seatType"
                         type="text"
                         label="Seat Type"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight?.seatType}
+                        isInvalid={
+                          formHandler.errors.flight?.seatType &&
+                          formHandler.touched.flight?.seatType
+                        }
+                        errorMessage={formHandler.errors.flight?.seatType}
                       />
-                      {formHandler.touched.flight?.seatType &&
-                      formHandler.errors.flight?.seatType ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.seatType}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -380,19 +367,18 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.departureAddress"
                         type="text"
                         label="Departure Address"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight.departureAddress}
+                        isInvalid={
+                          formHandler.errors.flight?.departureAddress &&
+                          formHandler.touched.flight?.departureAddress
+                        }
+                        errorMessage={
+                          formHandler.errors.flight?.departureAddress
+                        }
                       />
-                      {formHandler.touched.flight?.departureAddress &&
-                      formHandler.errors.flight?.departureAddress ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.departureAddress}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -401,19 +387,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.departureCity"
                         type="text"
                         label="Departure City"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight.departureCity}
+                        isInvalid={
+                          formHandler.errors.flight?.departureCity &&
+                          formHandler.touched.flight?.departureCity
+                        }
+                        errorMessage={formHandler.errors.flight?.departureCity}
                       />
-                      {formHandler.touched.flight?.departureCity &&
-                      formHandler.errors.flight?.departureCity ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.departureCity}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -422,20 +405,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.arrivalAddress"
                         type="text"
                         label="Arrival Address"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight.arrivalAddress}
+                        isInvalid={
+                          formHandler.errors.flight?.arrivalAddress &&
+                          formHandler.touched.flight?.arrivalAddress
+                        }
+                        errorMessage={formHandler.errors.flight?.arrivalAddress}
                       />
-
-                      {formHandler.touched.flight?.arrivalAddress &&
-                      formHandler.errors.flight?.arrivalAddress ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.arrivalAddress}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -444,19 +423,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.arrivalCity"
                         type="text"
                         label="Arrival City"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight.arrivalCity}
+                        isInvalid={
+                          formHandler.errors.flight?.arrivalCity &&
+                          formHandler.touched.flight?.arrivalCity
+                        }
+                        errorMessage={formHandler.errors.flight?.arrivalCity}
                       />
-                      {formHandler.touched.flight?.arrivalCity &&
-                      formHandler.errors.flight?.arrivalCity ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.arrivalCity}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -465,19 +441,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.departureTime"
                         type="text"
                         label="Departure Time"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight.departureTime}
+                        isInvalid={
+                          formHandler.errors.flight?.departureTime &&
+                          formHandler.touched.flight?.departureTime
+                        }
+                        errorMessage={formHandler.errors.flight?.departureTime}
                       />
-                      {formHandler.touched.flight?.departureTime &&
-                      formHandler.errors.flight?.departureTime ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.departureTime}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -486,19 +459,16 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         name="flight.arrivalTime"
                         type="text"
                         label="Arrival Time"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.flight.arrivalTime}
+                        isInvalid={
+                          formHandler.errors.flight?.arrivalTime &&
+                          formHandler.touched.flight?.arrivalTime
+                        }
+                        errorMessage={formHandler.errors.flight?.arrivalTime}
                       />
-                      {formHandler.touched.flight?.arrivalTime &&
-                      formHandler.errors.flight?.arrivalTime ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.flight?.arrivalTime}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -508,6 +478,11 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         onChange={formHandler.handleChange("service.isOffer")}
                         value={formHandler.values.service?.isOffer}
                         isSelected={formHandler.values.service.isOffer}
+                        isInvalid={
+                          formHandler.errors.service?.isOffer &&
+                          formHandler.touched.service?.isOffer
+                        }
+                        errorMessage={formHandler.errors.service?.isOffer}
                       >
                         Is Offer
                       </Checkbox>
