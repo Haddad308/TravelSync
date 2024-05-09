@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
 import Services from "./modules/services/Services";
 import Reservation from "./modules/reservation/Reservation";
+import Finance from "./modules/finance/Finance";
 
 const routers = createBrowserRouter([
   {
@@ -57,6 +58,14 @@ const routers = createBrowserRouter([
         element: (
           <ProtectRoutes allowedRoles={["admin"]}>
             <Reservation />
+          </ProtectRoutes>
+        ),
+      },
+      {
+        path: "Finance",
+        element: (
+          <ProtectRoutes allowedRoles={["admin"]}>
+            <Finance />
           </ProtectRoutes>
         ),
       },
