@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
 import Services from "./modules/services/Services";
+import Reservation from "./modules/reservation/Reservation";
 
 const routers = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const routers = createBrowserRouter([
           </ProtectRoutes>
         ),
       },
+      {
+        path: "Reservations",
+        element: (
+          <ProtectRoutes allowedRoles={["admin"]}>
+            <Reservation />
+          </ProtectRoutes>
+        ),
+      },
     ],
   },
   { path: "login", element: <Login /> },
@@ -59,12 +68,6 @@ const routers = createBrowserRouter([
 ]);
 
 function App() {
-  // *Make it hook.
-  // check if token is exists in localStorage.
-  // let [token, setToken] = useContext(auth);
-  // useEffect(() => {
-  //   if (localStorage.getItem("userToken")) setToken(localStorage.getItem("userToken"));
-  // }, [token, setToken])
 
   const { i18n } = useTranslation();
 
