@@ -1,13 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { LuClock3 } from "react-icons/lu";
 import { Avatar, Button } from "@nextui-org/react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function ReservationCard({ AgencyName, AgencyEmail, AgencyContact, status, info1, info2, info3, ReservationDate }) {
+export default function ReservationCard({ id, AgencyName, AgencyEmail, AgencyContact, status, info1, info2, info3, ReservationDate }) {
 
     const date = new Date(ReservationDate);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     console.log(formattedDate); // Output: 9/5/2024
+    const navigate = useNavigate();
 
+    const handleCheckInClick = () => {
+        navigate(`/Reservation/${id}`);
+    };
     return (
         <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2" >
             <div className=" flex justify-between p-3">
@@ -40,7 +45,7 @@ export default function ReservationCard({ AgencyName, AgencyEmail, AgencyContact
                 </div>
             </div>
             <div className="flex justify-center mt-3 mb-5  " >
-                <Button className="bg-[#616CA8] w-96 text-white font-semibold" size="md">Check In</Button>
+                <Button onClick={handleCheckInClick} className="bg-[#616CA8] w-96 text-white font-semibold" size="md">Check In</Button>
             </div>
         </div>
     )

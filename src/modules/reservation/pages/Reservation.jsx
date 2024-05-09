@@ -1,16 +1,13 @@
-/* eslint-disable no-unused-vars */
 import { Tabs, Tab, } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import ReservationCard from "./components/ReservationCard";
+import ReservationCard from "../components/ReservationCard";
 import { ClockLoader } from "react-spinners";
-import { getReservation } from "./reservation.handlers";
+import { getReservation } from "../reservation.handlers";
 
 
 
 
 export default function Reservation() {
-
-    // *make the reserve page. 
 
     const [selected, setSelected] = useState("all");
     const [isLoading, setIsLoading] = useState(false)
@@ -42,6 +39,7 @@ export default function Reservation() {
                             <div className="grid grid-cols-2 gap-5 px-5 mt-5" >
                                 {reservations?.map(({ id, status, travelOffice, service, checkInDate }) => {
                                     return <ReservationCard
+                                        id={id}
                                         key={id}
                                         status={status}
                                         AgencyName={travelOffice.name}
@@ -68,6 +66,7 @@ export default function Reservation() {
                             <div className="grid grid-cols-2 gap-5 px-5 mt-5" >
                                 {reserved?.map(({ id, status, travelOffice, service, checkInDate }) => {
                                     return <ReservationCard
+                                        id={id}
                                         key={id}
                                         status={status}
                                         AgencyName={travelOffice.name}
@@ -94,6 +93,7 @@ export default function Reservation() {
                             <div className="grid grid-cols-2 gap-5 px-5 mt-5" >
                                 {pending?.map(({ id, status, travelOffice, service, checkInDate }) => {
                                     return <ReservationCard
+                                        id={id}
                                         key={id}
                                         status={status}
                                         AgencyName={travelOffice.name}
@@ -120,6 +120,7 @@ export default function Reservation() {
                             <div className="grid grid-cols-2 gap-5 px-5 mt-5" >
                                 {canceled?.map(({ id, status, travelOffice, service, checkInDate }) => {
                                     return <ReservationCard
+                                        id={id}
                                         key={id}
                                         status={status}
                                         AgencyName={travelOffice.name}

@@ -12,8 +12,9 @@ import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
 import Services from "./modules/services/Services";
-import Reservation from "./modules/reservation/Reservation";
+import Reservation from "./modules/reservation/pages/Reservation";
 import Finance from "./modules/finance/Finance";
+import ReservationPage from "./modules/reservation/pages/ReservationPage";
 
 const routers = createBrowserRouter([
   {
@@ -58,6 +59,14 @@ const routers = createBrowserRouter([
         element: (
           <ProtectRoutes allowedRoles={["admin"]}>
             <Reservation />
+          </ProtectRoutes>
+        ),
+      },
+      {
+        path: "Reservation/:id",
+        element: (
+          <ProtectRoutes allowedRoles={["admin"]}>
+            <ReservationPage />
           </ProtectRoutes>
         ),
       },
