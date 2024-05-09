@@ -18,37 +18,37 @@ import { useState } from "react";
 import { uploadImage } from "../../core/core.handlers";
 import Alert from "../../core/components/Alert";
 import { editService } from "../services.handlers";
-import { RemoveEmptyValues } from "../../core/utils";
 import { EditIcon } from "../../core/components/icons/EditIcon";
 
 export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [flightImage, setflightImage] = useState([]);
+  const [flightImages, setflightImages] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [apiError, setApiError] = useState("");
+
+  console.log("data", data);
 
   const formHandler = useFormik({
     initialValues: {
       service: {
         name: data?.name,
         type: "flights",
-        description: "",
-        price: "",
-        quantityAvailable: "",
-        savings: "",
-        isOffer: false,
-        cancelationPolicy: "",
+        description: data?.description,
+        price: data?.price,
+        quantityAvailable: data?.quantityAvailable,
+        savings: data?.savings,
+        isOffer: data?.isOffer,
+        cancellationPolicy: data?.cancellationPolicy,
       },
       flight: {
-        airline: "",
-        departureAddress: "",
-        departureCity: "",
-        arrivalAddress: "",
-        arrivalCity: "",
-        departureTime: "",
-        arrivalTime: "",
-        seatType: "",
-        description: "",
+        airline: data?.flight?.airline,
+        departureAddress: data?.flight?.departureAddress,
+        departureCity: data?.flight?.departureCity,
+        arrivalAddress: data?.flight?.arrivalAddress,
+        arrivalCity: data?.flight?.arrivalCity,
+        departureTime: data?.flight?.departureTime,
+        arrivalTime: data?.flight?.arrivalTime,
+        seatType: data?.flight?.seatType,
       },
     },
 
@@ -62,7 +62,7 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
           quantityAvailable: Yup.number().min(0).max(9999),
           savings: Yup.number(),
           isOffer: Yup.boolean(),
-          cancelationPolicy: Yup.string(),
+          cancellationPolicy: Yup.string(),
         }),
         flight: Yup.object({
           airline: Yup.string(),
@@ -77,26 +77,44 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
       });
     },
 
-    onSubmit: (values, { resetForm }) => {
-      values = RemoveEmptyValues(values);
+    onSubmit: async (values, { resetForm }) => {
+      // values = RemoveEmptyValues(values);
       console.log("values:", values);
-      uploadImage(flightImage, setIsLoading, setApiError).then((ids) => {
-        console.log("checking the Image.", ids); // Check if image is properly updated
-        values["service"]["WholesalerId"] = 1;
-        values["service"]["imageIds"] = ids ? ids : [];
-        console.log("checking the values.", values);
-        console.log("flightidididididi", flightID); // Check if values are properly updated
-        editService(
-          values,
-          flightID,
+      if (flightImages.length !== 0) {
+        const imageIds = await uploadImage(
+          flightImages,
           setIsLoading,
-          handleUpdate,
-          "flights",
-        ).then(() => {
-          onClose();
-          resetForm();
-        });
-      });
+          setApiError,
+        );
+        values.service.imageIds = imageIds ? imageIds : [];
+      }
+      values.service.WholesalerId = 1;
+      await editService(
+        values,
+        flightID,
+        setIsLoading,
+        handleUpdate,
+        "flights",
+      );
+      onClose();
+      resetForm();
+      // uploadImage(flightImages, setIsLoading, setApiError).then((ids) => {
+      //   console.log("checking the Image.", ids); // Check if image is properly updated
+      //   values["service"]["WholesalerId"] = 1;
+      //   values["service"]["imageIds"] = ids ? ids : [];
+      //   console.log("checking the values.", values);
+      //   console.log("flightidididididi", flightID); // Check if values are properly updated
+      //   editService(
+      //     values,
+      //     flightID,
+      //     setIsLoading,
+      //     handleUpdate,
+      //     "flights",
+      //   ).then(() => {
+      //     onClose();
+      //     resetForm();
+      //   });
+      // });
     },
   });
 
@@ -295,8 +313,8 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
 
                     <div>
                       <Input
-                        id="service.cancelationPolicy"
-                        name="service.cancelationPolicy"
+                        id="service.cancellationPolicy"
+                        name="service.cancellationPolicy"
                         type="text"
                         label="Cancelation Policy"
                         variant="bordered"
@@ -304,12 +322,12 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.service.cancelationPolicy}
+                        value={formHandler.values.service.cancellationPolicy}
                       />
-                      {formHandler.touched.service?.cancelationPolicy &&
-                      formHandler.errors.service?.cancelationPolicy ? (
+                      {formHandler.touched.service?.cancellationPolicy &&
+                      formHandler.errors.service?.cancellationPolicy ? (
                         <div className="text-red-600">
-                          {formHandler.errors.service?.cancelationPolicy}
+                          {formHandler.errors.service?.cancellationPolicy}
                         </div>
                       ) : null}
                     </div>
@@ -325,7 +343,7 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.airline}
+                        value={formHandler.values.flight?.airline}
                       />
                       {formHandler.touched.flight?.airline &&
                       formHandler.errors.flight?.airline ? (
@@ -346,7 +364,7 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.seatType}
+                        value={formHandler.values.flight?.seatType}
                       />
                       {formHandler.touched.flight?.seatType &&
                       formHandler.errors.flight?.seatType ? (
@@ -489,6 +507,7 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                         label="Is Offer"
                         onChange={formHandler.handleChange("service.isOffer")}
                         value={formHandler.values.service?.isOffer}
+                        isSelected={formHandler.values.service.isOffer}
                       >
                         Is Offer
                       </Checkbox>
@@ -501,8 +520,8 @@ export default function FlightsFormEdit({ handleUpdate, flightID, data }) {
                 </div>
                 <div className="w-1/2">
                   <ImagesUploader
-                    files={flightImage}
-                    setFiles={setflightImage}
+                    files={flightImages}
+                    setFiles={setflightImages}
                     isMultiple={true}
                     isOnly={false}
                   />

@@ -54,7 +54,7 @@ export default function FlightsTable({ data, isLoading, handleUpdate }) {
     { name: "ACTIONS", uid: "actions" },
   ];
 
-  console.log("data", data);
+  console.log("daaaaataaa:", data);
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -81,14 +81,14 @@ export default function FlightsTable({ data, isLoading, handleUpdate }) {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...data];
+    let filteredServices = [...data];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredServices = filteredServices.filter((service) =>
+        service.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    return filteredUsers;
+    return filteredServices;
   }, [data, filterValue]);
 
   const items = React.useMemo(() => {
@@ -108,67 +108,66 @@ export default function FlightsTable({ data, isLoading, handleUpdate }) {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback((service, columnKey) => {
+    console.log("service:", service);
+    const cellValue = service[columnKey];
     switch (columnKey) {
       case "airline":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.airline}
+            {service.flight?.airline}
           </div>
         );
       case "departureAddress":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.departureAddress}
+            {service.flight?.departureAddress}
           </div>
         );
       case "seatType":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.seatType}
+            {service.flight?.seatType}
           </div>
         );
       case "arrivalAddress":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.arrivalAddress}
+            {service.flight?.arrivalAddress}
           </div>
         );
       case "arrivalTime":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.arrivalTime}
+            {service.flight?.arrivalTime}
           </div>
         );
       case "departureCity":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.departureCity}
+            {service.flight?.departureCity}
           </div>
         );
       case "arrivalCity":
         return (
           <div className="relative flex items-center   gap-2">
-            {user.flight?.arrivalCity}
+            {service.flight?.arrivalCity}
           </div>
         );
       case "actions":
-        console.log("userrrrrrrrr", user);
-
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Edit user">
+            <Tooltip content="Edit service">
               <FlightsFormEdit
                 handleUpdate={handleUpdate}
-                flightID={user.id}
-                data={user}
+                flightID={service.id}
+                data={service}
               />
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
+            <Tooltip color="danger" content="Delete service">
               <DeleteModal
                 deleteFun={() => {
-                  DeleteService(user.id, handleUpdate, "flights");
+                  DeleteService(service.id, handleUpdate, "flights");
                 }}
                 text={"flight"}
               />
@@ -244,7 +243,7 @@ export default function FlightsTable({ data, isLoading, handleUpdate }) {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {data.length} users
+            Total {data.length} services
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:

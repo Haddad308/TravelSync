@@ -22,7 +22,7 @@ import { addService } from "../services.handlers";
 
 export default function FlightsForm({ handleUpdate }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [flightImage, setflightImage] = useState([]);
+  const [flightImages, setFlightImages] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [apiError, setApiError] = useState("");
 
@@ -30,13 +30,13 @@ export default function FlightsForm({ handleUpdate }) {
     initialValues: {
       service: {
         name: "",
-        type: "flights",
+        // type: "flights",
         description: "",
         price: 0,
         quantityAvailable: 0,
         savings: 0,
         isOffer: false,
-        cancelationPolicy: "",
+        cancellationPolicy: "",
       },
       flight: {
         airline: "",
@@ -55,13 +55,13 @@ export default function FlightsForm({ handleUpdate }) {
       return Yup.object({
         service: Yup.object({
           name: Yup.string().min(5).max(500).required("Required"),
-          type: Yup.string().required("Required"),
+          // type: Yup.string().required("Required"),
           description: Yup.string().required("Required"),
           price: Yup.number().max(999999).min(0).required("Required"),
           quantityAvailable: Yup.number().min(0).max(9999).required("Required"),
           savings: Yup.number().required("Required"),
           isOffer: Yup.boolean().required("Required"),
-          cancelationPolicy: Yup.string().required("Required"),
+          cancellationPolicy: Yup.string().required("Required"),
         }),
         flight: Yup.object({
           airline: Yup.string().required("Required"),
@@ -76,18 +76,31 @@ export default function FlightsForm({ handleUpdate }) {
       });
     },
 
-    onSubmit: (values, { resetForm }) => {
-      console.log("values:", values);
-      uploadImage(flightImage, setIsLoading, setApiError).then((ids) => {
-        console.log("checking the Image.", ids); // Check if image is properly updated
-        values["service"]["WholesalerId"] = 1;
-        values["service"]["imageIds"] = ids ? ids : [];
-        console.log("checking the values.", values); // Check if values are properly updated
-        addService(values, setIsLoading, handleUpdate, "flights").then(() => {
-          onClose();
-          resetForm();
-        });
-      });
+    onSubmit: async (values, { resetForm }) => {
+      console.log("cancellationPolicy:", values.service.cancellationPolicy);
+      let imageIds;
+      if (flightImages.length !== 0) {
+        imageIds = await uploadImage(flightImages, setIsLoading, setApiError);
+        values.service.imageIds = imageIds ? imageIds : [];
+      }
+      values.service.imageIds = imageIds ? imageIds : [];
+
+      values.service.WholesalerId = 1;
+      await addService(values, setIsLoading, handleUpdate, "flights");
+      onClose();
+      resetForm();
+
+      // console.log("values:", values);
+      // uploadImage(flightImages, setIsLoading, setApiError).then((ids) => {
+      //   console.log("checking the Image.", ids); // Check if image is properly updated
+      //   values["service"]["WholesalerId"] = 1;
+      //   values["service"]["imageIds"] = ids ? ids : [];
+      //   console.log("checking the values.", values); // Check if values are properly updated
+      //   addService(values, setIsLoading, handleUpdate, "flights").then(() => {
+      //     onClose();
+      //     resetForm();
+      //   });
+      // });
     },
   });
 
@@ -138,7 +151,7 @@ export default function FlightsForm({ handleUpdate }) {
                       ) : null}
                     </div>
 
-                    <div>
+                    {/* <div>
                       <Input
                         id="service.type"
                         type="type"
@@ -157,7 +170,7 @@ export default function FlightsForm({ handleUpdate }) {
                           {formHandler.errors.service?.type}
                         </div>
                       ) : null}
-                    </div>
+                    </div> */}
                     <div>
                       <Textarea
                         id="service.description"
@@ -288,8 +301,8 @@ export default function FlightsForm({ handleUpdate }) {
 
                     <div>
                       <Input
-                        id="service.cancelationPolicy"
-                        name="service.cancelationPolicy"
+                        id="service.cancellationPolicy"
+                        name="service.cancellationPolicy"
                         type="text"
                         label="Cancelation Policy"
                         variant="bordered"
@@ -297,12 +310,12 @@ export default function FlightsForm({ handleUpdate }) {
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.service.cancelationPolicy}
+                        value={formHandler.values.service.cancellationPolicy}
                       />
-                      {formHandler.touched.service?.cancelationPolicy &&
-                      formHandler.errors.service?.cancelationPolicy ? (
+                      {formHandler.touched.service?.cancellationPolicy &&
+                      formHandler.errors.service?.cancellationPolicy ? (
                         <div className="text-red-600">
-                          {formHandler.errors.service?.cancelationPolicy}
+                          {formHandler.errors.service?.cancellationPolicy}
                         </div>
                       ) : null}
                     </div>
@@ -513,8 +526,8 @@ export default function FlightsForm({ handleUpdate }) {
                 </div>
                 <div className="w-1/2">
                   <ImagesUploader
-                    files={flightImage}
-                    setFiles={setflightImage}
+                    files={flightImages}
+                    setFiles={setFlightImages}
                     isMultiple={true}
                     isOnly={false}
                   />
