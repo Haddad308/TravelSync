@@ -8,8 +8,10 @@ import { IoPeopleSharp } from "react-icons/io5";
 import { SiOnlyoffice } from "react-icons/si";
 import { GrServices } from "react-icons/gr";
 import { IoDocumentText } from "react-icons/io5";
+import { PiCurrencyDollarFill } from "react-icons/pi";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
+
 const ADMIN_ITEMS = [
   {
     title: "Dashboard",
@@ -35,6 +37,11 @@ const ADMIN_ITEMS = [
     title: "Reservations",
     path: "/Reservations",
     icon: <IoDocumentText className={ICON_STYLE} />,
+  },
+  {
+    title: "Finance",
+    path: "/Finance",
+    icon: <PiCurrencyDollarFill className={ICON_STYLE} />,
   },
 ];
 
@@ -68,8 +75,7 @@ const SideBar = () => {
             {ADMIN_ITEMS.map(({ title, path, icon }, idx) => {
               return (
                 <NavItem title={title} path={path} key={idx}>
-                  {" "}
-                  {icon}{" "}
+                  {icon}
                 </NavItem>
               );
             })}
