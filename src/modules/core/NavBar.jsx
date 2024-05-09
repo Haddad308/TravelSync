@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 const NavBar = () => {
+
   // !Handling title (Need Actions) .
   const location = useLocation();
   let { pathname } = location;
