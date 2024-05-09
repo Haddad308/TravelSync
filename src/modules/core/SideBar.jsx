@@ -7,6 +7,7 @@ import Logout from "../auth/components/Logout";
 import { IoPeopleSharp } from "react-icons/io5";
 import { SiOnlyoffice } from "react-icons/si";
 import { GrServices } from "react-icons/gr";
+import { IoDocumentText } from "react-icons/io5";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
 const ADMIN_ITEMS = [
@@ -29,6 +30,11 @@ const ADMIN_ITEMS = [
     title: "Services",
     path: "/Services",
     icon: <GrServices className={ICON_STYLE} />,
+  },
+  {
+    title: "Reservations",
+    path: "/Reservations",
+    icon: <IoDocumentText className={ICON_STYLE} />,
   },
 ];
 
