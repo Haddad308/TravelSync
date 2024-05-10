@@ -23,25 +23,36 @@ import {
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
+import CruisesForm from "./Cruises.Add.Form";
+import CruisesFormEdit from "./Cruises.Edit.Form";
+import { DeleteService } from "../services.handlers";
+import DeleteModal from "../../core/components/DeleteModal";
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "city", "website", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "cabinType",
+  "NAME",
+  "quantityAvailable",
+  "endTime",
+  "actions",
+];
 
 export default function CruisesTable({ data, isLoading, handleUpdate }) {
   const columns = [
     { name: "ID", uid: "id", sortable: true },
     { name: "NAME", uid: "name", sortable: true },
-    { name: "PHONE", uid: "phoneNumber", sortable: true },
-    { name: "ADDRESS", uid: "address" },
-    { name: "CITY", uid: "city" },
-    { name: "STATE", uid: "state", sortable: true },
-    { name: "ZIP CODE", uid: "zipCode", sortable: true },
-    { name: "STARS", uid: "stars", sortable: true },
-    { name: "MOBILE NUMBER", uid: "mobileNumber", sortable: true },
-    { name: "WEBSITE", uid: "website" },
-    { name: "EMAIL", uid: "email" },
-    { name: "DESCRIPTION", uid: "description" },
+    { name: "price", uid: "price" },
+    { name: "quantityAvailable", uid: "quantityAvailable" },
+    { name: "savings", uid: "savings", sortable: true },
+    { name: "departureAddress", uid: "departureAddress", sortable: true },
+    { name: "cabinType", uid: "cabinType", sortable: true },
+    { name: "departureTime", uid: "departureTime" },
+    { name: "endTime", uid: "endTime" },
+    { name: "departureCity", uid: "departureCity" },
+    { name: "departureCountry", uid: "departureCountry" },
     { name: "ACTIONS", uid: "actions" },
   ];
+
+  console.log("daaaaataaa:", data);
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -68,14 +79,14 @@ export default function CruisesTable({ data, isLoading, handleUpdate }) {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...data];
+    let filteredServices = [...data];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredServices = filteredServices.filter((service) =>
+        service.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    return filteredUsers;
+    return filteredServices;
   }, [data, filterValue]);
 
   const items = React.useMemo(() => {
@@ -95,17 +106,75 @@ export default function CruisesTable({ data, isLoading, handleUpdate }) {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
+  const renderCell = React.useCallback((service, columnKey) => {
+    console.log("service:", service);
+    const cellValue = service[columnKey];
     switch (columnKey) {
+      case "airline":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.airline}
+          </div>
+        );
+      case "departureAddress":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.departureAddress}
+          </div>
+        );
+      case "cabinType":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.cabinType}
+          </div>
+        );
+      case "arrivalAddress":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.arrivalAddress}
+          </div>
+        );
+      case "departureTime":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.departureTime}
+          </div>
+        );
+      case "endTime":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.endTime}
+          </div>
+        );
+      case "departureCity":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.departureCity}
+          </div>
+        );
+      case "departureCountry":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.cruise?.departureCountry}
+          </div>
+        );
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Edit user">
-              {/* <AgenciesFormEdit handleUpdate={handleUpdate} agencyId={user.id} /> */}
+            <Tooltip content="Edit service">
+              <CruisesFormEdit
+                handleUpdate={handleUpdate}
+                cruiseID={service.id}
+                data={service}
+              />
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              {/* <DeleteModal deleteFun={() => { DeleteAgency(user.id, handleUpdate) }} text={"agency"} /> */}
+            <Tooltip color="danger" content="Delete service">
+              <DeleteModal
+                deleteFun={() => {
+                  DeleteService(service.id, handleUpdate, "cruises");
+                }}
+                text={"cruise"}
+              />
             </Tooltip>
           </div>
         );
@@ -173,12 +242,12 @@ export default function CruisesTable({ data, isLoading, handleUpdate }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            {/* <AgenciesForm handleUpdate={handleUpdate} /> */}
+            <CruisesForm handleUpdate={handleUpdate} />
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {data.length} users
+            Total {data.length} services
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -247,10 +316,12 @@ export default function CruisesTable({ data, isLoading, handleUpdate }) {
       removeWrapper
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      aria-label="Agencies Table."
+      aria-label="Cruises Table."
       checkboxesProps={{
         classNames: {
-          wrapper: "after:bg-foreground after:text-background text-background",
+          wrapper: " after:bg-foreground after:text-background text-background",
+          base: "overflow-scroll",
+          table: "overflow-scroll",
         },
       }}
       classNames={classNames}
