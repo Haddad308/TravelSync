@@ -8,6 +8,8 @@ import {
   Button,
   useDisclosure,
   Input,
+  Checkbox,
+  Textarea,
 } from "@nextui-org/react";
 import { PlusIcon } from "../../core/components/icons/PlusIcon";
 import * as Yup from "yup"; // For validation.
@@ -20,59 +22,81 @@ import { addService } from "../services.handlers";
 
 export default function CruisesForm({ handleUpdate }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [agencyImage, setAgencyImage] = useState([]);
+  const [cruiseImages, setCruiseImages] = useState([]);
   const [isLoading, setIsLoading] = useState("");
   const [apiError, setApiError] = useState("");
 
+  const handleCloseModal = () => {
+    formHandler.resetForm();
+  };
+
   const formHandler = useFormik({
     initialValues: {
-      name: "",
-      address: "",
-      stars: "",
-      city: "",
-      state: "",
-      zipCode: "",
-      mobileNumber: "",
-      phoneNumber: "",
-      website: "",
-      email: "",
-      description: "",
-      WholesalerId: 1,
+      service: {
+        name: "",
+        description: "",
+        price: "",
+        quantityAvailable: "",
+        savings: "",
+        isOffer: false,
+        cancellationPolicy: "",
+      },
+      cruise: {
+        // airline: "",
+        departureAddress: "",
+        departureCity: "",
+        // arrivalAddress: "",
+        departureCountry: "",
+        departureTime: new Date().toISOString(),
+        endTime: new Date().toISOString(),
+        cabinType: "",
+        // description: "",
+      },
     },
+
     validationSchema: () => {
-      const phoneRegex = /^\+20(1[0125]\d{8})$/; // Egyptian phone number regex
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email regex
-
       return Yup.object({
-        name: Yup.string().required("Required"),
-        address: Yup.string().required("Required"),
-        stars: Yup.number().integer().required("Required"),
-        city: Yup.string().required("Required"),
-        state: Yup.string().required("Required"),
-        zipCode: Yup.string().required("Required"),
-        mobileNumber: Yup.string().required("Required"),
-        phoneNumber: Yup.string()
-          .matches(phoneRegex, "Invalid Egyptian phoneNumber number")
-          .required("Required"),
-        website: Yup.string().required("Required"),
-        email: Yup.string()
-          .matches(emailRegex, "Invalid email address")
-          .required("Required"),
-        description: Yup.string().required("Required"),
+        service: Yup.object({
+          name: Yup.string().min(5).max(500).required("Required"),
+          description: Yup.string().required("Required"),
+          price: Yup.number().max(999999).min(0).required("Required"),
+          quantityAvailable: Yup.number()
+            .min(0)
+            .max(9999)
+            .required("Required")
+            .integer("Must be a number"),
+          savings: Yup.number().min(0).max(9999).required("Required"),
+          isOffer: Yup.boolean().required("Required"),
+          cancellationPolicy: Yup.string().min(2).max(500).required("Required"),
+        }),
+        cruise: Yup.object({
+          departureAddress: Yup.string().min(3).max(250).required("Required"),
+          departureCity: Yup.string().min(3).max(60).required("Required"),
+          departureCountry: Yup.string().min(3).max(60).required("Required"),
+          departureTime: Yup.string().required("Required"),
+          endTime: Yup.string().required("Required"),
+          cabinType: Yup.string().required("Required"),
+        }),
       });
     },
 
-    onSubmit: (values, { resetForm }) => {
-      console.log("Is hre?", values);
-      uploadImage(agencyImage, setIsLoading, setApiError).then((id) => {
-        console.log("checking the Image.", id); // Check if image is properly updated
-        values["imageIds"] = id ? id : null;
-        values["stars"] = Number(values["stars"]);
-        addService(values, setIsLoading, handleUpdate, "cruises").then(() => {
-          onClose();
-          resetForm();
-        });
-      });
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        console.log("valuse for cruise:", values);
+        let imageIds;
+        if (cruiseImages.length !== 0) {
+          imageIds = await uploadImage(cruiseImages, setIsLoading, setApiError);
+          values.service.imageIds = imageIds ? imageIds : [];
+        }
+        values.service.imageIds = imageIds ? imageIds : [];
+
+        values.service.WholesalerId = 1;
+        await addService(values, setIsLoading, handleUpdate, "cruises");
+        onClose();
+        resetForm();
+      } catch (error) {
+        setApiError(error.response.data?.message);
+      }
     },
   });
 
@@ -89,6 +113,8 @@ export default function CruisesForm({ handleUpdate }) {
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        onClose={handleCloseModal}
+        isDismissable={false}
         scrollBehavior="outside"
         backdrop="blur"
         size="5xl"
@@ -97,223 +123,345 @@ export default function CruisesForm({ handleUpdate }) {
           {(onClose) => (
             <form onSubmit={formHandler.handleSubmit}>
               <ModalHeader className="flex flex-col gap-1">
-                Add new Agency
+                Add new Cruise Service
               </ModalHeader>
               <ModalBody className="flex flex-row items-center">
                 <div className="w-1/2">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <Input
-                        id="name"
-                        type="name"
-                        label="Name"
-                        variant="bordered"
-                        labelPlacement="outside"
+                        id="service.name"
+                        type="text"
+                        name="service.name"
+                        label="Title"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.name}
+                        value={formHandler.values.service.name}
+                        isInvalid={
+                          formHandler.errors.service?.name &&
+                          formHandler.touched.service?.name
+                        }
+                        errorMessage={formHandler.errors.service?.name}
                       />
-                      {formHandler.touched.name && formHandler.errors.name ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.name}
-                        </div>
-                      ) : null}
+                    </div>
+
+                    <div>
+                      <Textarea
+                        id="service.description"
+                        name="service.description"
+                        type="text"
+                        label="Description"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.service.description}
+                        isInvalid={
+                          formHandler.errors.service?.description &&
+                          formHandler.touched.service?.description
+                        }
+                        errorMessage={formHandler.errors.service?.description}
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        id="service.price"
+                        name="service.price"
+                        type="number"
+                        label="Price"
+                        placeholder="0.00"
+                        radius="lg"
+                        onChange={(e) => {
+                          if (e.target.value === "") {
+                            formHandler.setFieldValue("service.price", "");
+                            return;
+                          }
+
+                          const value = Math.max(0, parseFloat(e.target.value));
+                          formHandler.setFieldValue("service.price", value);
+                        }}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.service?.price}
+                        startContent={
+                          <div className="pointer-events-none flex items-center">
+                            <span className="text-default-400 text-small">
+                              $
+                            </span>
+                          </div>
+                        }
+                        isInvalid={
+                          formHandler.errors.service?.price &&
+                          formHandler.touched.service?.price
+                        }
+                        errorMessage={formHandler.errors.service?.price}
+                      />
+                    </div>
+                    <div>
+                      <Input
+                        id="service.savings"
+                        name="service.savings"
+                        type="number"
+                        label="savings"
+                        placeholder="0.00"
+                        radius="lg"
+                        onChange={(e) => {
+                          if (e.target.value === "") {
+                            formHandler.setFieldValue("service.savings", "");
+                            return;
+                          }
+
+                          const value = Math.max(0, parseFloat(e.target.value));
+                          formHandler.setFieldValue("service.savings", value);
+                        }}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.service.savings}
+                        startContent={
+                          <div className="pointer-events-none flex items-center">
+                            <span className="text-default-400 text-small">
+                              $
+                            </span>
+                          </div>
+                        }
+                        isInvalid={
+                          formHandler.errors.service?.savings &&
+                          formHandler.touched.service?.savings
+                        }
+                        errorMessage={formHandler.errors.service?.savings}
+                      />
                     </div>
 
                     <div>
                       <Input
-                        id="stars"
-                        // type=""
-                        label="stars"
-                        variant="bordered"
-                        labelPlacement="outside"
+                        id="service.quantityAvailable"
+                        name="service.quantityAvailable"
+                        type="number"
+                        label="Quantity Available"
                         radius="lg"
-                        onChange={formHandler.handleChange}
+                        onChange={(e) => {
+                          if (e.target.value === "") {
+                            formHandler.setFieldValue(
+                              "service.quantityAvailable",
+                              "",
+                            );
+                            return;
+                          }
+
+                          const value = Math.max(0, parseFloat(e.target.value));
+                          formHandler.setFieldValue(
+                            "service.quantityAvailable",
+                            value,
+                          );
+                        }}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.stars}
+                        value={formHandler.values.service.quantityAvailable}
+                        isInvalid={
+                          formHandler.errors.service?.quantityAvailable &&
+                          formHandler.touched.service?.quantityAvailable
+                        }
+                        errorMessage={
+                          formHandler.errors.service?.quantityAvailable
+                        }
                       />
-                      {formHandler.touched.stars && formHandler.errors.stars ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.stars}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
                       <Input
-                        id="zipCode"
-                        type="zipCode"
-                        label="zipCode"
-                        variant="bordered"
-                        labelPlacement="outside"
+                        id="service.cancellationPolicy"
+                        name="service.cancellationPolicy"
+                        type="text"
+                        label="Cancelation Policy"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.zipCode}
+                        value={formHandler.values.service.cancellationPolicy}
+                        isInvalid={
+                          formHandler.errors.service?.cancellationPolicy &&
+                          formHandler.touched.service?.cancellationPolicy
+                        }
+                        errorMessage={
+                          formHandler.errors.service?.cancellationPolicy
+                        }
                       />
-                      {formHandler.touched.zipCode &&
-                      formHandler.errors.zipCode ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.zipCode}
-                        </div>
-                      ) : null}
+                    </div>
+
+                    {/* <div>
+                      <Input
+                        id="cruise.airline"
+                        name="cruise.airline"
+                        type="text"
+                        label="Airline"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.airline}
+                        isInvalid={
+                          formHandler.errors.cruise?.airline &&
+                          formHandler.touched.cruise?.airline
+                        }
+                        errorMessage={formHandler.errors.cruise?.airline}
+                      />
+                    </div> */}
+
+                    <div>
+                      <Input
+                        id="cruise.cabinType"
+                        name="cruise.cabinType"
+                        type="text"
+                        label="Seat Type"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.cruise?.cabinType}
+                        isInvalid={
+                          formHandler.errors.cruise?.cabinType &&
+                          formHandler.touched.cruise?.cabinType
+                        }
+                        errorMessage={formHandler.errors.cruise?.cabinType}
+                      />
                     </div>
 
                     <div>
                       <Input
-                        id="state"
-                        type="state"
-                        label="state"
-                        variant="bordered"
-                        labelPlacement="outside"
+                        id="cruise.departureAddress"
+                        name="cruise.departureAddress"
+                        type="text"
+                        label="Departure Address"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.state}
+                        value={formHandler.values.cruise.departureAddress}
+                        isInvalid={
+                          formHandler.errors.cruise?.departureAddress &&
+                          formHandler.touched.cruise?.departureAddress
+                        }
+                        errorMessage={
+                          formHandler.errors.cruise?.departureAddress
+                        }
                       />
-                      {formHandler.touched.state && formHandler.errors.state ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.state}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
                       <Input
-                        id="city"
-                        type="city"
-                        label="city"
-                        variant="bordered"
-                        labelPlacement="outside"
+                        id="cruise.departureCity"
+                        name="cruise.departureCity"
+                        type="text"
+                        label="Departure City"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.city}
+                        value={formHandler.values.cruise.departureCity}
+                        isInvalid={
+                          formHandler.errors.cruise?.departureCity &&
+                          formHandler.touched.cruise?.departureCity
+                        }
+                        errorMessage={formHandler.errors.cruise?.departureCity}
                       />
-                      {formHandler.touched.city && formHandler.errors.city ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.city}
-                        </div>
-                      ) : null}
+                    </div>
+
+                    {/* <div>
+                      <Input
+                        id="cruise.arrivalAddress"
+                        name="cruise.arrivalAddress"
+                        type="text"
+                        label="Arrival Address"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.cruise.arrivalAddress}
+                        isInvalid={
+                          formHandler.errors.cruise?.arrivalAddress &&
+                          formHandler.touched.cruise?.arrivalAddress
+                        }
+                        errorMessage={formHandler.errors.cruise?.arrivalAddress}
+                      />
+                    </div> */}
+
+                    <div>
+                      <Input
+                        id="cruise.departureCountry"
+                        name="cruise.departureCountry"
+                        type="text"
+                        label="Arrival City"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.cruise.departureCountry}
+                        isInvalid={
+                          formHandler.errors.cruise?.departureCountry &&
+                          formHandler.touched.cruise?.departureCountry
+                        }
+                        errorMessage={
+                          formHandler.errors.cruise?.departureCountry
+                        }
+                      />
+                    </div>
+
+                    <div>
+                      {/* <DatePicker
+                        id="cruise.departureTime"
+                        name="cruise.departureTime"
+                        className="max-w-lg"
+                        granularity="minute"
+                        label="Departure Date"
+                        onChange={formHandler.handleChange}
+                        // onBlur={formHandler.handleBlur}
+                        value={formHandler.values.cruise.departureTime}
+                        // placeholderValue={now("AST")}
+                      />
+                      {console.log(
+                        "formHandler.values.cruise.departureTime: ",
+                        formHandler.values.cruise?.departureTime,
+                      )} */}
+                      <Input
+                        id="cruise.departureTime"
+                        name="cruise.departureTime"
+                        type="text"
+                        label="Departure Time"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.cruise.departureTime}
+                        isInvalid={
+                          formHandler.errors.cruise?.departureTime &&
+                          formHandler.touched.cruise?.departureTime
+                        }
+                        errorMessage={formHandler.errors.cruise?.departureTime}
+                      />
                     </div>
 
                     <div>
                       <Input
-                        id="email"
-                        label="email"
-                        variant="bordered"
-                        labelPlacement="outside"
+                        id="cruise.endTime"
+                        name="cruise.endTime"
+                        type="text"
+                        label="Arrival Time"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
-                        value={formHandler.values.email}
+                        value={formHandler.values.cruise.endTime}
+                        isInvalid={
+                          formHandler.errors.cruise?.endTime &&
+                          formHandler.touched.cruise?.endTime
+                        }
+                        errorMessage={formHandler.errors.cruise?.endTime}
                       />
-                      {formHandler.touched.email && formHandler.errors.email ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.email}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
-                      <Input
-                        id="phoneNumber"
-                        type="phoneNumber"
-                        label="phoneNumber"
-                        variant="bordered"
-                        labelPlacement="outside"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.phoneNumber}
-                      />
-                      {formHandler.touched.phoneNumber &&
-                      formHandler.errors.phoneNumber ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.phoneNumber}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div>
-                      <Input
-                        id="mobileNumber"
-                        type="mobileNumber"
-                        label="mobileNumber"
-                        variant="bordered"
-                        labelPlacement="outside"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.mobileNumber}
-                      />
-                      {formHandler.touched.mobileNumber &&
-                      formHandler.errors.mobileNumber ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.mobileNumber}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div>
-                      <Input
-                        id="address"
-                        type="address"
-                        label="address"
-                        variant="bordered"
-                        labelPlacement="outside"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.address}
-                      />
-                      {formHandler.touched.address &&
-                      formHandler.errors.address ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.address}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div>
-                      <Input
-                        id="website"
-                        type="website"
-                        label="website"
-                        variant="bordered"
-                        labelPlacement="outside"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.website}
-                      />
-                      {formHandler.touched.website &&
-                      formHandler.errors.website ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.website}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div>
-                      <Input
-                        id="description"
-                        type="description"
-                        label="description"
-                        variant="bordered"
-                        labelPlacement="outside"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.description}
-                      />
-                      {formHandler.touched.description &&
-                      formHandler.errors.description ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.description}
-                        </div>
-                      ) : null}
+                      <Checkbox
+                        id="serviceIsOffer"
+                        name="cruise.endTime"
+                        label="Is Offer"
+                        onChange={formHandler.handleChange("service.isOffer")}
+                        value={formHandler.values.service?.isOffer}
+                        isInvalid={
+                          formHandler.errors.service?.isOffer &&
+                          formHandler.touched.service?.isOffer
+                        }
+                        errorMessage={formHandler.errors.service?.isOffer}
+                      >
+                        Is Offer
+                      </Checkbox>
                     </div>
 
                     <div className="col-span-2">
@@ -323,8 +471,8 @@ export default function CruisesForm({ handleUpdate }) {
                 </div>
                 <div className="w-1/2">
                   <ImagesUploader
-                    files={agencyImage}
-                    setFiles={setAgencyImage}
+                    files={cruiseImages}
+                    setFiles={setCruiseImages}
                     isMultiple={true}
                     isOnly={false}
                   />
