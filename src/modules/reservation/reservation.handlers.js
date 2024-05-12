@@ -20,7 +20,6 @@ async function getReservation(SetReservation, setIsLoading, status = "", id = ""
             setIsLoading(false);
         });
     if (data?.status === 200) {
-        console.log("هنا القاهرى");
         if (id)
             SetReservation(data.data);
         else

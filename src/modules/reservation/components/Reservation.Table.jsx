@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import {
@@ -14,20 +13,25 @@ import {
     Dropdown,
     DropdownMenu,
     DropdownItem,
-    User,
     Pagination,
     Spinner,
-    Tooltip,
 } from "@nextui-org/react";
-
+import { FaRegFileAlt } from "react-icons/fa";
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "city", "postalCode", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "phone", "file"];
 
-export default function ReservationTable({ columns, users, isLoading }) {
-    // console.log(users);
+export default function ReservationTable({ users = [], isLoading }) {
+
+    const columns = [
+        { name: "ID", uid: "id", sortable: true },
+        { name: "NAME", uid: "name", sortable: true },
+        { name: "PHONE", uid: "phone", sortable: true },
+        { name: "FILE", uid: "file" },
+    ];
+
 
     const [filterValue, setFilterValue] = React.useState("");
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -86,29 +90,30 @@ export default function ReservationTable({ columns, users, isLoading }) {
         switch (columnKey) {
             case "name":
                 return (
-                    <User
-                        avatarProps={{
-                            radius: "full",
-                            size: "sm",
-                            isBordered: "true",
-                            src: user.profilePhoto?.imageUrl,
-                        }}
-                        classNames={{
-                            description: "text-default-500",
-                        }}
-                        description={user.email}
-                        name={cellValue}
-                    >
-                        {user.email}
-                    </User>
-                );
-            case "actions":
-                return (
-                    <div className="relative flex items-center gap-2">
-                        <Tooltip color="danger" content="Delete user">
-                            <div>s</div>
-                        </Tooltip>
+                    <div>
+                        <h1>{user.firstName} {user.lastName}</h1>
                     </div>
+                );
+            case "phone":
+                return (
+                    <div>
+                        <h1>{user.mobilePhone}</h1>
+                    </div>
+                );
+            case "file":
+                return (
+                    <>
+                        {user.files[0] && (
+                            <div>
+                                <FaRegFileAlt
+                                    className="cursor-pointer"
+                                    onClick={() => window.open(user.files[0]?.url)}
+                                    width={40}
+                                    height={40}
+                                />
+                            </div>
+                        )}
+                    </>
                 );
             default:
                 return cellValue;
