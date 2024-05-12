@@ -9,6 +9,11 @@ import AcceptReservation from "../components/AcceptReservation";
 import ReservationTable from "../components/Reservation.Table";
 
 const ReservationPage = () => {
+
+
+
+
+
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(false)
     const [reservation, setReservation] = useState([])
@@ -22,6 +27,7 @@ const ReservationPage = () => {
         getReservation(setReservation, setIsLoading, "", id)
     }, [id])
 
+
     const { name, email, phone } = reservation.travelOffice || {};
     const { airline, arrivalAddress, arrivalCity } = reservation.service?.flight || {};
     const { status, checkInDate, CancelReason, travelers } = reservation
@@ -29,6 +35,10 @@ const ReservationPage = () => {
 
     const date = new Date(checkInDate);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+    useEffect(() => {
+        console.log(travelers);
+    }, [travelers]);
 
     return (
         <div className="m-5 p-5 rounded-lg bg-white">
@@ -94,7 +104,7 @@ const ReservationPage = () => {
                             {status != "confirmed" ? <AcceptReservation id={id} handleUpdate={handleUpdate} /> : ""}
                         </div>
                     </div>
-                    {/* <ReservationTable users={travelers} /> */}
+                    <ReservationTable users={travelers} isLoading={isLoading} />
                 </>
             }
 

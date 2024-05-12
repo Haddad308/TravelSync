@@ -9,72 +9,7 @@ export default function Reservation() {
 
   const [selected, setSelected] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
-  const [reservations, setReservations] = useState([
-    {
-      AgencyImg: "",
-      AgencyName: "Triage1",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Reserved",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-    {
-      AgencyName: "Triage2",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Cancelled",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-    {
-      AgencyName: "Triage3",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Pending",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-    {
-      AgencyName: "Triage4",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Pending",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-    {
-      AgencyName: "Triage5",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Pending",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-    {
-      AgencyName: "Triage6",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Cancelled",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-    {
-      AgencyName: "Triage7",
-      AgencyEmail: "Agency@gmail.com",
-      AgencyContact: "+201281982770",
-      status: "Pending",
-      info1: "Hotel",
-      info2: "4 Rooms in Hilton Hotel",
-      info3: "2 Nights",
-    },
-  ]);
+  const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
     console.log(selected);

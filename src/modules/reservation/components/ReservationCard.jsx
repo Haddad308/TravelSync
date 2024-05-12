@@ -7,12 +7,12 @@ export default function ReservationCard({ id, AgencyName, AgencyEmail, AgencyCon
 
     const date = new Date(ReservationDate);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    console.log(formattedDate); // Output: 9/5/2024
     const navigate = useNavigate();
 
     const handleCheckInClick = () => {
         navigate(`/Reservation/${id}`);
     };
+
     return (
         <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2" >
             <div className=" flex justify-between p-3">
