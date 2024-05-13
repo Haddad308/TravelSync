@@ -3,10 +3,10 @@ import Cookies from "js-cookie";
 
 const token = Cookies.get("userToken");
 
-async function getAccounts(SetAccounts, setIsLoading) {
+async function getAccounts(SetAccounts, setIsLoading, id = "") {
     setIsLoading(true);
     let data = await instance
-        .get(`/api/accounts`, {
+        .get(`/api/accounts${id ? `/${id}` : " "}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -21,6 +21,25 @@ async function getAccounts(SetAccounts, setIsLoading) {
     setIsLoading(false);
 }
 
+async function getTransactions(SetTransactions, setIsLoading, id = "") {
+    setIsLoading(true);
+    let data = await instance
+        .get(`/api/accounts/${id ? `${id}` : " "}/transactions`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .catch((error) => {
+            console.error(error);
+            setIsLoading(false);
+        });
+    if (data?.status === 200) {
+        SetTransactions(data.data);
+    }
+    setIsLoading(false);
+}
+
 export {
-    getAccounts
+    getAccounts,
+    getTransactions
 }

@@ -3,22 +3,29 @@ import UserBalance from "../components/UserBalance";
 import { Link } from "react-router-dom";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { getAccounts } from "../Finance.handlers";
+import { getAccounts, getTransactions } from "../Finance.handlers";
 import FinanceTable from "../components/FinanceTable";
 
 
 export default function Finance() {
 
     const [accounts, setAccounts] = useState([]);
+    const [transitions, setTransitions] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         getAccounts(setAccounts, setIsLoading)
+        getTransactions(setTransitions, setIsLoading)
     }, [])
 
     useEffect(() => {
         console.log("check", accounts);
     }, [accounts])
+
+
+    useEffect(() => {
+        console.log("check transitions", transitions);
+    }, [transitions])
 
     return (
         <div>
@@ -42,7 +49,7 @@ export default function Finance() {
             </div>
             <div className="m-6 p-6 bg-white rounded-3xl"  >
                 <h1 className="text-xl font-bold mb-4" >Last Transactions</h1>
-                <FinanceTable users={[]} isLoading={isLoading} />
+                <FinanceTable users={transitions} isLoading={isLoading} />
             </div>
         </div>
     )

@@ -21,15 +21,15 @@ import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "phone", "file"];
+const INITIAL_VISIBLE_COLUMNS = ["type", "amount", "currency"];
 
 export default function FinanceTable({ users = [], isLoading }) {
 
     const columns = [
         { name: "ID", uid: "id", sortable: true },
-        { name: "NAME", uid: "name", sortable: true },
-        { name: "PHONE", uid: "phone", sortable: true },
-        { name: "FILE", uid: "file" },
+        { name: "type", uid: "type", sortable: true },
+        { name: "amount", uid: "amount", sortable: true },
+        { name: "currency", uid: "currency" },
     ];
 
 
@@ -62,7 +62,7 @@ export default function FinanceTable({ users = [], isLoading }) {
 
         if (hasSearchFilter) {
             filteredUsers = filteredUsers.filter((user) =>
-                user.name.toLowerCase().includes(filterValue.toLowerCase()),
+                user?.type.toLowerCase().includes(filterValue.toLowerCase()),
             );
         }
         return filteredUsers;
