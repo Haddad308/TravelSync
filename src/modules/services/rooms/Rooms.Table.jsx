@@ -23,12 +23,16 @@ import {
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
+import RoomsForm from "./Rooms.Add.Form";
+import RoomsFormEdit from "./Rooms.Edit.Form";
+import { DeleteService } from "../services.handlers";
+import DeleteModal from "../../core/components/DeleteModal";
 
 const INITIAL_VISIBLE_COLUMNS = [
-  "name",
-  "price",
+  "type",
+  "NAME",
   "quantityAvailable",
-  "savings",
+  "endTime",
   "actions",
 ];
 
@@ -36,15 +40,19 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
   const columns = [
     { name: "ID", uid: "id", sortable: true },
     { name: "NAME", uid: "name", sortable: true },
-    { name: "PRICE", uid: "price", sortable: true },
+    { name: "price", uid: "price" },
     { name: "quantityAvailable", uid: "quantityAvailable" },
     { name: "savings", uid: "savings", sortable: true },
-    { name: "roomArea", uid: "roomArea", sortable: true },
-    { name: "numberOfBeds", uid: "numberOfBeds" },
+    { name: "type", uid: "type", sortable: true },
+    { name: "roomArea", uid: "roomArea" },
+    { name: "hotelId", uid: "hotelId" },
+    { name: "numberOfBeds`", uid: "numberOfBeds" },
     { name: "numberOfSleeps", uid: "numberOfSleeps" },
-    { name: "DESCRIPTION", uid: "description" },
+
     { name: "ACTIONS", uid: "actions" },
   ];
+
+  console.log("daaaaataaa:", data);
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -71,14 +79,14 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...data];
+    let filteredServices = [...data];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredServices = filteredServices.filter((service) =>
+        service.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    return filteredUsers;
+    return filteredServices;
   }, [data, filterValue]);
 
   const items = React.useMemo(() => {
@@ -98,36 +106,105 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = React.useCallback((room, columnKey) => {
-    const cellValue = room[columnKey];
+  const renderCell = React.useCallback((service, columnKey) => {
+    console.log("service:", service);
+    const cellValue = service[columnKey];
     switch (columnKey) {
+      case "departureAddress":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.departureAddress}
+          </div>
+        );
+
+      case "type":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.type}
+          </div>
+        );
+      case "arrivalAddress":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.arrivalAddress}
+          </div>
+        );
+      case "departureTime":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.departureTime}
+          </div>
+        );
+      case "arrivalTime":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.arrivalTime}
+          </div>
+        );
+      case "departingDate":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.departingDate}
+          </div>
+        );
+      case "returningDate":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.returningDate}
+          </div>
+        );
+      case "Rooms Description":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.description}
+          </div>
+        );
+
+      case "roomArea":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.roomArea}
+          </div>
+        );
+      case "hotelId":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.hotelId}
+          </div>
+        );
+
+      case "numberOfBeds":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.numberOfBeds}
+          </div>
+        );
+
+      case "numberOfSleeps":
+        return (
+          <div className="relative flex items-center   gap-2">
+            {service.room?.numberOfSleeps}
+          </div>
+        );
+
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Edit user">
-              {/* <AgenciesFormEdit handleUpdate={handleUpdate} agencyId={user.id} /> */}
+            <Tooltip content="Edit service">
+              <RoomsFormEdit
+                handleUpdate={handleUpdate}
+                roomID={service.id}
+                data={service}
+              />
             </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              {/* <DeleteModal deleteFun={() => { DeleteAgency(user.id, handleUpdate) }} text={"agency"} /> */}
+            <Tooltip color="danger" content="Delete service">
+              <DeleteModal
+                deleteFun={() => {
+                  DeleteService(service.id, handleUpdate, "rooms");
+                }}
+                text={"room"}
+              />
             </Tooltip>
-          </div>
-        );
-      case "roomArea":
-        return (
-          <div className="relative flex items-center justify-center  gap-2">
-            {room.room.roomArea}
-          </div>
-        );
-      case "numberOfBeds":
-        return (
-          <div className="relative flex items-center justify-center  gap-2">
-            {room.room.numberOfBeds}
-          </div>
-        );
-      case "numberOfSleeps":
-        return (
-          <div className="relative flex items-center justify-center  gap-2">
-            {room.room.numberOfSleeps}
           </div>
         );
       default:
@@ -194,12 +271,12 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            {/* <AgenciesForm handleUpdate={handleUpdate} /> */}
+            <RoomsForm handleUpdate={handleUpdate} />
           </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {data.length} users
+            Total {data.length} services
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -268,12 +345,12 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
       removeWrapper
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      aria-label="Agencies Table."
+      aria-label="Rooms Table."
       checkboxesProps={{
         classNames: {
-          wrapper: "after:bg-foreground after:text-background text-background",
-          base: "max-h-[520px] overflow-scroll",
-          table: "min-h-[420px]",
+          wrapper: " after:bg-foreground after:text-background text-background",
+          base: "overflow-scroll",
+          table: "overflow-scroll",
         },
       }}
       classNames={classNames}

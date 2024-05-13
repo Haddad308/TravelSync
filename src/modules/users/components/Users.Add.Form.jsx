@@ -15,7 +15,7 @@ import { PlusIcon } from "../../core/components/icons/PlusIcon";
 import * as Yup from "yup"; // For validation.
 import { useFormik } from "formik";
 import ImagesUploader from "../../core/components/ImageUploader/ImageUploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uploadImage } from "../../core/core.handlers";
 import { addUser } from "../Users.handlers";
 import { getAgencies } from "../../agencies/Agencies.handlers";
@@ -28,6 +28,10 @@ export default function UsersForm({ handleUpdate }) {
   const [apiError, setApiError] = useState("");
 
   const [agencies, setAgencies] = useState([]);
+
+  useEffect(() => {
+    getAgencies(setAgencies, setIsLoading);
+  }, []);
 
   const handleUpdateAgencies = () => {
     getAgencies(setAgencies, setIsLoading);
@@ -132,12 +136,11 @@ export default function UsersForm({ handleUpdate }) {
                       ) : null}
                     </div>
 
-                    <div className="py-3">
+                    <div>
                       <Select
                         label="Agency"
                         id="travelOfficeId"
                         placeholder="Select an agency"
-                        className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 focus:!border-gray-900 focus:!border-t-gray-900 focus:ring-gray-900/10"
                         value={formHandler.values.travelOfficeId}
                         onClick={handleUpdateAgencies}
                         onChange={formHandler.handleChange("travelOfficeId")}
