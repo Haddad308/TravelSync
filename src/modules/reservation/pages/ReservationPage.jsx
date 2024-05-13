@@ -10,10 +10,6 @@ import ReservationTable from "../components/Reservation.Table";
 
 const ReservationPage = () => {
 
-
-
-
-
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(false)
     const [reservation, setReservation] = useState([])
