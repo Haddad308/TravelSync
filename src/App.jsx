@@ -13,8 +13,10 @@ import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
 import Services from "./modules/services/Services";
 import Reservation from "./modules/reservation/pages/Reservation";
-import Finance from "./modules/finance/Finance";
 import ReservationPage from "./modules/reservation/pages/ReservationPage";
+import Finance from "./modules/finance/pages/Finance";
+import Accounts from "./modules/finance/pages/Accounts";
+import UserAccount from "./modules/finance/pages/UserAccount";
 
 const routers = createBrowserRouter([
   {
@@ -75,6 +77,22 @@ const routers = createBrowserRouter([
         element: (
           <ProtectRoutes allowedRoles={["admin"]}>
             <Finance />
+          </ProtectRoutes>
+        ),
+      },
+      {
+        path: "Accounts",
+        element: (
+          <ProtectRoutes allowedRoles={["admin"]}>
+            <Accounts />
+          </ProtectRoutes>
+        ),
+      },
+      {
+        path: "UserAccount/:id",
+        element: (
+          <ProtectRoutes allowedRoles={["admin"]}>
+            <UserAccount />
           </ProtectRoutes>
         ),
       },
