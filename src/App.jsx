@@ -11,12 +11,13 @@ import Redirection from "./network/Redirection";
 import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
-import Services from "./modules/services/Services";
 import Reservation from "./modules/reservation/pages/Reservation";
 import ReservationPage from "./modules/reservation/pages/ReservationPage";
 import Finance from "./modules/finance/pages/Finance";
 import Accounts from "./modules/finance/pages/Accounts";
 import UserAccount from "./modules/finance/pages/UserAccount";
+import Services from "./modules/services/pages/Services.admin";
+import ServicesView from "./modules/services/pages/Services.user";
 
 const routers = createBrowserRouter([
   {
@@ -53,6 +54,14 @@ const routers = createBrowserRouter([
         element: (
           <ProtectRoutes allowedRoles={["admin"]}>
             <Services />
+          </ProtectRoutes>
+        ),
+      },
+      {
+        path: "services2",
+        element: (
+          <ProtectRoutes allowedRoles={["admin"]}>
+            <ServicesView />
           </ProtectRoutes>
         ),
       },
