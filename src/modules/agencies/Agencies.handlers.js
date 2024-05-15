@@ -6,7 +6,9 @@ const deleted = () => toast.success("The agency deleted successfully.");
 const added = () => toast.success("The agency added successfully.");
 const edited = () => toast.success("The agency edited successfully.");
 
-const token = JSON.parse(Cookies.get("auth-token-data"))?.token;
+const cookie = Cookies.get("auth-token-data");
+const token = JSON.parse(cookie ? cookie : "null")?.token;
+// const token = Cookies.get("authUserToken");
 
 async function getAgencies(SetAgencies, setIsLoading) {
   setIsLoading(true);

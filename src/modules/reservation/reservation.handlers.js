@@ -6,7 +6,8 @@ const confirmed = () =>
   toast.success("The reservation confirmed successfully.");
 const canceled = () => toast.success("The reservation canceled successfully.");
 
-const token = JSON.parse(Cookies.get("auth-token-data"))?.token;
+const cookie = Cookies.get("auth-token-data");
+const token = JSON.parse(cookie ? cookie : "null")?.token;
 
 async function getReservation(
   SetReservation,

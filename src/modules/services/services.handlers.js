@@ -6,7 +6,9 @@ const deleted = () => toast.success("The Hotel deleted successfully.");
 const added = () => toast.success("The Hotel added successfully.");
 const edited = () => toast.success("The Hotel edited successfully.");
 
-const token = JSON.parse(Cookies.get("auth-token-data"))?.token;
+const cookie = Cookies.get("auth-token-data");
+const token = JSON.parse(cookie ? cookie : "null")?.token;
+
 async function getService(SetService, setIsLoading, service) {
   let data = await instance
     .get(`/api/v1/${service}`, {
