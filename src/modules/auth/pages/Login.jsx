@@ -1,25 +1,55 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import LoginVector from "../../../assets/system/LoginVector.svg";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "../../core/components/icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "../../core/components/icons/EyeFilledIcon";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../context/AuthProvider";
-import userLogin from "../handlers/login.handler";
+// import { useNavigate } from "react-router-dom";
+// import { auth } from "../context/AuthProvider";
+// import userLogin from "../handlers/login.handler";
 import ForgetPassword from "../components/ForgetPassword";
 import { useTranslation } from "react-i18next";
 import Alert from "../../core/components/Alert";
+import useAuthActions from "../context/use-auth-actions";
+import useAuthTokens from "../context/use-auth-tokens";
+import { useAuthLoginService } from "../handlers/auth";
+import HTTP_CODES_ENUM from "../../../enums/http-codes";
 
 const Login = () => {
+  const { setUser } = useAuthActions();
+  const { setTokensInfo } = useAuthTokens();
+  const fetchAuthLogin = useAuthLoginService();
+
   const toggleVisibility = () => setIsVisible(!isVisible);
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [apiError, setApiError] = useState("");
-  const [, SetToken] = useContext(auth);
-  const navigate = useNavigate();
+  // const [, SetToken] = useContext(auth);
+  // const navigate = useNavigate();
+
+  const onSubmit = async (formData) => {
+    const { data, status } = await fetchAuthLogin(formData);
+
+    if (status === HTTP_CODES_ENUM.UNPROCESSABLE_ENTITY) {
+      setApiError(data.errors);
+      // Object.keys(data.errors).forEach((key) => {
+      //   setApiError(data.errors[key]);
+      // });
+
+      return;
+    }
+
+    if (status === HTTP_CODES_ENUM.OK) {
+      setTokensInfo({
+        token: data.token,
+        refreshToken: data.refreshToken,
+        tokenExpires: data.tokenExpires,
+      });
+      setUser(data.user);
+    }
+  };
 
   const formHandler = useFormik({
     initialValues: {
@@ -30,9 +60,11 @@ const Login = () => {
       email: Yup.string().email("Invalid email address").required("Required"),
       password: Yup.string().required("Required"),
     }),
-    onSubmit: (values) => {
-      userLogin(values, setIsLoading, setApiError, navigate, SetToken);
-    },
+
+    // onSubmit: (values) => {
+    //   userLogin(values, setIsLoading, setApiError, navigate, SetToken);
+    // },
+    onSubmit: onSubmit,
   });
 
   return (

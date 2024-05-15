@@ -1,4 +1,9 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+} from "react-router-dom";
 import Login from "./modules/auth/pages/Login";
 import UnAuthorized from "./modules/auth/pages/UnAuthorized";
 import NotFound from "./modules/auth/pages/NotFound";
@@ -6,8 +11,8 @@ import Layout from "./modules/core/Layout";
 import Dashboard from "./modules/dashboard/Dashboard";
 import Agencies from "./modules/agencies/Agencies";
 import { useEffect } from "react";
-import ProtectRoutes from "./network/ProtectRoutes";
-import Redirection from "./network/Redirection";
+// import ProtectRoutes from "./network/ProtectRoutes";
+// import Redirection from "./network/Redirection";
 import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
@@ -17,94 +22,114 @@ import ReservationPage from "./modules/reservation/pages/ReservationPage";
 import Finance from "./modules/finance/pages/Finance";
 import Accounts from "./modules/finance/pages/Accounts";
 import UserAccount from "./modules/finance/pages/UserAccount";
+// import withPageRequiredAuth from "./modules/auth/context/with-page-required-auth";
+import { RoleEnum } from "./enums/role-enum";
+import WithPageRequiredAuth from "./modules/auth/context/with-page-required-auth";
+import WithPageRequiredGuest from "./modules/auth/context/with-page-required-guest";
 
 const routers = createBrowserRouter([
   {
     path: "",
-    element: <Layout />,
+    element: (
+      <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+        <Layout />
+      </WithPageRequiredAuth>
+    ),
     children: [
-      { index: true, element: <Redirection /> },
+      // { index: true, element: <Redirection /> },
       {
         path: "dashboard",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Dashboard />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <Dashboard />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "agencies",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Agencies />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth
+          //   // roles={[RoleEnum.admin]}
+          //   options={{ roles: [RoleEnum.travelAgent] }}
+          // >
+          <Agencies />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "users",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Users />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <Users />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "services",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Services />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <Services />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "Reservations",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Reservation />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <Reservation />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "Reservation/:id",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <ReservationPage />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <ReservationPage />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "Finance",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Finance />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <Finance />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "Accounts",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <Accounts />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <Accounts />
+          // </WithPageRequiredAuth>
         ),
       },
       {
         path: "UserAccount/:id",
         element: (
-          <ProtectRoutes allowedRoles={["admin"]}>
-            <UserAccount />
-          </ProtectRoutes>
+          // <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+          <UserAccount />
+          // </WithPageRequiredAuth>
         ),
       },
     ],
   },
-  { path: "login", element: <Login /> },
-  { path: "unauthorized", element: <UnAuthorized /> },
+  {
+    path: "login",
+    element: (
+      <WithPageRequiredGuest>
+        <Login />
+      </WithPageRequiredGuest>
+    ),
+  },
+  {
+    path: "unauthorized",
+    element: <UnAuthorized />,
+  },
   { path: "", element: <NotFound /> },
 ]);
 
 function App() {
-
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -115,6 +140,9 @@ function App() {
 
   return (
     <>
+      <Routes>
+        <Route></Route>
+      </Routes>
       <Toaster />
       <RouterProvider router={routers} />
     </>

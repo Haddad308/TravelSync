@@ -9,11 +9,13 @@ import {
 } from "@nextui-org/react";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../handlers/logout.handler";
+// import { logout } from "../handlers/logout.handler";
 import { useTranslation } from "react-i18next";
+import useAuthActions from "../context/use-auth-actions";
 
 export default function Logout() {
   const navigate = useNavigate();
+  const { logOut } = useAuthActions();
   const { t, i18n } = useTranslation();
 
   const ICON_STYLE = `flex-shrink-0 w-6 h-6 ${i18n.resolvedLanguage === "ar" ? "mt-1" : ""} text-white  transition duration-75`;
@@ -45,7 +47,9 @@ export default function Logout() {
                   color="danger"
                   onPress={() => {
                     onClose();
-                    logout(navigate);
+                    // logout(navigate);
+                    logOut();
+                    navigate("/login");
                   }}
                 >
                   Yes

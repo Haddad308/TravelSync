@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import AgenciesTable from "./components/Agencies.Table";
 import { getAgencies } from "./Agencies.handlers";
+// import withPageRequiredAuth from "../auth/context/with-page-required-auth";
+// import { RoleEnum } from "../../enums/role-enum";
 
 const columns = [
   { name: "ID", uid: "id", sortable: true },

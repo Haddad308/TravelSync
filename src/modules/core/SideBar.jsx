@@ -1,7 +1,7 @@
 import { HiMiniPresentationChartBar } from "react-icons/hi2";
 import { FaLocationDot } from "react-icons/fa6";
 import NavItem from "./components/NavItem";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Skeleton } from "@nextui-org/react";
 import ChangeLocale from "./components/ChangeLocale";
 import Logout from "../auth/components/Logout";
 import { IoPeopleSharp } from "react-icons/io5";
@@ -9,6 +9,7 @@ import { SiOnlyoffice } from "react-icons/si";
 import { GrServices } from "react-icons/gr";
 import { IoDocumentText } from "react-icons/io5";
 import { PiCurrencyDollarFill } from "react-icons/pi";
+import useAuth from "../auth/context/use-auth";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
 
@@ -60,6 +61,7 @@ const USER_ITEMS = [
 ];
 
 const SideBar = () => {
+  const { user, isLoaded } = useAuth();
   return (
     <div className="bg-main h-screen col-span-2 text-white flex flex-col justify-between w-2/12">
       <div>
@@ -89,21 +91,34 @@ const SideBar = () => {
           <Logout />
         </div>
         <footer className="text-white py-3 px-[20px] border-t-2 gap-4 border-gray-500 flex flex-col justify-center items-start">
-          <div className="flex gap-5">
-            <Avatar
-              isBordered
-              color="success"
-              radius="full"
-              size="md"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-            />
-            <div className="flex flex-col gap-1 items-start justify-center">
-              <h4 className="text-small font-semibold leading-none ">
-                Zoey Lang
-              </h4>
-              <h5 className="text-small tracking-tight ">@zoeylang</h5>
+          {isLoaded ? (
+            <div className="flex gap-5">
+              <Avatar
+                isBordered
+                color="success"
+                radius="full"
+                size="md"
+                // src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+                src={user && user.profilePhoto.imageUrl}
+              />
+              <div className="flex flex-col gap-1 items-start justify-center">
+                <h4 className="text-small font-semibold leading-none ">
+                  {user?.firstName} {user?.lastName}
+                </h4>
+                <h5 className="text-small tracking-tight ">{user?.email}</h5>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="max-w-[300px] w-full flex items-center gap-3">
+              <div>
+                <Skeleton className="flex rounded-full w-12 h-12" />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <Skeleton className="h-3 w-3/5 rounded-lg" />
+                <Skeleton className="h-3 w-4/5 rounded-lg" />
+              </div>
+            </div>
+          )}
         </footer>
       </div>
     </div>
