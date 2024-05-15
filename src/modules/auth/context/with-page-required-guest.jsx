@@ -11,10 +11,8 @@ function WithPageRequiredGuest({ children }) {
     const check = () => {
       if (!user || !isLoaded) return;
 
-      const params = new URLSearchParams(window.location.search);
       const returnTo =
-        params.get("returnTo") ??
-        (user?.role?.id === RoleEnum.admin ? "/Dashboard" : "/home");
+        user?.role?.id === RoleEnum.admin ? "/Dashboard" : "/user/Home";
       navigate(returnTo);
     };
 

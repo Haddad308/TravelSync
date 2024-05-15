@@ -24,12 +24,14 @@ const Login = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState("");
   // const [, SetToken] = useContext(auth);
   // const navigate = useNavigate();
 
   const onSubmit = async (formData) => {
+    setIsLoading(true);
+
     const { data, status } = await fetchAuthLogin(formData);
 
     if (status === HTTP_CODES_ENUM.UNPROCESSABLE_ENTITY) {
@@ -49,6 +51,7 @@ const Login = () => {
       });
       setUser(data.user);
     }
+    setIsLoading(false);
   };
 
   const formHandler = useFormik({

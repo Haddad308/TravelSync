@@ -43,9 +43,9 @@ export default function Logout() {
                 <Button
                   color="danger"
                   onPress={() => {
+                    navigate("/login");
                     onClose();
                     logOut();
-                    navigate("/login");
                   }}
                 >
                   Yes

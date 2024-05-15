@@ -16,7 +16,6 @@ import CruisesTable from "../cruises/Cruises.Table";
 import TransportationTable from "../transportation/Transportation.Table";
 import PackagesTable from "../packages/Packages.Table";
 
-
 export default function Services() {
   const [selected, setSelected] = useState("flights");
   const [data, setData] = useState([]);

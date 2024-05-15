@@ -51,8 +51,8 @@ function WithPageRequiredAuth({ options, children }) {
       let redirectTo = `/login?${params.toString()}`;
 
       if (user) {
-        logOut();
-        redirectTo = `/login`;
+        // logOut();
+        redirectTo = `/unauthorized`;
       }
 
       navigate(redirectTo);

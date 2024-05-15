@@ -10,6 +10,8 @@ import { GrServices } from "react-icons/gr";
 import { IoDocumentText } from "react-icons/io5";
 import { PiCurrencyDollarFill } from "react-icons/pi";
 import useAuth from "../auth/context/use-auth";
+import { IoHome } from "react-icons/io5";
+import { RoleEnum } from "../../enums/role-enum";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
 
@@ -49,15 +51,20 @@ const ADMIN_ITEMS = [
 // eslint-disable-next-line no-unused-vars
 const USER_ITEMS = [
   {
-    title: "",
-    path: "/",
-    icon: "",
+    title: "Home",
+    path: "/user/Home",
+    icon: <IoHome className={ICON_STYLE} />,
   },
-  { title: "", path: "/" },
-  { title: "", path: "/" },
-  { title: "", path: "/" },
-  { title: "", path: "/" },
-  { title: "", path: "/" },
+  {
+    title: "Finance",
+    path: "/user/Finance",
+    icon: <PiCurrencyDollarFill className={ICON_STYLE} />,
+  },
+  {
+    title: "Reservation",
+    path: "/user/Reservations",
+    icon: <IoDocumentText className={ICON_STYLE} />,
+  },
 ];
 
 const SideBar = () => {
@@ -74,13 +81,22 @@ const SideBar = () => {
         <div>
           {/* I will add a condition here to add other users ITEMS. */}
           <ul className="my-2 font-medium">
-            {ADMIN_ITEMS.map(({ title, path, icon }, idx) => {
-              return (
-                <NavItem title={title} path={path} key={idx}>
-                  {icon}
-                </NavItem>
-              );
-            })}
+            {user.role.id === RoleEnum.admin &&
+              ADMIN_ITEMS.map(({ title, path, icon }, idx) => {
+                return (
+                  <NavItem title={title} path={path} key={idx}>
+                    {icon}
+                  </NavItem>
+                );
+              })}
+            {user.role.id === RoleEnum.travelAgent &&
+              USER_ITEMS.map(({ title, path, icon }, idx) => {
+                return (
+                  <NavItem title={title} path={path} key={idx}>
+                    {icon}
+                  </NavItem>
+                );
+              })}
           </ul>
         </div>
       </div>
