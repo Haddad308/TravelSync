@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
-import Services from "./modules/services/Services";
 import Reservation from "./modules/reservation/pages/Reservation";
 import ReservationPage from "./modules/reservation/pages/ReservationPage";
 import Finance from "./modules/finance/pages/Finance";
