@@ -1,7 +1,6 @@
 import { instance } from "../../network/axios";
 import Cookies from "js-cookie";
-
-const token = Cookies.get("userToken");
+const token = JSON.parse(Cookies.get("auth-token-data"))?.token;
 
 async function getAccounts(SetAccounts, setIsLoading, id = "") {
   setIsLoading(true);

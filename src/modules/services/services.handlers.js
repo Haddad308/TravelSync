@@ -6,10 +6,8 @@ const deleted = () => toast.success("The Hotel deleted successfully.");
 const added = () => toast.success("The Hotel added successfully.");
 const edited = () => toast.success("The Hotel edited successfully.");
 
-const token = Cookies.get("userToken");
-
+const token = JSON.parse(Cookies.get("auth-token-data"))?.token;
 async function getService(SetService, setIsLoading, service) {
-  setIsLoading(true);
   let data = await instance
     .get(`/api/v1/${service}`, {
       headers: {
@@ -20,7 +18,6 @@ async function getService(SetService, setIsLoading, service) {
       console.error(error);
       setIsLoading(false);
     });
-
   if (data?.status === 200) {
     SetService(data.data);
     setIsLoading(false);

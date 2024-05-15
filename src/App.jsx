@@ -1,9 +1,4 @@
-import {
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./modules/auth/pages/Login";
 import UnAuthorized from "./modules/auth/pages/UnAuthorized";
 import NotFound from "./modules/auth/pages/NotFound";
@@ -140,9 +135,6 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route></Route>
-      </Routes>
       <Toaster />
       <RouterProvider router={routers} />
     </>
