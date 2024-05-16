@@ -29,7 +29,7 @@ export default function FinanceTable({ users = [], isLoading }) {
     { name: "type", uid: "type", sortable: true },
     { name: "amount", uid: "amount", sortable: true },
     { name: "currency", uid: "currency" },
-    { name: "Agency", uid: "agency", sortable: true },
+    // { name: "Agency", uid: "agency", sortable: true },
   ];
 
   const [filterValue, setFilterValue] = React.useState("");

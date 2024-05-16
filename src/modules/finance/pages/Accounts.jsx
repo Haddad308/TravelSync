@@ -20,7 +20,7 @@ export default function Accounts() {
             <div className="w-full md:w-72 mt-3">
               <Input
                 label="Search"
-                // icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              // icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
           </div>
@@ -33,7 +33,7 @@ export default function Accounts() {
                   AgnecyName={travelOffice?.name}
                   AgnecyEmail={travelOffice?.email}
                   AgencyBalance={currentBalance}
-                  AgencyProfilePhoto={travelOffice.profilePhoto.imageUrl}
+                  AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                 />
               );
             })}
