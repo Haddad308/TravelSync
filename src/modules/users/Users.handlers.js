@@ -101,7 +101,7 @@ async function editUser(values, id, setIsLoading, callback) {
 
   try {
     // Make POST request to add a user
-    await instance.patch(`http://localhost:3000/api/v1/users/${id}`, values, {
+    await instance.patch(`/api/v1/users/${id}`, values, {
       headers: {
         Authorization: "Bearer " + token, // Include bearer token in the header
       },

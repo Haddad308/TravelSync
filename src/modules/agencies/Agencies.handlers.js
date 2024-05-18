@@ -78,15 +78,11 @@ async function editAgency(values, id, setIsLoading, callback) {
 
   try {
     // Make POST request to add a user
-    await instance.patch(
-      `http://localhost:3000/api/v1/travel-offices/${id}`,
-      values,
-      {
-        headers: {
-          Authorization: "Bearer " + token, // Include bearer token in the header
-        },
+    await instance.patch(`/api/v1/travel-offices/${id}`, values, {
+      headers: {
+        Authorization: "Bearer " + token, // Include bearer token in the header
       },
-    );
+    });
     // If successful, clear API error and log success message
     callback();
     edited();

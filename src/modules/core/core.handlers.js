@@ -10,15 +10,11 @@ async function uploadImage(imagesList, setIsLoading, setApiErrorImg, status) {
       formData.append("files", image);
     });
 
-    const result = await instance.post(
-      "http://localhost:3000/api/v1/images/upload",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+    const result = await instance.post("/api/v1/images/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-    );
+    });
 
     const uploadedImageIds = result.data.map((image) => image.id);
     return uploadedImageIds;
