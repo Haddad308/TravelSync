@@ -83,9 +83,6 @@ export default function ServicesView() {
     },
   ];
 
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
 
   return (
     <div className="flex w-full flex-col m-5 p-5 rounded-lg bg-white ">

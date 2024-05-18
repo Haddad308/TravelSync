@@ -32,7 +32,6 @@ function WithPageRequiredAuth({ options, children }) {
 
   useEffect(() => {
     const check = () => {
-      console.log("optionRoles: ", optionRoles, "userRole: ", user?.role?.id);
       if (
         (user &&
           user?.role?.id &&
@@ -64,7 +63,7 @@ function WithPageRequiredAuth({ options, children }) {
 
   return user && user?.role?.id && optionRoles.includes(Number(user?.role.id))
     ? // <Component {...props} />
-      children
+    children
     : null;
   // };
 }

@@ -1,6 +1,8 @@
 import { ClockLoader } from "react-spinners"
 import FlightCard from "./FlightCard"
 import ServiceCard from "./ServiceCard"
+import HotelsFilter from "../components/HotelsFilters"
+
 
 const ServicesWrapper = ({ data, isLoading, type }) => {
     return (
@@ -10,24 +12,28 @@ const ServicesWrapper = ({ data, isLoading, type }) => {
                     <ClockLoader color="#36d7b7" size={100} />
                 </div>
             ) : (
-                type === "flights" ?
+                type === "flights" ? (
                     data.map(({ id }) => (
                         <FlightCard
                             key={id}
                             img="https://img.freepik.com/premium-vector/airline-logo-plane-travel-icon-airport-flight-world-aviation-aircraft-business-tourism-logo_41737-1254.jpg"
                         />
                     ))
-                    :
-                    data.map(({ id, name, images, stars }) => (
-                        <ServiceCard
-                            key={id}
-                            img={images[0]?.imageUrl}
-                            stars={stars}
-                            hotelName={name}
-                            numberOfRooms={52}
-                        />
-                    ))
+                ) : (
+                    <HotelsFilter>
+                        {data.map(({ id, name, images, stars }) => (
+                            <ServiceCard
+                                key={id}
+                                img={images[0]?.imageUrl}
+                                stars={stars}
+                                hotelName={name}
+                                numberOfRooms={52}
+                            />
+                        ))}
+                    </HotelsFilter>
+                )
             )}
+
         </div>
     );
 
