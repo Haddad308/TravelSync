@@ -54,15 +54,11 @@ async function editService(values, id, setIsLoading, callback, service) {
 
   try {
     // Make POST request to add a user
-    await instance.patch(
-      `http://localhost:3000/api/v1/${service}/${id}`,
-      values,
-      {
-        headers: {
-          Authorization: "Bearer " + token, // Include bearer token in the header
-        },
+    await instance.patch(`/api/v1/${service}/${id}`, values, {
+      headers: {
+        Authorization: "Bearer " + token, // Include bearer token in the header
       },
-    );
+    });
     // If successful, clear API error and log success message
     callback(service);
     edited();
