@@ -8,8 +8,6 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
-// import Reservation from "./modules/reservation/pages/Reservation";
-// import ReservationPage from "./modules/reservation/pages/ReservationPage";
 import UserAccount from "./modules/finance/pages/UserAccount";
 import { RoleEnum } from "./enums/role-enum";
 import WithPageRequiredAuth from "./modules/auth/context/with-page-required-auth";
@@ -23,6 +21,7 @@ import Finance from "./modules/finance/pages/Finance.admin";
 import Accounts from "./modules/finance/pages/Accounts";
 import Reservation from "./modules/reservation/pages/Reservation.admin";
 import ReservationPage from "./modules/reservation/pages/ReservationPage.admin";
+import HotelsPage from "./modules/services/pages/Hotels.page";
 
 function App() {
   const { i18n } = useTranslation();
@@ -82,6 +81,7 @@ function App() {
             <Route path="Home" element={<ServicesView />} />
             <Route path="Finance" element={<FinanceUser />} />
             <Route path="Reservations" element={<ReservationUser />} />
+            <Route path="hotel/:id" element={<HotelsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Button } from "@nextui-org/react"
 import { FaStar } from "react-icons/fa6"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
-export default function ServiceCard({ img, hotelName, stars, numberOfRooms }) {
+export default function ServiceCard({ img, hotelName, stars, numberOfRooms, id }) {
+    const navigate = useNavigate();
     return (
         <div className="flex justify-between gap-6 p-3 border-2 rounded-xl m-2 " >
             <div className="flex  gap-6 justify-center  " >
@@ -37,9 +38,7 @@ export default function ServiceCard({ img, hotelName, stars, numberOfRooms }) {
                     <h1 className="font-semibold" >1500 EGP</h1>
                     <h1>Per Night</h1>
                 </div>
-                <Link to={"/details"} >
-                    <Button className="bg-[#616CA8] text-white font-semibold" >Reserve Room</Button>
-                </Link>
+                <Button onClick={() => { navigate(`/user/hotel/${id}`) }} className="bg-[#616CA8] text-white font-semibold" >Reserve Room</Button>
             </div>
         </div>
     )

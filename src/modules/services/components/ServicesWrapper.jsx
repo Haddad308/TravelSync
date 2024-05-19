@@ -3,7 +3,6 @@ import FlightCard from "./FlightCard"
 import ServiceCard from "./ServiceCard"
 import HotelsFilter from "../components/HotelsFilters"
 
-
 const ServicesWrapper = ({ data, isLoading, type }) => {
     return (
         <div className="flex flex-col gap-5">
@@ -23,6 +22,7 @@ const ServicesWrapper = ({ data, isLoading, type }) => {
                     <HotelsFilter>
                         {data.map(({ id, name, images, stars }) => (
                             <ServiceCard
+                                id={id}
                                 key={id}
                                 img={images[0]?.imageUrl}
                                 stars={stars}
