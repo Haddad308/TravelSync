@@ -10,11 +10,11 @@ export const ImageGallery = ({ images }) => {
     return (
         <>
             {images.length === 0 ? (
-                <div className="col-span-7 text-center">No images found</div>
+                <div className="col-span-12 text-center">No images found</div>
             ) : (
-                <div className="grid grid-cols-7 gap-4">
+                <div className="grid grid-cols-8 gap-4">
 
-                    <div id="section-1" className="col-span-3 h-[100%] flex items-center justify-center">
+                    <div id="section-1" className="col-span-4 h-[100%] flex items-center justify-center">
                         {images.length > 0 && (
                             <img
                                 className={`rounded-xl h-full w-full object-cover ${loadedImages.includes(0) ? '' : 'hidden'}`}

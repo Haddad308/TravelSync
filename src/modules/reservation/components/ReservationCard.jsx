@@ -3,14 +3,17 @@ import { LuClock3 } from "react-icons/lu";
 import { Avatar, Button } from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function ReservationCard({ id, AgencyName, AgencyEmail, AgencyContact, status, info1, info2, info3, ReservationDate }) {
+export default function ReservationCard({ id, AgencyName, AgencyEmail, AgencyContact, status, info1, info2, info3, ReservationDate, isAdmin }) {
 
     const date = new Date(ReservationDate);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const navigate = useNavigate();
 
     const handleCheckInClick = () => {
-        navigate(`/Reservation/${id}`);
+        if (isAdmin)
+            navigate(`/Reservation/${id}`);
+        else
+            navigate(`/user/ReservationUser/${id}`);
     };
 
     return (

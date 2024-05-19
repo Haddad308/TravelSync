@@ -22,6 +22,7 @@ const ServicesWrapper = ({ data, isLoading, type }) => {
                     <HotelsFilter>
                         {data.map(({ id, name, images, stars }) => (
                             <ServiceCard
+                                type={type}
                                 id={id}
                                 key={id}
                                 img={images[0]?.imageUrl}

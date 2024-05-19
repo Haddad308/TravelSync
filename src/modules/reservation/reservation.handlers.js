@@ -2,8 +2,7 @@ import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-const confirmed = () =>
-  toast.success("The reservation confirmed successfully.");
+const confirmed = () => toast.success("The reservation confirmed successfully.");
 const canceled = () => toast.success("The reservation canceled successfully.");
 
 const cookie = Cookies.get("auth-token-data");
@@ -18,7 +17,7 @@ async function getReservation(
   setIsLoading(true);
   let data = await instance
     .get(
-      `/api/reservations${status ? `?filters=${encodeURIComponent(JSON.stringify({ status: status }))}` : ""}${id ? `/${id}` : ""}`,
+      `/api/reservations?limit=50${status ? `&filters=${encodeURIComponent(JSON.stringify({ status: status }))}` : ""}${id ? `/${id}` : ""}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -75,4 +74,25 @@ async function acceptReservation(setIsLoading, id = "", callback) {
   }
 }
 
-export { getReservation, cancelReservation, acceptReservation };
+async function Reserve(setIsLoading, values) {
+  console.log(token);
+  setIsLoading(true);
+  try {
+    let data = await instance.post(`/api/reservations`, values, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (data?.status === 201) {
+      confirmed();
+      // callback()
+    }
+  } catch (error) {
+    console.log(error);
+    console.error(error);
+  } finally {
+    setIsLoading(false);
+  }
+}
+
+export { getReservation, cancelReservation, acceptReservation, Reserve };

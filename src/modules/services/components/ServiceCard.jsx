@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/react"
 import { FaStar } from "react-icons/fa6"
 import { useNavigate } from "react-router-dom"
 
-export default function ServiceCard({ img, hotelName, stars, numberOfRooms, id }) {
+export default function ServiceCard({ img, hotelName, stars, numberOfRooms, id, type }) {
     const navigate = useNavigate();
     return (
         <div className="flex justify-between gap-6 p-3 border-2 rounded-xl m-2 " >
@@ -38,7 +38,7 @@ export default function ServiceCard({ img, hotelName, stars, numberOfRooms, id }
                     <h1 className="font-semibold" >1500 EGP</h1>
                     <h1>Per Night</h1>
                 </div>
-                <Button onClick={() => { navigate(`/user/hotel/${id}`) }} className="bg-[#616CA8] text-white font-semibold" >Reserve Room</Button>
+                <Button onClick={() => { navigate(`/user/${type}/${id}`) }} className="bg-[#616CA8] text-white font-semibold" >Reserve Room</Button>
             </div>
         </div>
     )

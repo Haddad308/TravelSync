@@ -49,6 +49,7 @@ export default function Reservation() {
                                         info2={service.type}
                                         info3={service.description}
                                         ReservationDate={checkInDate}
+                                        isAdmin={true}
                                     />
                                 })}
                             </div>
