@@ -21,6 +21,12 @@ const UserAccount = () => {
     getTransactions(setTransition, setIsLoading, id);
   }, [id]);
 
+
+  const handlechange = () => {
+    getTransactions(setTransition, setIsLoading, id);
+    getAccounts(setAccount, setIsLoading, id);
+  }
+
   return (
     <div className="m-5 p-5 rounded-lg bg-white">
       {isLoading ? (
@@ -84,7 +90,7 @@ const UserAccount = () => {
           </div>
           <div className="m-6 p-6 bg-white rounded-3xl">
             <h1 className="text-xl font-bold mb-4">Last Transactions</h1>
-            <FinanceTable users={transition} isLoading={isLoading} />
+            <FinanceTable users={transition} isLoading={isLoading} handlechange={handlechange} />
           </div>
         </>
       )}

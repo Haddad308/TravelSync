@@ -20,16 +20,19 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
+import Transactions from "./Transaction";
 
 const INITIAL_VISIBLE_COLUMNS = ["type", "amount", "currency"];
 
-export default function FinanceTable({ users = [], isLoading }) {
+export default function FinanceTable({ users = [], isLoading, handlechange }) {
+
+  console.log(handlechange);
+
   const columns = [
     { name: "ID", uid: "id", sortable: true },
     { name: "type", uid: "type", sortable: true },
     { name: "amount", uid: "amount", sortable: true },
     { name: "currency", uid: "currency" },
-    // { name: "Agency", uid: "agency", sortable: true },
   ];
 
   const [filterValue, setFilterValue] = React.useState("");
@@ -122,6 +125,10 @@ export default function FinanceTable({ users = [], isLoading }) {
             <h1>{user.account?.travelOffice?.name}</h1>
           </div>
         );
+      case "amount":
+        return (
+          <h1 className={`${user.type === "deposit" ? "text-green-600" : "text-red-600"} flex `} ><p>{user.type === "deposit" ? "+" : "-"} </p>{user.amount}$</h1>
+        );
       default:
         return cellValue;
     }
@@ -187,6 +194,8 @@ export default function FinanceTable({ users = [], isLoading }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
+            {/* Here */}
+            <Transactions handlechange={handlechange} />
           </div>
         </div>
         <div className="flex justify-between items-center">
