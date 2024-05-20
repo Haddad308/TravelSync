@@ -2,25 +2,30 @@ import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-const confirmed = () => toast.success("The reservation confirmed successfully.");
+const confirmed = () =>
+  toast.success("The reservation confirmed successfully.");
 const canceled = () => toast.success("The reservation canceled successfully.");
 
 const cookie = Cookies.get("auth-token-data");
 const token = JSON.parse(cookie ? cookie : "null")?.token;
+console.log("this is the token from the reservation handlers file", token);
 
 async function getReservation(
   SetReservation,
   setIsLoading,
   status = "",
   id = "",
+  token = "",
 ) {
+  const cookie = Cookies.get("auth-token-data");
+  const token1 = JSON.parse(cookie ? cookie : "null")?.token;
   setIsLoading(true);
   let data = await instance
     .get(
-      `/api/reservations?limit=50${status ? `&filters=${encodeURIComponent(JSON.stringify({ status: status }))}` : ""}${id ? `/${id}` : ""}`,
+      `/api/reservations${id ? `/${id}` : ""}?limit=50${status ? `&filters=${encodeURIComponent(JSON.stringify({ status: status }))}` : ""}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token1}`,
         },
       },
     )
