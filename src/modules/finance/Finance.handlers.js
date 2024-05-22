@@ -1,17 +1,14 @@
 import { instance } from "../../network/axios";
-import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 
 const Done = () => toast.success("transactions successfully.");
 
 
-async function getAccounts(SetAccounts, setIsLoading, id = "") {
-  const cookie = Cookies.get("auth-token-data");
-  const token = JSON.parse(cookie ? cookie : "null")?.token;
+async function getAccounts(SetAccounts, setIsLoading, id = "", isUser = false, token) {
 
   setIsLoading(true);
   let data = await instance
-    .get(`/api/accounts${id ? `/${id}` : " "}`, {
+    .get(`/api/${isUser ? "v1/travel-offices/account" : "accounts"}${id ? `/${id}` : " "}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,11 +21,10 @@ async function getAccounts(SetAccounts, setIsLoading, id = "") {
     SetAccounts(data.data);
   }
   setIsLoading(false);
+
 }
 
-async function getTransactions(SetTransactions, setIsLoading, id = "") {
-  const cookie = Cookies.get("auth-token-data");
-  const token = JSON.parse(cookie ? cookie : "null")?.token;
+async function getTransactions(SetTransactions, setIsLoading, id = "", token) {
 
   setIsLoading(true);
   let data = await instance
@@ -48,7 +44,6 @@ async function getTransactions(SetTransactions, setIsLoading, id = "") {
 }
 
 async function MakeTransaction(values, setIsLoading, id = "", token, callback) {
-  console.log(callback);
   setIsLoading(true);
 
   try {

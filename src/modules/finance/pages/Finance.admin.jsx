@@ -4,24 +4,20 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { getAccounts, getTransactions } from "../Finance.handlers";
 import FinanceTable from "../components/FinanceTable";
+import useAuthTokens from "../../auth/context/use-auth-tokens";
 
 export default function Finance() {
   const [accounts, setAccounts] = useState([]);
   const [transitions, setTransitions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const tokenObj = useAuthTokens();
+  const token = tokenObj.tokensInfoRef.current.token;
 
   useEffect(() => {
-    getAccounts(setAccounts, setIsLoading);
-    getTransactions(setTransitions, setIsLoading);
-  }, []);
+    getAccounts(setAccounts, setIsLoading, "", false, token);
+    getTransactions(setTransitions, setIsLoading, "", token);
+  }, [token]);
 
-  useEffect(() => {
-    console.log("check", accounts);
-  }, [accounts]);
-
-  useEffect(() => {
-    console.log("check transitions", transitions);
-  }, [transitions]);
 
   return (
     <div>
@@ -56,7 +52,7 @@ export default function Finance() {
       </div>
       <div className="m-6 p-6 bg-white rounded-3xl">
         <h1 className="text-xl font-bold mb-4">Last Transactions</h1>
-        <FinanceTable users={transitions} isLoading={isLoading} />
+        <FinanceTable users={transitions} isLoading={isLoading} isAdmin={false} />
       </div>
     </div>
   );
