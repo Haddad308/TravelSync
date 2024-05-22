@@ -12,63 +12,69 @@ import { PiCurrencyDollarFill } from "react-icons/pi";
 import useAuth from "../auth/context/use-auth";
 import { IoHome } from "react-icons/io5";
 import { RoleEnum } from "../../enums/role-enum";
+import { useTranslation } from "react-i18next";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
 
-const ADMIN_ITEMS = [
-  {
-    title: "Dashboard",
-    path: "/Dashboard",
-    icon: <HiMiniPresentationChartBar className={ICON_STYLE} />,
-  },
-  {
-    title: "Agencies",
-    path: "/Agencies",
-    icon: <SiOnlyoffice className={ICON_STYLE} />,
-  },
-  {
-    title: "Users",
-    path: "/Users",
-    icon: <IoPeopleSharp className={ICON_STYLE} />,
-  },
-  {
-    title: "Services",
-    path: "/Services",
-    icon: <GrServices className={ICON_STYLE} />,
-  },
-  {
-    title: "Reservations",
-    path: "/Reservations",
-    icon: <IoDocumentText className={ICON_STYLE} />,
-  },
-  {
-    title: "Finance",
-    path: "/Finance",
-    icon: <PiCurrencyDollarFill className={ICON_STYLE} />,
-  },
-];
 
-// eslint-disable-next-line no-unused-vars
-const USER_ITEMS = [
-  {
-    title: "Home",
-    path: "/user/Home",
-    icon: <IoHome className={ICON_STYLE} />,
-  },
-  {
-    title: "Finance",
-    path: "/user/Finance",
-    icon: <PiCurrencyDollarFill className={ICON_STYLE} />,
-  },
-  {
-    title: "Reservation",
-    path: "/user/Reservations",
-    icon: <IoDocumentText className={ICON_STYLE} />,
-  },
-];
 
 const SideBar = () => {
+  const { t } = useTranslation();
   const { user, isLoaded } = useAuth();
+
+  const ADMIN_ITEMS = [
+    {
+      title: t("Dashboard"),
+      path: "/Dashboard",
+      icon: <HiMiniPresentationChartBar className={ICON_STYLE} />,
+    },
+    {
+      title: t("Agencies"),
+      path: "/Agencies",
+      icon: <SiOnlyoffice className={ICON_STYLE} />,
+    },
+    {
+      title: t("Users"),
+      path: "/Users",
+      icon: <IoPeopleSharp className={ICON_STYLE} />,
+    },
+    {
+      title: t("Services"),
+      path: "/Services",
+      icon: <GrServices className={ICON_STYLE} />,
+    },
+    {
+      title: t("Reservations"),
+      path: "/Reservations",
+      icon: <IoDocumentText className={ICON_STYLE} />,
+    },
+    {
+      title: t("Finance"),
+      path: "/Finance",
+      icon: <PiCurrencyDollarFill className={ICON_STYLE} />,
+    },
+  ];
+
+  // eslint-disable-next-line no-unused-vars
+  const USER_ITEMS = [
+    {
+      title: t("Dashboard"),
+      path: "/user/Home",
+      icon: <IoHome className={ICON_STYLE} />,
+    },
+    {
+      title: t("Finance"),
+      path: "/user/Finance",
+      icon: <PiCurrencyDollarFill className={ICON_STYLE} />,
+    },
+    {
+      title: t("Reservations"),
+      path: "/user/Reservations",
+      icon: <IoDocumentText className={ICON_STYLE} />,
+    },
+  ];
+
+
   return (
     <div className="bg-main h-screen col-span-2 text-white flex flex-col justify-between w-2/12">
       <div>
