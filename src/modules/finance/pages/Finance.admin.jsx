@@ -9,13 +9,16 @@ import useAuthTokens from "../../auth/context/use-auth-tokens";
 export default function Finance() {
   const [accounts, setAccounts] = useState([]);
   const [transitions, setTransitions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // ! We need to add loader here to the page. 
+  const [, setIsLoading] = useState(false);
+  const [isLoadingT, setIsLoadingT] = useState(false);
+
   const tokenObj = useAuthTokens();
   const token = tokenObj.tokensInfoRef.current.token;
 
   useEffect(() => {
     getAccounts(setAccounts, setIsLoading, "", false, token);
-    getTransactions(setTransitions, setIsLoading, "", token);
+    getTransactions(setTransitions, setIsLoadingT, "", token);
   }, [token]);
 
 
@@ -52,7 +55,7 @@ export default function Finance() {
       </div>
       <div className="m-6 p-6 bg-white rounded-3xl">
         <h1 className="text-xl font-bold mb-4">Last Transactions</h1>
-        <FinanceTable users={transitions} isLoading={isLoading} isAdmin={false} />
+        <FinanceTable users={transitions} isLoading={isLoadingT} isAdmin={false} />
       </div>
     </div>
   );

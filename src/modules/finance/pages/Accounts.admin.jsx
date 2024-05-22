@@ -9,6 +9,7 @@ export default function Accounts() {
   const [, setIsLoading] = useState(false);
   const tokenObj = useAuthTokens();
   const token = tokenObj.tokensInfoRef.current.token;
+  // ! We need to add loader here to the page. 
 
   useEffect(() => {
     getAccounts(setAccounts, setIsLoading, "", false, token);

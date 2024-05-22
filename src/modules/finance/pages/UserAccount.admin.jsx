@@ -12,6 +12,8 @@ import useAuthTokens from "../../auth/context/use-auth-tokens";
 const UserAccount = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingT, setIsLoadingT] = useState(false);
+
   const [account, setAccount] = useState([]);
   const [transition, setTransition] = useState([]);
   const tokenObj = useAuthTokens();
@@ -23,13 +25,13 @@ const UserAccount = () => {
 
   useEffect(() => {
     getAccounts(setAccount, setIsLoading, id, false, token);
-    getTransactions(setTransition, setIsLoading, id, token);
+    getTransactions(setTransition, setIsLoadingT, id, token);
   }, [id, token]);
 
 
   const handlechange = () => {
     getAccounts(setAccount, setIsLoading, id, false, token);
-    getTransactions(setTransition, setIsLoading, id, token);
+    getTransactions(setTransition, setIsLoadingT, id, token);
   }
 
   return (
@@ -44,7 +46,7 @@ const UserAccount = () => {
           <AccountDetails account={account} isAdmin={true} />
           <div className="m-6 p-6 bg-white rounded-3xl">
             <h1 className="text-xl font-bold mb-4">Last Transactions</h1>
-            <FinanceTable users={transition} isLoading={isLoading} handlechange={handlechange} isAdmin={true} />
+            <FinanceTable users={transition} isLoading={isLoadingT} handlechange={handlechange} isAdmin={true} />
           </div>
         </>
       )}
