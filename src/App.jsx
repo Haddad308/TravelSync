@@ -22,7 +22,7 @@ import Accounts from "./modules/finance/pages/Accounts.admin";
 import Reservation from "./modules/reservation/pages/Reservation.admin";
 import ReservationPage from "./modules/reservation/pages/ReservationPage.admin";
 import HotelsPage from "./modules/services/pages/Hotels.page";
-import ReserveService from "./modules/reservation/pages/ReserveService";
+import ReserveService from "./modules/reservation/pages/ReserveService.user";
 import RoomsPage from "./modules/services/pages/Rooms.page";
 import ReservationPageUser from "./modules/reservation/pages/ReservationPage.user";
 

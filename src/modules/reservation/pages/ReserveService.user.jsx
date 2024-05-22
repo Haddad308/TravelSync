@@ -30,17 +30,20 @@ const ReserveService = () => {
 
     // Function to add a new traveler
     const addTraveler = () => {
-        setTravelers(prevTravelers => [
-            ...prevTravelers,
-            {
+        setTravelers(() => {
+            // Create the new traveler object
+            const newTraveler = {
                 firstName: '',
                 lastName: '',
                 email: '',
                 mobilePhone: '',
                 dateOfBirth: '',
                 fileIds: []
-            }
-        ]);
+            };
+
+            // Append the new traveler to the existing travelers array
+            return [...formHandler.values.travelers, newTraveler];
+        });
     };
 
     // Use useFormik for form handling
