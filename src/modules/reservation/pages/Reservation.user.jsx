@@ -12,19 +12,11 @@ export default function Reservation() {
   const [selected, setSelected] = useState("all");
   const [isLoading, setIsLoading] = useState(false);
   const [reservations, setReservations] = useState([]);
-  const [reserved, setReserved] = useState([]);
-  const [pending, setPending] = useState([]);
-  const [canceled, setCanceled] = useState([]);
+
 
   useEffect(() => {
-    getReservation(setReservations, setIsLoading, "", "", token);
-    getReservation(setReserved, setIsLoading, "confirmed", "", token);
-    getReservation(setCanceled, setIsLoading, "canceled", "", token);
-    getReservation(setPending, setIsLoading, "pending", "", token);
-  }, [token]);
-  useEffect(() => {
-    console.log("toooookeenn: ", token);
-  }, [token]);
+    getReservation(setReservations, setIsLoading, selected, "", token);
+  }, [token, selected]);
 
   return (
     <div className="m-5 p-5 rounded-lg bg-white">
@@ -58,7 +50,7 @@ export default function Reservation() {
                       info2={service.type}
                       info3={service.description}
                       ReservationDate={checkInDate}
-                      isAdmin={false}
+                      isAdmin={true}
                     />
                   );
                 },
@@ -67,10 +59,10 @@ export default function Reservation() {
           )}
         </Tab>
         <Tab
-          key="reserved"
+          key="confirmed"
           title={
             <p className="text-green-500 font-semibold">
-              Reserved ({reserved.length})
+              Reserved ({reservations.length})
             </p>
           }
         >
@@ -80,7 +72,7 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reserved?.map(
+              {reservations?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard
@@ -105,7 +97,7 @@ export default function Reservation() {
           key="pending"
           title={
             <p className="text-yellow-500 font-semibold">
-              Pending ({pending.length})
+              Pending ({reservations.length})
             </p>
           }
         >
@@ -115,7 +107,7 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {pending?.map(
+              {reservations?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard
@@ -137,10 +129,10 @@ export default function Reservation() {
           )}
         </Tab>
         <Tab
-          key="cancelled"
+          key="canceled"
           title={
             <p className="text-red-500 font-semibold">
-              Cancelled ({canceled.length})
+              Cancelled ({reservations.length})
             </p>
           }
         >
@@ -150,7 +142,42 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {canceled?.map(
+              {reservations?.map(
+                ({ id, status, travelOffice, service, checkInDate }) => {
+                  return (
+                    <ReservationCard
+                      id={id}
+                      key={id}
+                      status={status}
+                      AgencyName={travelOffice.name}
+                      AgencyEmail={travelOffice.email}
+                      AgencyContact={travelOffice.phone}
+                      info1={service.name}
+                      info2={service.type}
+                      info3={service.description}
+                      ReservationDate={checkInDate}
+                    />
+                  );
+                },
+              )}
+            </div>
+          )}
+        </Tab>
+        <Tab
+          key="action_required"
+          title={
+            <p className="text-sky-600 font-semibold">
+              Action required ({reservations.length})
+            </p>
+          }
+        >
+          {isLoading ? (
+            <div className="flex justify-center items-center h-96">
+              <ClockLoader color="#36d7b7" size={100} />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-5 px-5 mt-5">
+              {reservations?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard

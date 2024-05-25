@@ -9,7 +9,6 @@ import { Reserve } from '../reservation.handlers';
 const ReserveService = () => {
     const [isLoading, setIsLoading] = useState(false);
 
-
     // Get ID from URL
     const location = useLocation();
 

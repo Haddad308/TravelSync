@@ -8,7 +8,8 @@ import ReservationTable from "../components/Reservation.Table";
 import useAuthTokens from "../../auth/context/use-auth-tokens";
 
 const ReservationPageUser = () => {
-  const { token } = useAuthTokens();
+  const tokenObj = useAuthTokens();
+  const token = tokenObj.tokensInfoRef.current.token;
 
   const [isLoading, setIsLoading] = useState(false);
   const [reservation, setReservation] = useState([]);
@@ -18,12 +19,10 @@ const ReservationPageUser = () => {
   const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
 
   useEffect(() => {
-    getReservation(setReservation, setIsLoading, "", id), token;
+    getReservation(setReservation, setIsLoading, "", id, token);
   }, [id, token]);
 
-  useEffect(() => {
-    console.log("toooookeenn: ", token);
-  }, [token]);
+
 
   const { name, email, phone } = reservation.travelOffice || {};
   const { airline, arrivalAddress, arrivalCity } =
@@ -44,19 +43,10 @@ const ReservationPageUser = () => {
         <>
           <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2">
             <div className=" flex justify-between p-3">
-              {status === "pending" ? (
-                <p className="flex items-center justify-between text-yellow-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Pending
-                </p>
-              ) : status === "canceled" ? (
-                <p className="flex items-center justify-between text-red-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Cancelled
-                </p>
-              ) : (
-                <p className="flex items-center justify-between font-semibold text-green-500">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Reserved
-                </p>
-              )}
+              {status === "pending" ? <p className="flex items-center justify-between text-yellow-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Pending</p>
+                : status === "canceled" ? <p className="flex items-center justify-between text-red-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Cancelled</p>
+                  : status === "action_required" ? <p className="flex items-center justify-between text-blue-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Action Required</p>
+                    : <p className="flex items-center justify-between font-semibold text-green-500" ><LuClock3 className="w-4 h-4" /> &nbsp;Reserved</p>}
               <p>{formattedDate}</p>
             </div>
             <div className="text-black flex justify-evenly items-center mb-5">

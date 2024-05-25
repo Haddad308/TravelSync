@@ -15,7 +15,6 @@ import WithPageRequiredGuest from "./modules/auth/context/with-page-required-gue
 import Services from "./modules/services/pages/Services.admin";
 import ServicesView from "./modules/services/pages/Services.user";
 import FinanceUser from "./modules/finance/pages/Finance.user";
-import ReservationUser from "./modules/reservation/pages/Reservation.user";
 import Agencies from "./modules/agencies/Agencies";
 import Finance from "./modules/finance/pages/Finance.admin";
 import Accounts from "./modules/finance/pages/Accounts.admin";
@@ -66,7 +65,6 @@ function App() {
             <Route path="Services" element={<Services />} />
             <Route path="Reservations" element={<Reservation />} />
             <Route path="Reservation/:id" element={<ReservationPage />} />
-            {/* <Route path="Reservation" element={<Reservation />} /> */}
             <Route path="Finance" element={<Finance />} />
             <Route path="Accounts" element={<Accounts />} />
             <Route path="UserAccount/:id" element={<UserAccount />} />
@@ -83,7 +81,7 @@ function App() {
           >
             <Route path="Home" element={<ServicesView />} />
             <Route path="Finance" element={<FinanceUser />} />
-            <Route path="Reservations" element={<ReservationUser />} />
+            <Route path="Reservations" element={<Reservation />} />
             <Route path="Reserve/:id" element={<ReserveService />} />
             <Route path="hotels/:id" element={<HotelsPage />} />
             <Route path="hotel-rooms/:id" element={<RoomsPage />} />

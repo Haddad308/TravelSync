@@ -7,8 +7,12 @@ import { ClockLoader } from "react-spinners";
 import CancelReservation from "../components/CancelReservation";
 import AcceptReservation from "../components/AcceptReservation";
 import ReservationTable from "../components/Reservation.Table";
+import useAuthTokens from "../../auth/context/use-auth-tokens";
 
 const ReservationPage = () => {
+
+  const tokenObj = useAuthTokens();
+  const token = tokenObj.tokensInfoRef.current.token;
   const [isLoading, setIsLoading] = useState(false);
   const [reservation, setReservation] = useState([]);
   const location = useLocation();
@@ -17,11 +21,11 @@ const ReservationPage = () => {
   const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
 
   const handleUpdate = () =>
-    getReservation(setReservation, setIsLoading, "", id);
+    getReservation(setReservation, setIsLoading, "", id, token);
 
   useEffect(() => {
-    getReservation(setReservation, setIsLoading, "", id);
-  }, [id]);
+    getReservation(setReservation, setIsLoading, "", id, token);
+  }, [id, token]);
 
   const { name, email, phone } = reservation.travelOffice || {};
   const { airline, arrivalAddress, arrivalCity } =
@@ -46,19 +50,10 @@ const ReservationPage = () => {
         <>
           <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2">
             <div className=" flex justify-between p-3">
-              {status === "pending" ? (
-                <p className="flex items-center justify-between text-yellow-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Pending
-                </p>
-              ) : status === "canceled" ? (
-                <p className="flex items-center justify-between text-red-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Cancelled
-                </p>
-              ) : (
-                <p className="flex items-center justify-between font-semibold text-green-500">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Reserved
-                </p>
-              )}
+              {status === "pending" ? <p className="flex items-center justify-between text-yellow-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Pending</p>
+                : status === "canceled" ? <p className="flex items-center justify-between text-red-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Cancelled</p>
+                  : status === "action_required" ? <p className="flex items-center justify-between text-blue-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Action Required</p>
+                    : <p className="flex items-center justify-between font-semibold text-green-500" ><LuClock3 className="w-4 h-4" /> &nbsp;Reserved</p>}
               <p>{formattedDate}</p>
             </div>
             <div className="text-black flex justify-evenly items-center mb-5">
