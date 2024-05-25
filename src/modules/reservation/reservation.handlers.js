@@ -30,7 +30,7 @@ async function getReservation(
     });
   if (data?.status === 200) {
     if (id) SetReservation(data.data);
-    else SetReservation(data.data.data);
+    else SetReservation(data.data.data.data);
   }
   setIsLoading(false);
 }
@@ -126,4 +126,39 @@ async function Reserve(setIsLoading, values) {
   }
 }
 
-export { getReservation, cancelReservation, acceptReservation, Reserve, requestAction };
+import axios from 'axios';
+
+async function uploadFile(file, isLoading, status, travellerIDs) {
+  isLoading = true; // Set loading state to true
+  try {
+    const formData = new FormData();
+    formData.append("files", file);
+
+    const result = await axios.post(
+      "http://localhost:3000/api/attatchments/upload",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    const uploadedImageIds = result.data.map((image) => image.id);
+
+    // Add the uploaded image IDs to the travellerIDs list
+    travellerIDs.push(...uploadedImageIds);
+  } catch (error) {
+    if (status !== "edit") {
+      throw error; // Re-throw the error to propagate it to the calling code
+    }
+  } finally {
+    isLoading = false;
+    // Set loading state to false regardless of success or failure
+  }
+}
+
+export default uploadFile;
+
+
+export { getReservation, cancelReservation, acceptReservation, Reserve, requestAction, uploadFile };
