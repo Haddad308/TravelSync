@@ -10,17 +10,23 @@ export default function ReservationCard({ id, AgencyName, AgencyEmail, AgencyCon
     const navigate = useNavigate();
 
     const handleCheckInClick = () => {
-        if (isAdmin)
+        if (isAdmin) {
+            console.log("Admin");
             navigate(`/Reservation/${id}`);
-        else
+        }
+        else {
+            console.log("User");
             navigate(`/user/ReservationUser/${id}`);
+        }
     };
 
     return (
         <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2" >
             <div className=" flex justify-between p-3">
                 {status === "pending" ? <p className="flex items-center justify-between text-yellow-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Pending</p>
-                    : status === "canceled" ? <p className="flex items-center justify-between text-red-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Cancelled</p> : <p className="flex items-center justify-between font-semibold text-green-500" ><LuClock3 className="w-4 h-4" /> &nbsp;Reserved</p>}
+                    : status === "canceled" ? <p className="flex items-center justify-between text-red-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Cancelled</p>
+                        : status === "action_required" ? <p className="flex items-center justify-between text-blue-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Action Required</p>
+                            : <p className="flex items-center justify-between font-semibold text-green-500" ><LuClock3 className="w-4 h-4" /> &nbsp;Reserved</p>}
                 <p>{formattedDate}</p>
             </div>
             <div className="text-black flex justify-center items-center">

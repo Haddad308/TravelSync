@@ -2,13 +2,9 @@ import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-const confirmed = () =>
-  toast.success("The reservation confirmed successfully.");
+const confirmed = () => toast.success("The reservation confirmed successfully.");
 const canceled = () => toast.success("The reservation canceled successfully.");
 
-const cookie = Cookies.get("auth-token-data");
-const token = JSON.parse(cookie ? cookie : "null")?.token;
-console.log("this is the token from the reservation handlers file", token);
 
 async function getReservation(
   SetReservation,
@@ -17,15 +13,14 @@ async function getReservation(
   id = "",
   token = "",
 ) {
-  const cookie = Cookies.get("auth-token-data");
-  const token1 = JSON.parse(cookie ? cookie : "null")?.token;
   setIsLoading(true);
+  status = status === "all" ? "" : status;
   let data = await instance
     .get(
       `/api/reservations${id ? `/${id}` : ""}?limit=50${status ? `&filters=${encodeURIComponent(JSON.stringify({ status: status }))}` : ""}`,
       {
         headers: {
-          Authorization: `Bearer ${token1}`,
+          Authorization: `Bearer ${token}`,
         },
       },
     )
@@ -40,7 +35,34 @@ async function getReservation(
   setIsLoading(false);
 }
 
+
+async function requestAction(setIsLoading, message, id = "", callback) {
+  const cookie = Cookies.get("auth-token-data");
+  const token = JSON.parse(cookie ? cookie : "null")?.token;
+
+  setIsLoading(true);
+  let data = await instance
+    .patch(`/api/reservations/${id}/request-action`, message, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((error) => {
+      console.error(error);
+      setIsLoading(false);
+    });
+  if (data?.status === 200) {
+    canceled();
+    callback();
+  }
+  setIsLoading(false);
+}
+
+
 async function cancelReservation(setIsLoading, message, id = "", callback) {
+  const cookie = Cookies.get("auth-token-data");
+  const token = JSON.parse(cookie ? cookie : "null")?.token;
+
   setIsLoading(true);
   let data = await instance
     .patch(`/api/reservations/${id}/cancel`, message, {
@@ -60,6 +82,9 @@ async function cancelReservation(setIsLoading, message, id = "", callback) {
 }
 
 async function acceptReservation(setIsLoading, id = "", callback) {
+  const cookie = Cookies.get("auth-token-data");
+  const token = JSON.parse(cookie ? cookie : "null")?.token;
+
   console.log(token);
   setIsLoading(true);
   try {
@@ -80,7 +105,8 @@ async function acceptReservation(setIsLoading, id = "", callback) {
 }
 
 async function Reserve(setIsLoading, values) {
-  console.log(token);
+  const cookie = Cookies.get("auth-token-data");
+  const token = JSON.parse(cookie ? cookie : "null")?.token;
   setIsLoading(true);
   try {
     let data = await instance.post(`/api/reservations`, values, {
@@ -100,4 +126,4 @@ async function Reserve(setIsLoading, values) {
   }
 }
 
-export { getReservation, cancelReservation, acceptReservation, Reserve };
+export { getReservation, cancelReservation, acceptReservation, Reserve, requestAction };

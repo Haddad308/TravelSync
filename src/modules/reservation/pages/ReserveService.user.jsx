@@ -10,6 +10,7 @@ import { getService } from "../../services/services.handlers";
 const ReserveService = () => {
   const [isLoading, setIsLoading] = useState(false);
 
+  // Get ID from URL
   const location = useLocation();
 
   const { pathname } = location;
