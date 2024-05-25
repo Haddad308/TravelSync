@@ -8,6 +8,7 @@ import CancelReservation from "../components/CancelReservation";
 import AcceptReservation from "../components/AcceptReservation";
 import ReservationTable from "../components/Reservation.Table";
 import useAuthTokens from "../../auth/context/use-auth-tokens";
+import ActionRequired from "../components/ActionRequired";
 
 const ReservationPage = () => {
 
@@ -114,7 +115,11 @@ const ReservationPage = () => {
             )}
             <div className="flex gap-4 justify-center  mb-5">
               {status == "pending" ? (
-                <CancelReservation id={id} handleUpdate={handleUpdate} />
+                <>
+                  <CancelReservation id={id} handleUpdate={handleUpdate} />
+                  <ActionRequired id={id} handleUpdate={handleUpdate} />
+                </>
+
               ) : (
                 ""
               )}

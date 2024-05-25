@@ -24,14 +24,14 @@ export default function Reservation() {
   const [isLoading, setIsLoading] = useState(false);
   const [reservations, setReservations] = useState([]);
 
-
-  useEffect(() => {
-    console.log("this is the token from the reservation page", isAdmin);
-  }, [isAdmin]);
-
   useEffect(() => {
     getReservation(setReservations, setIsLoading, selected, "", token);
   }, [token, selected]);
+
+
+  useEffect(() => {
+    console.log(reservations);
+  }, [reservations])
 
   return (
     <div className="m-5 p-5 rounded-lg bg-white">

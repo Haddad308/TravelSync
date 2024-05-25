@@ -5,9 +5,11 @@ import * as Yup from 'yup'; // For validation.
 import { useFormik } from 'formik';
 import { Button, Input } from '@nextui-org/react';
 import { Reserve } from '../reservation.handlers';
+import TravellerFileUploader from '../components/TravellerFileUploader';
 
 const ReserveService = () => {
     const [isLoading, setIsLoading] = useState(false);
+
 
     // Get ID from URL
     const location = useLocation();
@@ -68,10 +70,11 @@ const ReserveService = () => {
                 })
             ),
         }),
-        onSubmit: (values) => {
+        onSubmit: (values, { resetForm }) => {
+            console.log("test values", values);
             // Handle form submission
             Reserve(setIsLoading, values);
-            // resetForm();
+            resetForm();
         },
     });
 
@@ -82,10 +85,7 @@ const ReserveService = () => {
 
     return (
         <form onSubmit={formHandler.handleSubmit} className="m-5 p-5 rounded-lg bg-white" >
-
             <div className='flex-grow' >
-
-
                 <div className='grid grid-cols-3 gap-5'>
                     <div className='col-span-2 '>
                         <h1 className="text-2xl font-semibold">Reservation details</h1>
@@ -111,8 +111,6 @@ const ReserveService = () => {
 
                         {/* Check-In Date Input */}
                         <div className='grid grid-cols-2 gap-3' >
-
-
                             <div>
                                 <Input
                                     id="checkInDate"
@@ -148,6 +146,8 @@ const ReserveService = () => {
                                 ) : null}
                             </div>
                         </div>
+
+
                     </div>
                     <div className=' rounded-2xl border-2 p-5 flex-none'>
                         <h2 className='text-2xl font-semibold mb-2'>Price Details</h2>
@@ -262,6 +262,13 @@ const ReserveService = () => {
                                 <div className="text-red-600">{formHandler.errors.travelers[idx].dateOfBirth}</div>
                             ) : null}
                         </div>
+
+                        <TravellerFileUploader
+                            key={idx}
+                            TravellerFiles={formHandler.values.travelers[idx]?.fileIds}
+                            idx={idx}
+                        />
+
                     </div>
                 ))}
 
