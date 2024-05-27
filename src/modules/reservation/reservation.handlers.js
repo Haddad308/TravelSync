@@ -2,9 +2,9 @@ import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 
-const confirmed = () => toast.success("The reservation confirmed successfully.");
+const confirmed = () =>
+  toast.success("The reservation confirmed successfully.");
 const canceled = () => toast.success("The reservation canceled successfully.");
-
 
 async function getReservation(
   SetReservation,
@@ -30,11 +30,15 @@ async function getReservation(
     });
   if (data?.status === 200) {
     if (id) SetReservation(data.data);
-    else SetReservation(data.data.data.data);
+    else {
+      SetReservation({
+        data: [...data.data.data.data],
+        count: data.data.count,
+      });
+    }
   }
   setIsLoading(false);
 }
-
 
 async function requestAction(setIsLoading, message, id = "", callback) {
   const cookie = Cookies.get("auth-token-data");
@@ -57,7 +61,6 @@ async function requestAction(setIsLoading, message, id = "", callback) {
   }
   setIsLoading(false);
 }
-
 
 async function cancelReservation(setIsLoading, message, id = "", callback) {
   const cookie = Cookies.get("auth-token-data");
@@ -126,7 +129,7 @@ async function Reserve(setIsLoading, values) {
   }
 }
 
-import axios from 'axios';
+import axios from "axios";
 
 async function uploadFile(file, isLoading, status, travellerIDs) {
   isLoading = true; // Set loading state to true
@@ -141,7 +144,7 @@ async function uploadFile(file, isLoading, status, travellerIDs) {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     const uploadedImageIds = result.data.map((image) => image.id);
@@ -160,5 +163,11 @@ async function uploadFile(file, isLoading, status, travellerIDs) {
 
 export default uploadFile;
 
-
-export { getReservation, cancelReservation, acceptReservation, Reserve, requestAction, uploadFile };
+export {
+  getReservation,
+  cancelReservation,
+  acceptReservation,
+  Reserve,
+  requestAction,
+  uploadFile,
+};

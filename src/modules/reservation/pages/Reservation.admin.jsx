@@ -28,10 +28,9 @@ export default function Reservation() {
     getReservation(setReservations, setIsLoading, selected, "", token);
   }, [token, selected]);
 
-
   useEffect(() => {
     console.log(reservations);
-  }, [reservations])
+  }, [reservations]);
 
   return (
     <div className="m-5 p-5 rounded-lg bg-white">
@@ -43,7 +42,9 @@ export default function Reservation() {
       >
         <Tab
           key="all"
-          title={<p className="font-semibold">All ({reservations.length})</p>}
+          title={
+            <p className="font-semibold">All ({reservations.data.length})</p>
+          }
         >
           {isLoading ? (
             <div className="flex justify-center items-center h-96">
@@ -51,25 +52,26 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations?.map(
-                ({ id, status, travelOffice, service, checkInDate }) => {
-                  return (
-                    <ReservationCard
-                      id={id}
-                      key={id}
-                      status={status}
-                      AgencyName={travelOffice.name}
-                      AgencyEmail={travelOffice.email}
-                      AgencyContact={travelOffice.phone}
-                      info1={service.name}
-                      info2={service.type}
-                      info3={service.description}
-                      ReservationDate={checkInDate}
-                      isAdmin={isAdmin.current}
-                    />
-                  );
-                },
-              )}
+              {reservations &&
+                reservations.data?.map(
+                  ({ id, status, travelOffice, service, checkInDate }) => {
+                    return (
+                      <ReservationCard
+                        id={id}
+                        key={id}
+                        status={status}
+                        AgencyName={travelOffice.name}
+                        AgencyEmail={travelOffice.email}
+                        AgencyContact={travelOffice.phone}
+                        info1={service.name}
+                        info2={service.type}
+                        info3={service.description}
+                        ReservationDate={checkInDate}
+                        isAdmin={isAdmin.current}
+                      />
+                    );
+                  },
+                )}
             </div>
           )}
         </Tab>
@@ -77,7 +79,7 @@ export default function Reservation() {
           key="confirmed"
           title={
             <p className="text-green-500 font-semibold">
-              Reserved ({reservations.length})
+              Reserved ({reservations.count?.confirmed ?? 0})
             </p>
           }
         >
@@ -87,7 +89,7 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations?.map(
+              {reservations.data?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard
@@ -113,7 +115,7 @@ export default function Reservation() {
           key="pending"
           title={
             <p className="text-yellow-500 font-semibold">
-              Pending ({reservations.length})
+              Pending ({reservations.count?.pending ?? 0})
             </p>
           }
         >
@@ -123,7 +125,7 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations?.map(
+              {reservations.data?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard
@@ -149,7 +151,7 @@ export default function Reservation() {
           key="canceled"
           title={
             <p className="text-red-500 font-semibold">
-              Cancelled ({reservations.length})
+              Cancelled ({reservations.count?.canceled ?? 0})
             </p>
           }
         >
@@ -159,7 +161,7 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations?.map(
+              {reservations.data?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard
@@ -185,7 +187,7 @@ export default function Reservation() {
           key="action_required"
           title={
             <p className="text-blue-500 font-semibold">
-              Action required ({reservations.length})
+              Action required ({reservations.count?.action_required ?? 0})
             </p>
           }
         >
@@ -195,7 +197,7 @@ export default function Reservation() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations?.map(
+              {reservations.data?.map(
                 ({ id, status, travelOffice, service, checkInDate }) => {
                   return (
                     <ReservationCard
