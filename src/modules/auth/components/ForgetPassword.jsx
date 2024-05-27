@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -7,10 +7,12 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Input,
 } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 
 export default function ForgetPassword() {
+  const [email, setEmail] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = React.useState("opaque");
   const { t } = useTranslation();
@@ -38,7 +40,26 @@ export default function ForgetPassword() {
                 <p>
                   If you forgot your password, please contact with us <br />
                   <span className="font-semibold">Wholesalers@gmail.com</span>
+                  <br />
+                  Or reach us on WhatsApp: <br />
+                  <span className="font-semibold">+1234567890</span>
+                  or fill the form below
                 </p>
+                <form>
+                  <br />
+                  <Input
+                    type="email"
+                    id="email"
+                    label="Email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <br />
+                  <Button color="primary" variant="light">
+                    Send
+                  </Button>
+                </form>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>

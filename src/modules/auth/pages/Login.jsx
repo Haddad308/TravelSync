@@ -36,10 +36,17 @@ const Login = () => {
 
     if (status === HTTP_CODES_ENUM.UNPROCESSABLE_ENTITY) {
       setApiError(data.errors);
+      setIsLoading(false);
       // Object.keys(data.errors).forEach((key) => {
       //   setApiError(data.errors[key]);
       // });
 
+      return;
+    }
+
+    if (status === HTTP_CODES_ENUM.NOT_FOUND) {
+      setApiError("Wrong Email or Password.");
+      setIsLoading(false);
       return;
     }
 
@@ -50,7 +57,10 @@ const Login = () => {
         tokenExpires: data.tokenExpires,
       });
       setUser(data.user);
+      setIsLoading(false);
+      return;
     }
+    setApiError("Something went wrong");
     setIsLoading(false);
   };
 
