@@ -13,7 +13,6 @@ export default function Reservation() {
   const [isLoading, setIsLoading] = useState(false);
   const [reservations, setReservations] = useState([]);
 
-
   useEffect(() => {
     getReservation(setReservations, setIsLoading, selected, "", token);
   }, [token, selected]);
@@ -62,7 +61,7 @@ export default function Reservation() {
           key="confirmed"
           title={
             <p className="text-green-500 font-semibold">
-              Reserved ({reservations.length})
+              Reserved ({reservations.count.confirmed})
             </p>
           }
         >
@@ -97,7 +96,7 @@ export default function Reservation() {
           key="pending"
           title={
             <p className="text-yellow-500 font-semibold">
-              Pending ({reservations.length})
+              Pending ({reservations.count.pending})
             </p>
           }
         >
@@ -132,7 +131,7 @@ export default function Reservation() {
           key="canceled"
           title={
             <p className="text-red-500 font-semibold">
-              Cancelled ({reservations.length})
+              Cancelled ({reservations.count.cancelled})
             </p>
           }
         >

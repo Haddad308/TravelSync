@@ -11,7 +11,6 @@ import useAuthTokens from "../../auth/context/use-auth-tokens";
 import ActionRequired from "../components/ActionRequired";
 
 const ReservationPage = () => {
-
   const tokenObj = useAuthTokens();
   const token = tokenObj.tokensInfoRef.current.token;
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +31,7 @@ const ReservationPage = () => {
   const { airline, arrivalAddress, arrivalCity } =
     reservation.service?.flight || {};
   const { status, checkInDate, CancelReason, travelers } = reservation;
-  const { price, type, description } = reservation.service || {};
+  const { type, description } = reservation.service || {};
 
   const date = new Date(checkInDate);
   const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
@@ -51,10 +50,23 @@ const ReservationPage = () => {
         <>
           <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2">
             <div className=" flex justify-between p-3">
-              {status === "pending" ? <p className="flex items-center justify-between text-yellow-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Pending</p>
-                : status === "canceled" ? <p className="flex items-center justify-between text-red-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Cancelled</p>
-                  : status === "action_required" ? <p className="flex items-center justify-between text-blue-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Action Required</p>
-                    : <p className="flex items-center justify-between font-semibold text-green-500" ><LuClock3 className="w-4 h-4" /> &nbsp;Reserved</p>}
+              {status === "pending" ? (
+                <p className="flex items-center justify-between text-yellow-500 font-semibold">
+                  <LuClock3 className="w-4 h-4" /> &nbsp;Pending
+                </p>
+              ) : status === "canceled" ? (
+                <p className="flex items-center justify-between text-red-500 font-semibold">
+                  <LuClock3 className="w-4 h-4" /> &nbsp;Cancelled
+                </p>
+              ) : status === "action_required" ? (
+                <p className="flex items-center justify-between text-blue-500 font-semibold">
+                  <LuClock3 className="w-4 h-4" /> &nbsp;Action Required
+                </p>
+              ) : (
+                <p className="flex items-center justify-between font-semibold text-green-500">
+                  <LuClock3 className="w-4 h-4" /> &nbsp;Reserved
+                </p>
+              )}
               <p>{formattedDate}</p>
             </div>
             <div className="text-black flex justify-evenly items-center mb-5">
@@ -100,7 +112,7 @@ const ReservationPage = () => {
               </div>
               <div>
                 <h1 className="text-lg font-bold mb-2">Total price</h1>
-                <p className="text-sm text-center">{price}$</p>
+                <p className="text-sm text-center">{reservation.totalPrice}$</p>
               </div>
             </div>
             {/* Actions */}
@@ -119,7 +131,6 @@ const ReservationPage = () => {
                   <CancelReservation id={id} handleUpdate={handleUpdate} />
                   <ActionRequired id={id} handleUpdate={handleUpdate} />
                 </>
-
               ) : (
                 ""
               )}
