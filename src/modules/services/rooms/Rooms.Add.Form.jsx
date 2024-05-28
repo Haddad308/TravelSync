@@ -33,9 +33,7 @@ export default function RoomsForm({ handleUpdate }) {
     getService(setHotels, setIsLoading, "hotels");
   }, []);
 
-  // const handleUpdateHotel = () => {
-  //   getService(setHotels, setIsLoading, "hotels");
-  // };
+
 
   const handleCloseModal = () => {
     formHandler.resetForm();

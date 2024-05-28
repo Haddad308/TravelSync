@@ -1,11 +1,14 @@
 import { LuClock3 } from "react-icons/lu";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button, Tooltip } from "@nextui-org/react";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getReservation } from "../reservation.handlers";
 import { ClockLoader } from "react-spinners";
 import ReservationTable from "../components/Reservation.Table";
 import useAuthTokens from "../../auth/context/use-auth-tokens";
+import { FaExclamationCircle } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
+import { MdFileDownloadDone } from "react-icons/md";
 
 const ReservationPageUser = () => {
   const tokenObj = useAuthTokens();
@@ -43,10 +46,39 @@ const ReservationPageUser = () => {
         <>
           <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2">
             <div className=" flex justify-between p-3">
-              {status === "pending" ? <p className="flex items-center justify-between text-yellow-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Pending</p>
-                : status === "canceled" ? <p className="flex items-center justify-between text-red-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Cancelled</p>
-                  : status === "action_required" ? <p className="flex items-center justify-between text-blue-500 font-semibold" ><LuClock3 className="w-4 h-4" /> &nbsp;Action Required</p>
-                    : <p className="flex items-center justify-between font-semibold text-green-500" ><LuClock3 className="w-4 h-4" /> &nbsp;Reserved</p>}
+              {status === "pending" ? (
+                <Tooltip key={"warning"} color={"warning"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"warning"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <LuClock3 className="w-4 h-4" /> &nbsp;
+                    {"Pending"}
+                  </Button>
+                </Tooltip>
+              ) : status === "canceled" ? (
+                <Tooltip key={"danger"} color={"danger"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"danger"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <ImCancelCircle className="w-4 h-4" /> &nbsp;
+                    {"Canceled"}
+                  </Button>
+                </Tooltip>
+              ) : status === "action_required" ? (
+                <Tooltip key={"secondary"} color={"secondary"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"secondary"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <FaExclamationCircle className="w-4 h-4" /> &nbsp;
+                    {"Action required"}
+                  </Button>
+                </Tooltip>
+              ) : (
+                <Tooltip key={"success"} color={"success"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"success"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <MdFileDownloadDone className="w-4 h-4" /> &nbsp;
+                    {"Reserved"}
+                  </Button>
+                </Tooltip>
+              )}
               <p>{formattedDate}</p>
             </div>
             <div className="text-black flex justify-evenly items-center mb-5">

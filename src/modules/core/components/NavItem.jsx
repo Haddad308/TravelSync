@@ -6,7 +6,7 @@ const NavItem = ({ title, path, children }) => {
     <li>
       <Link
         to={path}
-        className="flex items-center p-2 mx-3 mb-1 text-black rounded-lg transition duration-300 hover:bg-[#cef661] focus:bg-[#cef661] group">
+        className="flex items-center p-2 mx-3 mb-1 text-[#3e4740] rounded-lg transition duration-300 hover:text-black focus:text-black hover:bg-primary focus:bg-primary group">
         {children}
         <span className="flex-1 ms-3 whitespace-nowrap text-lg">{title}</span>
       </Link>

@@ -97,11 +97,11 @@ export default function AgenciesTable({
             avatarProps={{
               radius: "full",
               size: "sm",
-              isBordered: "true",
+              isBordered: true,
               src: user.profilePhoto?.imageUrl,
             }}
             classNames={{
-              description: "text-default-500",
+              description: "text-default-500"
             }}
             description={user.email}
             name={cellValue}

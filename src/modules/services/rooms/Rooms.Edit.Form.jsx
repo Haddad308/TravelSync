@@ -32,7 +32,6 @@ export default function RoomsFormEdit({ handleUpdate, roomID, data }) {
     getService(setHotels, setIsLoading, "hotels");
   }, []);
 
-  console.log("data", data);
 
   const formHandler = useFormik({
     initialValues: {

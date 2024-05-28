@@ -48,11 +48,9 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
     { name: "hotelId", uid: "hotelId" },
     { name: "numberOfBeds`", uid: "numberOfBeds" },
     { name: "numberOfSleeps", uid: "numberOfSleeps" },
-
     { name: "ACTIONS", uid: "actions" },
   ];
 
-  console.log("daaaaataaa:", data);
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -107,7 +105,6 @@ export default function RoomsTable({ data, isLoading, handleUpdate }) {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback((service, columnKey) => {
-    console.log("service:", service);
     const cellValue = service[columnKey];
     switch (columnKey) {
       case "departureAddress":

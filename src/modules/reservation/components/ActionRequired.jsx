@@ -28,7 +28,7 @@ export default function ActionRequired({ id, handleUpdate }) {
 
     return (
         <>
-            <Button onPress={onOpen} color="secondary" variant="flat">Change Request</Button>
+            <Button onPress={onOpen} color="secondary" variant="flat" className="font-semibold">Change Request</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (

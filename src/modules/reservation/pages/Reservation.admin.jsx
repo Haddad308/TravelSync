@@ -48,7 +48,7 @@ export default function Reservation() {
         >
           {isLoading ? (
             <div className="flex justify-center items-center h-96">
-              <ClockLoader color="#36d7b7" size={100} />
+              <ClockLoader color="primary" size={100} />
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
@@ -81,7 +81,7 @@ export default function Reservation() {
         <Tab
           key="confirmed"
           title={
-            <p className="text-green-500 font-semibold">
+            <p className="text-success font-semibold">
               Reserved ({reservations.count?.confirmed ?? 0})
             </p>
           }
@@ -118,7 +118,7 @@ export default function Reservation() {
         <Tab
           key="pending"
           title={
-            <p className="text-yellow-500 font-semibold">
+            <p className="text-warning font-semibold">
               Pending ({reservations.count?.pending ?? 0})
             </p>
           }
@@ -155,7 +155,7 @@ export default function Reservation() {
         <Tab
           key="canceled"
           title={
-            <p className="text-red-500 font-semibold">
+            <p className="text-danger font-semibold">
               Cancelled ({reservations.count?.canceled ?? 0})
             </p>
           }
@@ -192,7 +192,7 @@ export default function Reservation() {
         <Tab
           key="action_required"
           title={
-            <p className="text-blue-500 font-semibold">
+            <p className="text-secondary font-semibold">
               Action required ({reservations.count?.action_required ?? 0})
             </p>
           }

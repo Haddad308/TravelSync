@@ -10,6 +10,7 @@ const cookie = Cookies.get("auth-token-data");
 const token = JSON.parse(cookie ? cookie : "null")?.token;
 
 async function getService(SetService, setIsLoading, service) {
+  setIsLoading(true);
   let data = await instance
     .get(`/api/v1/${service}`, {
       headers: {

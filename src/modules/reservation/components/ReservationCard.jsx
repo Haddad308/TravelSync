@@ -1,7 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { LuClock3 } from "react-icons/lu";
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button, Tooltip } from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
+import { MdFileDownloadDone } from "react-icons/md";
+import { ImCancelCircle } from "react-icons/im";
+import { FaExclamationCircle } from "react-icons/fa";
 
 export default function ReservationCard({
   id,
@@ -31,24 +34,40 @@ export default function ReservationCard({
   };
 
   return (
-    <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2">
+    <div className=" flex flex-col mb-4 rounded-xl border-grey border-2">
       <div className=" flex justify-between p-3">
         {status === "pending" ? (
-          <p className="flex items-center justify-between text-yellow-500 font-semibold">
-            <LuClock3 className="w-4 h-4" /> &nbsp;Pending
-          </p>
+          <Tooltip key={"warning"} color={"warning"} content={"Created at: " + formattedDate} className="capitalize ">
+            <Button variant="flat" color={"warning"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+              <LuClock3 className="w-4 h-4" /> &nbsp;
+              {"Pending"}
+            </Button>
+          </Tooltip>
         ) : status === "canceled" ? (
-          <p className="flex items-center justify-between text-red-500 font-semibold">
-            <LuClock3 className="w-4 h-4" /> &nbsp;Cancelled
-          </p>
+          <Tooltip key={"danger"} color={"danger"} content={"Created at: " + formattedDate} className="capitalize ">
+            <Button variant="flat" color={"danger"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+              <ImCancelCircle className="w-4 h-4" /> &nbsp;
+              {"Canceled"}
+            </Button>
+          </Tooltip>
         ) : status === "action_required" ? (
-          <p className="flex items-center justify-between text-blue-500 font-semibold">
-            <LuClock3 className="w-4 h-4" /> &nbsp;Action Required
-          </p>
+          <Tooltip key={"secondary"} color={"secondary"} content={"Created at: " + formattedDate} className="capitalize ">
+            <Button variant="flat" color={"secondary"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+              <FaExclamationCircle className="w-4 h-4" /> &nbsp;
+              {"Action required"}
+            </Button>
+          </Tooltip>
         ) : (
-          <p className="flex items-center justify-between font-semibold text-green-500">
-            <LuClock3 className="w-4 h-4" /> &nbsp;Reserved
-          </p>
+          <Tooltip key={"success"} color={"success"} content={"Created at: " + formattedDate} className="capitalize ">
+            <Button variant="flat" color={"success"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+              <MdFileDownloadDone className="w-4 h-4" /> &nbsp;
+              {"Reserved"}
+            </Button>
+          </Tooltip>
         )}
         <p>{formattedDate}</p>
       </div>
@@ -56,7 +75,6 @@ export default function ReservationCard({
         <div className="flex items-center justify-center w-[50%]">
           <Avatar
             isBordered
-            color="success"
             radius="full"
             size="md"
             alt="Agency Profile Photo"
@@ -87,7 +105,7 @@ export default function ReservationCard({
       <div className="flex justify-center mt-3 mb-5  ">
         <Button
           onClick={handleCheckInClick}
-          className="bg-[#616CA8] w-96 text-white font-semibold"
+          className="bg-black w-36 rounded-lg  text-white font-semibold"
           size="md"
         >
           Check In

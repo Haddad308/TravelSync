@@ -4,7 +4,6 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Button,
 } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { GrLanguage } from "react-icons/gr";
@@ -12,7 +11,7 @@ import { GrLanguage } from "react-icons/gr";
 export default function ChangeLocale() {
   const { i18n } = useTranslation();
   const iconClasses =
-    "text-xl font-bold  text-black pointer-events-none flex-shrink-0";
+    "text-xl font-bold  text-slate-600 pointer-events-none flex-shrink-0";
   const [selectedKeys, setSelectedKeys] = React.useState(
     new Set([i18n.resolvedLanguage]),
   );
@@ -23,20 +22,21 @@ export default function ChangeLocale() {
   );
 
   return (
-    <Dropdown>
+    <Dropdown >
       <DropdownTrigger>
-        <Button
-          variant="light"
-          className="capitalize p-2 mx-3 mb-2 flex items-center justify-start  gap-2  text-white rounded-lg cursor-pointer transition-all duration-300 hover:bg-danger-500 "
+        <div
+          className="w-[90%] capitalize p-2 mx-3 mb-2 flex items-center justify-start gap-2 text-slate-600 rounded-lg cursor-pointer transition-all duration-300 hover:bg-primary group-hover:bg-primary hover:text-black focus:text-black"
         >
           <GrLanguage
-            className={`flex-shrink-0 ${i18n.resolvedLanguage === "en" ? "ml-1" : ""}  w-5 h-5 text-white transition duration-75`}
+            className={`flex-shrink-0 ${i18n.resolvedLanguage === "en" ? "ml-1" : ""} w-5 h-5 transition duration-75`}
           />
-          <p className="font-semibold text-white text-lg">
+          <p className="font-semibold  text-md group">
             {selectedValue === "en" ? "English" : "العربية"}
           </p>
-        </Button>
+        </div>
       </DropdownTrigger>
+
+
       <DropdownMenu
         aria-label="Single selection example"
         variant="flat"

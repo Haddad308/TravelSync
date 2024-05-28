@@ -107,37 +107,29 @@ export default function HotelsForm({ handleUpdate }) {
                         id="name"
                         type="name"
                         label="Name"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.name}
+                        isInvalid={formHandler.touched.name && formHandler.errors.name}
+                        errormessage={formHandler.errors.name}
                       />
-                      {formHandler.touched.name && formHandler.errors.name ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.name}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
                       <Input
                         id="stars"
-                        // type=""
                         label="stars"
-                        variant="bordered"
-                        labelPlacement="outside"
+
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.stars}
+                        isInvalid={formHandler.touched.stars && formHandler.errors.stars}
+                        errormessage={formHandler.errors.stars}
                       />
-                      {formHandler.touched.stars && formHandler.errors.stars ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.stars}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -145,19 +137,14 @@ export default function HotelsForm({ handleUpdate }) {
                         id="zipCode"
                         type="zipCode"
                         label="zipCode"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.zipCode}
+                        isInvalid={formHandler.touched.zipCode && formHandler.errors.zipCode}
+                        errormessage={formHandler.errors.zipCode}
                       />
-                      {formHandler.touched.zipCode &&
-                      formHandler.errors.zipCode ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.zipCode}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -165,18 +152,14 @@ export default function HotelsForm({ handleUpdate }) {
                         id="state"
                         type="state"
                         label="state"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.state}
+                        isInvalid={formHandler.touched.state && formHandler.errors.state}
+                        errormessage={formHandler.errors.state}
                       />
-                      {formHandler.touched.state && formHandler.errors.state ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.state}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -184,12 +167,12 @@ export default function HotelsForm({ handleUpdate }) {
                         id="city"
                         type="city"
                         label="city"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.city}
+                        isInvalid={formHandler.touched.city && formHandler.errors.city}
+                        errormessage={formHandler.errors.city}
                       />
                       {formHandler.touched.city && formHandler.errors.city ? (
                         <div className="text-red-600">
@@ -202,8 +185,7 @@ export default function HotelsForm({ handleUpdate }) {
                       <Input
                         id="email"
                         label="email"
-                        variant="bordered"
-                        labelPlacement="outside"
+
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
@@ -221,19 +203,14 @@ export default function HotelsForm({ handleUpdate }) {
                         id="phoneNumber"
                         type="phoneNumber"
                         label="phoneNumber"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.phoneNumber}
+                        isInvalid={formHandler.touched.phoneNumber && formHandler.errors.phoneNumber}
+                        errormessage={formHandler.errors.phoneNumber}
                       />
-                      {formHandler.touched.phoneNumber &&
-                      formHandler.errors.phoneNumber ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.phoneNumber}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -241,19 +218,14 @@ export default function HotelsForm({ handleUpdate }) {
                         id="mobileNumber"
                         type="mobileNumber"
                         label="mobileNumber"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.mobileNumber}
+                        isInvalid={formHandler.touched.mobileNumber && formHandler.errors.mobileNumber}
+                        errormessage={formHandler.errors.mobileNumber}
                       />
-                      {formHandler.touched.mobileNumber &&
-                      formHandler.errors.mobileNumber ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.mobileNumber}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -261,19 +233,14 @@ export default function HotelsForm({ handleUpdate }) {
                         id="address"
                         type="address"
                         label="address"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.address}
+                        isInvalid={formHandler.touched.address && formHandler.errors.address}
+                        errormessage={formHandler.errors.address}
                       />
-                      {formHandler.touched.address &&
-                      formHandler.errors.address ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.address}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -281,39 +248,30 @@ export default function HotelsForm({ handleUpdate }) {
                         id="website"
                         type="website"
                         label="website"
-                        variant="bordered"
-                        labelPlacement="outside"
+
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.website}
+                        isInvalid={formHandler.touched.website && formHandler.errors.website}
+                        errormessage={formHandler.errors.website}
                       />
-                      {formHandler.touched.website &&
-                      formHandler.errors.website ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.website}
-                        </div>
-                      ) : null}
+
                     </div>
 
-                    <div>
+                    <div className="col-span-2" >
                       <Input
                         id="description"
                         type="description"
                         label="description"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.description}
+                        isInvalid={formHandler.touched.description && formHandler.errors.description}
+                        errormessage={formHandler.errors.description}
                       />
-                      {formHandler.touched.description &&
-                      formHandler.errors.description ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.description}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div className="col-span-2">

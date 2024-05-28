@@ -1,5 +1,5 @@
 import { LuClock3 } from "react-icons/lu";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button, Tooltip } from "@nextui-org/react";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getReservation } from "../reservation.handlers";
@@ -9,6 +9,9 @@ import AcceptReservation from "../components/AcceptReservation";
 import ReservationTable from "../components/Reservation.Table";
 import useAuthTokens from "../../auth/context/use-auth-tokens";
 import ActionRequired from "../components/ActionRequired";
+import { ImCancelCircle } from "react-icons/im";
+import { FaExclamationCircle } from "react-icons/fa";
+import { MdFileDownloadDone } from "react-icons/md";
 
 const ReservationPage = () => {
   const tokenObj = useAuthTokens();
@@ -48,24 +51,40 @@ const ReservationPage = () => {
         </div>
       ) : (
         <>
-          <div className=" flex flex-col mb-4 rounded-3xl border-grey border-2">
+          <div className=" flex flex-col mb-4 rounded-xl border-grey border-2">
             <div className=" flex justify-between p-3">
               {status === "pending" ? (
-                <p className="flex items-center justify-between text-yellow-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Pending
-                </p>
+                <Tooltip key={"warning"} color={"warning"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"warning"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <LuClock3 className="w-4 h-4" /> &nbsp;
+                    {"Pending"}
+                  </Button>
+                </Tooltip>
               ) : status === "canceled" ? (
-                <p className="flex items-center justify-between text-red-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Cancelled
-                </p>
+                <Tooltip key={"danger"} color={"danger"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"danger"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <ImCancelCircle className="w-4 h-4" /> &nbsp;
+                    {"Canceled"}
+                  </Button>
+                </Tooltip>
               ) : status === "action_required" ? (
-                <p className="flex items-center justify-between text-blue-500 font-semibold">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Action Required
-                </p>
+                <Tooltip key={"secondary"} color={"secondary"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"secondary"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <FaExclamationCircle className="w-4 h-4" /> &nbsp;
+                    {"Action required"}
+                  </Button>
+                </Tooltip>
               ) : (
-                <p className="flex items-center justify-between font-semibold text-green-500">
-                  <LuClock3 className="w-4 h-4" /> &nbsp;Reserved
-                </p>
+                <Tooltip key={"success"} color={"success"} content={"Created at: " + formattedDate} className="capitalize ">
+                  <Button variant="flat" color={"success"} className="capitalize  h-[35px]  px-2 gap-0
+            ">
+                    <MdFileDownloadDone className="w-4 h-4" /> &nbsp;
+                    {"Reserved"}
+                  </Button>
+                </Tooltip>
               )}
               <p>{formattedDate}</p>
             </div>
@@ -125,21 +144,24 @@ const ReservationPage = () => {
             ) : (
               ""
             )}
-            <div className="flex gap-4 justify-center  mb-5">
-              {status == "pending" ? (
+            <div className="flex gap-4 mb-5">
+              {status === "pending" ? (
                 <>
                   <CancelReservation id={id} handleUpdate={handleUpdate} />
-                  <ActionRequired id={id} handleUpdate={handleUpdate} />
+                  <div className="ml-auto self-end">
+                    <ActionRequired id={id} handleUpdate={handleUpdate} />
+                  </div>
                 </>
               ) : (
                 ""
               )}
-              {status != "confirmed" ? (
+              {status !== "confirmed" ? (
                 <AcceptReservation id={id} handleUpdate={handleUpdate} />
               ) : (
                 ""
               )}
             </div>
+
           </div>
           <ReservationTable users={travelers} isLoading={isLoading} />
         </>

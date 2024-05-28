@@ -11,6 +11,7 @@ const tailwindConfig = {
       colors: {
         main: "#FAFAFA",
         second: "#EFF3F4",
+        primary: "#CDF463",
       },
     },
   },

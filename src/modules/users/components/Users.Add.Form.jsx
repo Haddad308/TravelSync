@@ -101,19 +101,17 @@ export default function UsersForm({ handleUpdate }) {
                         id="firstName"
                         type="firstName"
                         label="First Name"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.firstName}
+                        isInvalid={
+                          formHandler.errors.firstName &&
+                          formHandler.touched.firstName
+                        }
+                        errorMessage={formHandler.errors.firstName}
                       />
-                      {formHandler.touched.firstName &&
-                      formHandler.errors.firstName ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.firstName}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -121,19 +119,18 @@ export default function UsersForm({ handleUpdate }) {
                         id="lastName"
                         type="lastName"
                         label="lastName"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.lastName}
+                        isInvalid={
+                          formHandler.errors.lastName &&
+                          formHandler.touched.lastName
+                        }
+                        errorMessage={formHandler.errors.lastName}
+
                       />
-                      {formHandler.touched.lastName &&
-                      formHandler.errors.lastName ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.lastName}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -144,6 +141,12 @@ export default function UsersForm({ handleUpdate }) {
                         value={formHandler.values.travelOfficeId}
                         onClick={handleUpdateAgencies}
                         onChange={formHandler.handleChange("travelOfficeId")}
+                        isInvalid={
+                          formHandler.errors.travelOfficeId &&
+                          formHandler.touched.travelOfficeId
+                        }
+                        errorMessage={formHandler.errors.travelOfficeId}
+
                       >
                         {agencies.map(({ id, name }) => (
                           <SelectItem key={id} value={id}>
@@ -151,12 +154,6 @@ export default function UsersForm({ handleUpdate }) {
                           </SelectItem>
                         ))}
                       </Select>
-                      {formHandler.touched.travelOfficeId &&
-                      formHandler.errors.travelOfficeId ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.travelOfficeId}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div>
@@ -164,37 +161,33 @@ export default function UsersForm({ handleUpdate }) {
                         id="email"
                         type="email"
                         label="email"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.email}
+                        isInvalid={
+                          formHandler.errors.email && formHandler.touched.email
+                        }
+                        errorMessage={formHandler.errors.email}
+
                       />
-                      {formHandler.touched.email && formHandler.errors.email ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.email}
-                        </div>
-                      ) : null}
                     </div>
 
-                    <div>
+                    <div className="col-span-2">
                       <Input
                         id="password"
                         label="password"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.password}
+                        isInvalid={
+                          formHandler.errors.password &&
+                          formHandler.touched.password
+                        }
+                        errorMessage={formHandler.errors.password}
+
                       />
-                      {formHandler.touched.password &&
-                      formHandler.errors.password ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.password}
-                        </div>
-                      ) : null}
                     </div>
                     <div className="col-span-2">
                       {apiError ? <Alert text={apiError} /> : ""}
