@@ -9,7 +9,7 @@ import TravellerFileUploader from '../components/TravellerFileUploader';
 
 const ReserveService = () => {
     const [isLoading, setIsLoading] = useState(false);
-
+    const [isUploading, setIsUploading] = useState(false);
 
     // Get ID from URL
     const location = useLocation();
@@ -267,6 +267,7 @@ const ReserveService = () => {
                             key={idx}
                             TravellerFiles={formHandler.values.travelers[idx]?.fileIds}
                             idx={idx}
+                            setIsUploading={setIsUploading}
                         />
 
                     </div>
@@ -276,7 +277,7 @@ const ReserveService = () => {
                 <Button color="warning" onClick={addTraveler}>Add Traveler</Button>
 
                 {/* Submit button */}
-                <Button type="submit" color="primary" isLoading={isLoading} className="btn btn-primary mt-4">Submit</Button>
+                <Button type="submit" color="primary" disabled={isUploading} isLoading={isLoading} className={`btn ${isUploading ? "bg-gray-400" : "btn-primary"}  mt-4`}>Submit</Button>
             </div>
 
 

@@ -1,15 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import uploadFile from "../reservation.handlers";
 
-export default function TravellerFileUploader({ TravellerFiles, idx }) {
-
-    useEffect(() => {
-        console.log(idx);
-    }, [idx])
-
-
+export default function TravellerFileUploader({ TravellerFiles, idx, setIsUploading }) {
     const [files, setFiles] = useState([]);
     const [isLoading, setIsLoading] = useState({}); // Manage loading state for each file
+
+    const checkUploading = () => {
+        for (let i = 0; i < files.length; i++) {
+            if (!files[i].state) {
+                return false;
+            }
+        }
+        return true;
+    };
 
     const handleFileChange = (e) => {
         const newFiles = Array.from(e.target.files).map(file => ({
@@ -45,6 +49,16 @@ export default function TravellerFileUploader({ TravellerFiles, idx }) {
             }
         });
     }, [TravellerFiles, files, isLoading]);
+
+    useEffect(() => {
+        console.log(idx);
+    }, [idx])
+
+    useEffect(() => {
+        const allFilesUploaded = checkUploading();
+        setIsUploading(!allFilesUploaded);
+    }, [files]);
+
 
     return (
         <div className="w-full pt-5">
