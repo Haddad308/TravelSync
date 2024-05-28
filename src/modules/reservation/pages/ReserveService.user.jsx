@@ -13,35 +13,20 @@ const ReserveService = () => {
 
   // Get ID from URL
   const location = useLocation();
-  // Get ID from URL
-  const location = useLocation();
 
   const { pathname } = location;
-  const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
-  const { pathname } = location;
-  const id = parseInt(pathname.slice(pathname.lastIndexOf("/") + 1));
+  const id = parseInt(pathname.slice(pathname.lastIndexOf('/') + 1));
 
   // State to manage travelers
   const [travelers, setTravelers] = useState([
     {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobilePhone: "",
-      dateOfBirth: "",
-      fileIds: [],
-    },
-  ]);
-  // State to manage travelers
-  const [travelers, setTravelers] = useState([
-    {
-      firstName: "",
-      lastName: "",
-      email: "",
-      mobilePhone: "",
-      dateOfBirth: "",
-      fileIds: [],
-    },
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobilePhone: '',
+      dateOfBirth: '',
+      fileIds: []
+    }
   ]);
 
   // Function to add a new traveler
@@ -49,30 +34,14 @@ const ReserveService = () => {
     setTravelers(() => {
       // Create the new traveler object
       const newTraveler = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        mobilePhone: "",
-        dateOfBirth: "",
-        fileIds: [],
+        firstName: '',
+        lastName: '',
+        email: '',
+        mobilePhone: '',
+        dateOfBirth: '',
+        fileIds: []
       };
-      // Function to add a new traveler
-      const addTraveler = () => {
-        setTravelers(() => {
-          // Create the new traveler object
-          const newTraveler = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            mobilePhone: "",
-            dateOfBirth: "",
-            fileIds: [],
-          };
 
-          // Append the new traveler to the existing travelers array
-          return [...formHandler.values.travelers, newTraveler];
-        });
-      };
       // Append the new traveler to the existing travelers array
       return [...formHandler.values.travelers, newTraveler];
     });
@@ -111,11 +80,7 @@ const ReserveService = () => {
 
   // Sync travelers state with formik values
   useEffect(() => {
-    formHandler.setFieldValue("travelers", travelers);
-  }, [travelers]);
-  // Sync travelers state with formik values
-  useEffect(() => {
-    formHandler.setFieldValue("travelers", travelers);
+    formHandler.setFieldValue('travelers', travelers);
   }, [travelers]);
 
   return (
@@ -126,7 +91,7 @@ const ReserveService = () => {
             <h1 className="text-2xl font-semibold">Reservation details</h1>
 
             {/* Quantity Input */}
-            <div className="mb-2">
+            <div className='mb-2'>
               <Input
                 id="quantity"
                 type="number"
@@ -140,29 +105,7 @@ const ReserveService = () => {
                 value={formHandler.values.quantity}
               />
               {formHandler.touched.quantity && formHandler.errors.quantity ? (
-                <div className="text-red-600">
-                  {formHandler.errors.quantity}
-                </div>
-              ) : null}
-            </div>
-            {/* Quantity Input */}
-            <div className="mb-2">
-              <Input
-                id="quantity"
-                type="number"
-                label="Quantity"
-                variant="bordered"
-                labelPlacement="outside"
-                radius="lg"
-                min={1}
-                onChange={formHandler.handleChange}
-                onBlur={formHandler.handleBlur}
-                value={formHandler.values.quantity}
-              />
-              {formHandler.touched.quantity && formHandler.errors.quantity ? (
-                <div className="text-red-600">
-                  {formHandler.errors.quantity}
-                </div>
+                <div className="text-red-600">{formHandler.errors.quantity}</div>
               ) : null}
             </div>
 
@@ -217,160 +160,129 @@ const ReserveService = () => {
               <p>300 EGP</p>
             </div>
 
-            <hr className="border-dashed border-2 my-3" />
-            <hr className="border-dashed border-2 my-3" />
+            <hr className='border-dashed border-2 my-3' />
 
-            <div className="flex justify-between">
-              <p className="font-semibold">Total</p>
-              <p className="font-semibold">
-                {formHandler.values.quantity * 1500 + 300} EGP
-              </p>
+            <div className='flex justify-between'>
+              <p className='font-semibold'>Total</p>
+              <p className='font-semibold'>{(formHandler.values.quantity * 1500) + 300} EGP</p>
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <p className="font-semibold">Total</p>
-          <p className="font-semibold">
-            {formHandler.values.quantity * 1500 + 300} EGP
-          </p>
-        </div>
-      </div>
-    </div>
 
-        {/* Travelers Section */ }
-  {
-    travelers.map((_, idx) => (
-      <div key={idx} className="my-5">
-        <h1 className="text-2xl font-semibold">Traveler {idx + 1}</h1>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Input
-              id={`travelers[${idx}].firstName`}
-              type="text"
-              label="First Name hamo"
-              variant="bordered"
-              labelPlacement="outside"
-              radius="lg"
-              onChange={formHandler.handleChange}
-              onBlur={formHandler.handleBlur}
-              value={formHandler.values.travelers[idx]?.firstName || ""}
-            />
-            {formHandler.touched.travelers?.[idx]?.firstName &&
-              formHandler.errors.travelers?.[idx]?.firstName ? (
-              <div className="text-red-600">
-                {formHandler.errors.travelers[idx].firstName}
+        {/* Travelers Section */}
+        {travelers.map((_, idx) => (
+          <div key={idx} className="my-5">
+            <h1 className="text-2xl font-semibold">Traveler {idx + 1}</h1>
+            <div className='grid grid-cols-2 gap-3'>
+              <div>
+                <Input
+                  id={`travelers[${idx}].firstName`}
+                  type="text"
+                  label="First Name hamo"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  radius="lg"
+                  onChange={formHandler.handleChange}
+                  onBlur={formHandler.handleBlur}
+                  value={formHandler.values.travelers[idx]?.firstName || ''}
+                />
+                {formHandler.touched.travelers?.[idx]?.firstName && formHandler.errors.travelers?.[idx]?.firstName ? (
+                  <div className="text-red-600">{formHandler.errors.travelers[idx].firstName}</div>
+                ) : null}
               </div>
-            ) : null}
-          </div>
 
-          <div>
+              <div>
+                <div>
+                  <Input
+                    id={`travelers[${idx}].lastName`}
+                    type="text"
+                    label="Last Name"
+                    variant="bordered"
+                    labelPlacement="outside"
+                    radius="lg"
+                    onChange={formHandler.handleChange}
+                    onBlur={formHandler.handleBlur}
+                    value={formHandler.values.travelers[idx]?.lastName || ''}
+                  />
+                  {formHandler.touched.travelers?.[idx]?.lastName && formHandler.errors.travelers?.[idx]?.lastName ? (
+                    <div className="text-red-600">{formHandler.errors.travelers[idx].lastName}</div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+
+            <div className='grid grid-cols-2 gap-3'>
+              <div>
+                <Input
+                  id={`travelers[${idx}].mobilePhone`}
+                  type="text"
+                  label="Mobile Phone"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  radius="lg"
+                  onChange={formHandler.handleChange}
+                  onBlur={formHandler.handleBlur}
+                  value={formHandler.values.travelers[idx]?.mobilePhone || ''}
+                />
+                {formHandler.touched.travelers?.[idx]?.mobilePhone && formHandler.errors.travelers?.[idx]?.mobilePhone ? (
+                  <div className="text-red-600">{formHandler.errors.travelers[idx].mobilePhone}</div>
+                ) : null}
+              </div>
+              <div>
+                <Input
+                  id={`travelers[${idx}].email`}
+                  type="email"
+                  label="Email"
+                  variant="bordered"
+                  labelPlacement="outside"
+                  radius="lg"
+                  onChange={formHandler.handleChange}
+                  onBlur={formHandler.handleBlur}
+                  value={formHandler.values.travelers[idx]?.email || ''}
+                />
+                {formHandler.touched.travelers?.[idx]?.email && formHandler.errors.travelers?.[idx]?.email ? (
+                  <div className="text-red-600">{formHandler.errors.travelers[idx].email}</div>
+                ) : null}
+              </div>
+            </div>
+
             <div>
               <Input
-                id={`travelers[${idx}].lastName`}
-                type="text"
-                label="Last Name"
+                id={`travelers[${idx}].dateOfBirth`}
+                type="date"
+                label="Date of Birth"
                 variant="bordered"
                 labelPlacement="outside"
                 radius="lg"
                 onChange={formHandler.handleChange}
                 onBlur={formHandler.handleBlur}
-                value={formHandler.values.travelers[idx]?.lastName || ""}
+                value={formHandler.values.travelers[idx]?.dateOfBirth || ''}
               />
-              {formHandler.touched.travelers?.[idx]?.lastName &&
-                formHandler.errors.travelers?.[idx]?.lastName ? (
-                <div className="text-red-600">
-                  {formHandler.errors.travelers[idx].lastName}
-                </div>
+              {formHandler.touched.travelers?.[idx]?.dateOfBirth && formHandler.errors.travelers?.[idx]?.dateOfBirth ? (
+                <div className="text-red-600">{formHandler.errors.travelers[idx].dateOfBirth}</div>
               ) : null}
             </div>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Input
-              id={`travelers[${idx}].mobilePhone`}
-              type="text"
-              label="Mobile Phone"
-              variant="bordered"
-              labelPlacement="outside"
-              radius="lg"
-              onChange={formHandler.handleChange}
-              onBlur={formHandler.handleBlur}
-              value={formHandler.values.travelers[idx]?.mobilePhone || ""}
+            <TravellerFileUploader
+              key={idx}
+              TravellerFiles={formHandler.values.travelers[idx]?.fileIds}
+              idx={idx}
+              setIsUploading={setIsUploading}
             />
-            {formHandler.touched.travelers?.[idx]?.mobilePhone &&
-              formHandler.errors.travelers?.[idx]?.mobilePhone ? (
-              <div className="text-red-600">
-                {formHandler.errors.travelers[idx].mobilePhone}
-              </div>
-            ) : null}
+
           </div>
-          <div>
-            <Input
-              id={`travelers[${idx}].email`}
-              type="email"
-              label="Email"
-              variant="bordered"
-              labelPlacement="outside"
-              radius="lg"
-              onChange={formHandler.handleChange}
-              onBlur={formHandler.handleBlur}
-              value={formHandler.values.travelers[idx]?.email || ""}
-            />
-            {formHandler.touched.travelers?.[idx]?.email &&
-              formHandler.errors.travelers?.[idx]?.email ? (
-              <div className="text-red-600">
-                {formHandler.errors.travelers[idx].email}
-              </div>
-            ) : null}
-          </div>
-        </div>
+        ))}
 
-        <div>
-          <Input
-            id={`travelers[${idx}].dateOfBirth`}
-            type="date"
-            label="Date of Birth"
-            variant="bordered"
-            labelPlacement="outside"
-            radius="lg"
-            onChange={formHandler.handleChange}
-            onBlur={formHandler.handleBlur}
-            value={formHandler.values.travelers[idx]?.dateOfBirth || ''}
-          />
-          {formHandler.touched.travelers?.[idx]?.dateOfBirth && formHandler.errors.travelers?.[idx]?.dateOfBirth ? (
-            <div className="text-red-600">{formHandler.errors.travelers[idx].dateOfBirth}</div>
-          ) : null}
-        </div>
+        {/* Button to add a new traveler */}
+        <Button color="warning" onClick={addTraveler}>Add Traveler</Button>
 
-        <TravellerFileUploader
-          key={idx}
-          TravellerFiles={formHandler.values.travelers[idx]?.fileIds}
-          idx={idx}
-          setIsUploading={setIsUploading}
-        />
-
+        {/* Submit button */}
+        <Button type="submit" color="primary" disabled={isUploading} isLoading={isLoading} className={`btn ${isUploading ? "bg-gray-400" : "btn-primary"}  mt-4`}>Submit</Button>
       </div>
-    ))
-  }
-
-  {/* Button to add a new traveler */ }
-  <Button color="warning" onClick={addTraveler}>
-    Add Traveler
-  </Button>
-  {/* Button to add a new traveler */ }
-  <Button color="warning" onClick={addTraveler}>
-    Add Traveler
-  </Button>
-
-  {/* Submit button */ }
-  <Button type="submit" color="primary" disabled={isUploading} isLoading={isLoading} className={`btn ${isUploading ? "bg-gray-400" : "btn-primary"}  mt-4`}>Submit</Button>
-      </div >
 
 
 
-    </form >
+    </form>
   );
 };
 
