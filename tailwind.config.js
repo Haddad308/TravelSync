@@ -9,8 +9,8 @@ const tailwindConfig = {
   theme: {
     extend: {
       colors: {
-        main: "#415A77",
-        second: "#344860",
+        main: "#FAFAFA",
+        second: "#EFF3F4",
       },
     },
   },

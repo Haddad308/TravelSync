@@ -8,8 +8,11 @@ const NavBar = () => {
   pathname = pathname.slice(1);
 
   return (
-    <div className="h-[80px] bg-white flex items-center justify-between">
-      <h1 className="text-2xl font-bold ml-5">{pathname}</h1>
+    <div className="h-[80px] bg-second flex items-center justify-between">
+      <div>
+        <h1 className="text-2xl font-bold ml-5">{pathname}</h1>
+        <h1 className=" font-light ml-5">12th Aug, 2024</h1>
+      </div>
     </div>
   );
 };

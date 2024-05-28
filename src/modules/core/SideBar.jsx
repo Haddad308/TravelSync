@@ -14,7 +14,7 @@ import { IoHome } from "react-icons/io5";
 import { RoleEnum } from "../../enums/role-enum";
 import { useTranslation } from "react-i18next";
 
-const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-white transition duration-75";
+const ICON_STYLE = "flex-shrink-0 w-6 h-6 text-black transition duration-75";
 
 
 
@@ -76,17 +76,17 @@ const SideBar = () => {
 
 
   return (
-    <div className="bg-main h-screen col-span-2 text-white flex flex-col justify-between w-2/12">
+    <div className="bg-main h-screen col-span-2  flex flex-col justify-between w-2/12 text-black">
       <div>
         <header
-          className={`bg-second px-[20px] h-[80px] flex items-center justify-start gap-2 text-2xl font-bold`}
+          className={`bg-main px-[20px] h-[80px] flex items-center justify-start gap-2 text-2xl font-bold`}
         >
           <FaLocationDot size={20} />
-          <h1 className={`gap-2 transition-all duration-400`}>Logo here</h1>
+          <h1 className={`gap-2 transition-all duration-400`}>BookIt</h1>
         </header>
         <div>
           {/* I will add a condition here to add other users ITEMS. */}
-          <ul className="my-2 font-medium">
+          <ul className="my-2 font-medium ">
             {user.role.id === RoleEnum.admin &&
               ADMIN_ITEMS.map(({ title, path, icon }, idx) => {
                 return (
@@ -112,7 +112,7 @@ const SideBar = () => {
           <ChangeLocale />
           <Logout />
         </div>
-        <footer className="text-white py-3 px-[20px] border-t-2 gap-4 border-gray-500 flex flex-col justify-center items-start">
+        <footer className="text-black py-3 px-[20px] border-t-2 gap-4 border-gray-500 flex flex-col justify-center items-start">
           {isLoaded ? (
             <div className="flex gap-5">
               <Avatar
