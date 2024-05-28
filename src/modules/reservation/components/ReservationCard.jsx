@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { LuClock3 } from "react-icons/lu";
-import { Avatar, Button, Tooltip } from "@nextui-org/react";
+import { Avatar, Button, Card, CardHeader, Chip } from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdFileDownloadDone } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
@@ -12,6 +12,7 @@ export default function ReservationCard({
   AgencyName,
   AgencyEmail,
   AgencyContact,
+  CreatedAt,
   status,
   info1,
   info2,
@@ -19,8 +20,26 @@ export default function ReservationCard({
   ReservationDate,
   isAdmin,
 }) {
-  const date = new Date(ReservationDate);
-  const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  const formattedDate = formatDuration(new Date(CreatedAt), new Date());
+
+  function formatDuration(startDate, endDate) {
+    const duration = endDate - startDate;
+    const seconds = Math.floor(duration / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+      return `${days}d`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else if (minutes > 0) {
+      return `${minutes}min`;
+    } else {
+      return `${seconds}s`;
+    }
+  }
+  // const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   const navigate = useNavigate();
 
   const handleCheckInClick = () => {
@@ -34,43 +53,47 @@ export default function ReservationCard({
   };
 
   return (
-    <div className=" flex flex-col mb-4 rounded-xl border-grey border-2">
-      <div className=" flex justify-between p-3">
+    <Card className=" flex flex-col mb-4 rounded-xl border-grey border-2 shadow-md">
+      <CardHeader className=" flex justify-between p-3">
         {status === "pending" ? (
-          <Tooltip key={"warning"} color={"warning"} content={"Created at: " + formattedDate} className="capitalize ">
-            <Button variant="flat" color={"warning"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-              <LuClock3 className="w-4 h-4" /> &nbsp;
-              {"Pending"}
-            </Button>
-          </Tooltip>
+          <Chip
+            variant="flat"
+            color={"warning"}
+            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+            startContent={<LuClock3 className="w-4 h-4" />}
+          >
+            Pending
+          </Chip>
         ) : status === "canceled" ? (
-          <Tooltip key={"danger"} color={"danger"} content={"Created at: " + formattedDate} className="capitalize ">
-            <Button variant="flat" color={"danger"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-              <ImCancelCircle className="w-4 h-4" /> &nbsp;
-              {"Canceled"}
-            </Button>
-          </Tooltip>
+          <Chip
+            variant="flat"
+            color={"danger"}
+            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+            startContent={<ImCancelCircle className="w-4 h-4" />}
+          >
+            Canceled
+          </Chip>
         ) : status === "action_required" ? (
-          <Tooltip key={"secondary"} color={"secondary"} content={"Created at: " + formattedDate} className="capitalize ">
-            <Button variant="flat" color={"secondary"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-              <FaExclamationCircle className="w-4 h-4" /> &nbsp;
-              {"Action required"}
-            </Button>
-          </Tooltip>
+          <Chip
+            variant="flat"
+            color={"secondary"}
+            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+            startContent={<FaExclamationCircle className="w-4 h-4" />}
+          >
+            Action required
+          </Chip>
         ) : (
-          <Tooltip key={"success"} color={"success"} content={"Created at: " + formattedDate} className="capitalize ">
-            <Button variant="flat" color={"success"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-              <MdFileDownloadDone className="w-4 h-4" /> &nbsp;
-              {"Reserved"}
-            </Button>
-          </Tooltip>
+          <Chip
+            variant="flat"
+            color={"success"}
+            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+            startContent={<MdFileDownloadDone className="w-4 h-4" />}
+          >
+            Reserved
+          </Chip>
         )}
         <p>{formattedDate}</p>
-      </div>
+      </CardHeader>
       <div className="text-black flex justify-center items-center">
         <div className="flex items-center justify-center w-[50%]">
           <Avatar
@@ -111,6 +134,6 @@ export default function ReservationCard({
           Check In
         </Button>
       </div>
-    </div>
+    </Card>
   );
 }

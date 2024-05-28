@@ -51,10 +51,17 @@ export default function Reservation() {
               <ClockLoader color="primary" size={100} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 px-5 mt-5">
+            <div className="grid grid-cols-2 gap-5 px-5 mt-5 md:grid-cols-1 lg:grid-cols-2">
               {reservations &&
                 reservations.data?.map(
-                  ({ id, status, travelOffice, service, checkInDate }) => {
+                  ({
+                    id,
+                    status,
+                    travelOffice,
+                    service,
+                    checkInDate,
+                    createdAt,
+                  }) => {
                     return (
                       <ReservationCard
                         id={id}
@@ -63,6 +70,7 @@ export default function Reservation() {
                         AgencyProfilePhoto={
                           travelOffice?.profilePhoto?.imageUrl
                         }
+                        CreatedAt={createdAt}
                         AgencyName={travelOffice.name}
                         AgencyEmail={travelOffice.email}
                         AgencyContact={travelOffice.phone}
@@ -93,7 +101,14 @@ export default function Reservation() {
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
               {reservations.data?.map(
-                ({ id, status, travelOffice, service, checkInDate }) => {
+                ({
+                  id,
+                  status,
+                  travelOffice,
+                  service,
+                  checkInDate,
+                  createdAt,
+                }) => {
                   return (
                     <ReservationCard
                       id={id}
@@ -103,6 +118,7 @@ export default function Reservation() {
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
                       AgencyContact={travelOffice.phone}
+                      CreatedAt={createdAt}
                       info1={service.name}
                       info2={service.type}
                       info3={service.description}
@@ -130,7 +146,14 @@ export default function Reservation() {
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
               {reservations.data?.map(
-                ({ id, status, travelOffice, service, checkInDate }) => {
+                ({
+                  id,
+                  status,
+                  travelOffice,
+                  service,
+                  checkInDate,
+                  createdAt,
+                }) => {
                   return (
                     <ReservationCard
                       id={id}
@@ -139,6 +162,7 @@ export default function Reservation() {
                       AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
+                      CreatedAt={createdAt}
                       AgencyContact={travelOffice.phone}
                       info1={service.name}
                       info2={service.type}
@@ -167,7 +191,14 @@ export default function Reservation() {
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
               {reservations.data?.map(
-                ({ id, status, travelOffice, service, checkInDate }) => {
+                ({
+                  id,
+                  status,
+                  travelOffice,
+                  service,
+                  checkInDate,
+                  createdAt,
+                }) => {
                   return (
                     <ReservationCard
                       id={id}
@@ -176,6 +207,7 @@ export default function Reservation() {
                       AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
+                      CreatedAt={createdAt}
                       AgencyContact={travelOffice.phone}
                       info1={service.name}
                       info2={service.type}
@@ -204,7 +236,14 @@ export default function Reservation() {
           ) : (
             <div className="grid grid-cols-2 gap-5 px-5 mt-5">
               {reservations.data?.map(
-                ({ id, status, travelOffice, service, checkInDate }) => {
+                ({
+                  id,
+                  status,
+                  travelOffice,
+                  service,
+                  checkInDate,
+                  createdAt,
+                }) => {
                   return (
                     <ReservationCard
                       id={id}
@@ -213,6 +252,7 @@ export default function Reservation() {
                       AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
+                      CreatedAt={createdAt}
                       AgencyContact={travelOffice.phone}
                       info1={service.name}
                       info2={service.type}

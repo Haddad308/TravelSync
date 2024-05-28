@@ -1,5 +1,5 @@
 import { LuClock3 } from "react-icons/lu";
-import { Avatar, Button, Tooltip } from "@nextui-org/react";
+import { Avatar, Chip } from "@nextui-org/react";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getReservation } from "../reservation.handlers";
@@ -51,40 +51,44 @@ const ReservationPage = () => {
         </div>
       ) : (
         <>
-          <div className=" flex flex-col mb-4 rounded-xl border-grey border-2">
+          <div className=" flex flex-col mb-4 rounded-lg border-grey border-2">
             <div className=" flex justify-between p-3">
               {status === "pending" ? (
-                <Tooltip key={"warning"} color={"warning"} content={"Created at: " + formattedDate} className="capitalize ">
-                  <Button variant="flat" color={"warning"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-                    <LuClock3 className="w-4 h-4" /> &nbsp;
-                    {"Pending"}
-                  </Button>
-                </Tooltip>
+                <Chip
+                  variant="flat"
+                  color={"warning"}
+                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+                  startContent={<LuClock3 className="w-4 h-4" />}
+                >
+                  Pending
+                </Chip>
               ) : status === "canceled" ? (
-                <Tooltip key={"danger"} color={"danger"} content={"Created at: " + formattedDate} className="capitalize ">
-                  <Button variant="flat" color={"danger"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-                    <ImCancelCircle className="w-4 h-4" /> &nbsp;
-                    {"Canceled"}
-                  </Button>
-                </Tooltip>
+                <Chip
+                  variant="flat"
+                  color={"danger"}
+                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+                  startContent={<ImCancelCircle className="w-4 h-4" />}
+                >
+                  Canceled
+                </Chip>
               ) : status === "action_required" ? (
-                <Tooltip key={"secondary"} color={"secondary"} content={"Created at: " + formattedDate} className="capitalize ">
-                  <Button variant="flat" color={"secondary"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-                    <FaExclamationCircle className="w-4 h-4" /> &nbsp;
-                    {"Action required"}
-                  </Button>
-                </Tooltip>
+                <Chip
+                  variant="flat"
+                  color={"secondary"}
+                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+                  startContent={<FaExclamationCircle className="w-4 h-4" />}
+                >
+                  Action required
+                </Chip>
               ) : (
-                <Tooltip key={"success"} color={"success"} content={"Created at: " + formattedDate} className="capitalize ">
-                  <Button variant="flat" color={"success"} className="capitalize  h-[35px]  px-2 gap-0
-            ">
-                    <MdFileDownloadDone className="w-4 h-4" /> &nbsp;
-                    {"Reserved"}
-                  </Button>
-                </Tooltip>
+                <Chip
+                  variant="flat"
+                  color={"success"}
+                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
+                  startContent={<MdFileDownloadDone className="w-4 h-4" />}
+                >
+                  Reserved
+                </Chip>
               )}
               <p>{formattedDate}</p>
             </div>
@@ -138,7 +142,7 @@ const ReservationPage = () => {
           </div>
           <div className="flex flex-col   ">
             {CancelReason ? (
-              <div className="bg-gray-200 p-6 rounded-3xl mb-5">
+              <div className="bg-gray-200 p-6 rounded-lg mb-5">
                 <p>{CancelReason}</p>
               </div>
             ) : (
@@ -161,7 +165,6 @@ const ReservationPage = () => {
                 ""
               )}
             </div>
-
           </div>
           <ReservationTable users={travelers} isLoading={isLoading} />
         </>
