@@ -43,7 +43,7 @@ export default function Reservation() {
         <Tab
           key="all"
           title={
-            <p className="font-semibold">All ({reservations.data.length})</p>
+            <p className="font-semibold">All ({reservations?.count?.all})</p>
           }
         >
           {isLoading ? (
@@ -60,6 +60,9 @@ export default function Reservation() {
                         id={id}
                         key={id}
                         status={status}
+                        AgencyProfilePhoto={
+                          travelOffice?.profilePhoto?.imageUrl
+                        }
                         AgencyName={travelOffice.name}
                         AgencyEmail={travelOffice.email}
                         AgencyContact={travelOffice.phone}
@@ -96,6 +99,7 @@ export default function Reservation() {
                       id={id}
                       key={id}
                       status={status}
+                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
                       AgencyContact={travelOffice.phone}
@@ -132,6 +136,7 @@ export default function Reservation() {
                       id={id}
                       key={id}
                       status={status}
+                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
                       AgencyContact={travelOffice.phone}
@@ -168,6 +173,7 @@ export default function Reservation() {
                       id={id}
                       key={id}
                       status={status}
+                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
                       AgencyContact={travelOffice.phone}
@@ -204,6 +210,7 @@ export default function Reservation() {
                       id={id}
                       key={id}
                       status={status}
+                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
                       AgencyName={travelOffice.name}
                       AgencyEmail={travelOffice.email}
                       AgencyContact={travelOffice.phone}
