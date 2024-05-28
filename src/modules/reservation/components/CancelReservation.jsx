@@ -27,7 +27,6 @@ export default function CancelReservation({ id, handleUpdate }) {
     });
 
     return (
-
         <>
             <Button onPress={onOpen} color="danger" variant="flat" className="font-semibold"  >Cancel</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
