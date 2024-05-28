@@ -6,7 +6,7 @@ export default function Layout() {
   return (
     <div className={`bg-[#edf2f6] w-screen flex `}>
       <SideBar />
-      <div className="flex flex-col  w-10/12">
+      <div className="flex flex-col w-full">
         <NavBar />
         <div className="h-[calc(100vh-81.5px)] overflow-scroll overflow-x-hidden">
           <Outlet />

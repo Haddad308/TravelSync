@@ -1,5 +1,4 @@
-import { LuClock3 } from "react-icons/lu";
-import { Avatar, Chip } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getReservation } from "../reservation.handlers";
@@ -9,9 +8,7 @@ import AcceptReservation from "../components/AcceptReservation";
 import ReservationTable from "../components/Reservation.Table";
 import useAuthTokens from "../../auth/context/use-auth-tokens";
 import ActionRequired from "../components/ActionRequired";
-import { ImCancelCircle } from "react-icons/im";
-import { FaExclamationCircle } from "react-icons/fa";
-import { MdFileDownloadDone } from "react-icons/md";
+import StatusBadge from "../components/StatusBadge";
 
 const ReservationPage = () => {
   const tokenObj = useAuthTokens();
@@ -53,43 +50,7 @@ const ReservationPage = () => {
         <>
           <div className=" flex flex-col mb-4 rounded-lg border-grey border-2">
             <div className=" flex justify-between p-3">
-              {status === "pending" ? (
-                <Chip
-                  variant="flat"
-                  color={"warning"}
-                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-                  startContent={<LuClock3 className="w-4 h-4" />}
-                >
-                  Pending
-                </Chip>
-              ) : status === "canceled" ? (
-                <Chip
-                  variant="flat"
-                  color={"danger"}
-                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-                  startContent={<ImCancelCircle className="w-4 h-4" />}
-                >
-                  Canceled
-                </Chip>
-              ) : status === "action_required" ? (
-                <Chip
-                  variant="flat"
-                  color={"secondary"}
-                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-                  startContent={<FaExclamationCircle className="w-4 h-4" />}
-                >
-                  Action required
-                </Chip>
-              ) : (
-                <Chip
-                  variant="flat"
-                  color={"success"}
-                  className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-                  startContent={<MdFileDownloadDone className="w-4 h-4" />}
-                >
-                  Reserved
-                </Chip>
-              )}
+              <StatusBadge status={status} />
               <p>{formattedDate}</p>
             </div>
             <div className="text-black flex justify-evenly items-center mb-5">

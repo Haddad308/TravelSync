@@ -51,38 +51,17 @@ export default function Reservation() {
               <ClockLoader color="primary" size={100} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 px-5 mt-5 md:grid-cols-1 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 px-5 mt-5 lg:grid-cols-2">
               {reservations &&
-                reservations.data?.map(
-                  ({
-                    id,
-                    status,
-                    travelOffice,
-                    service,
-                    checkInDate,
-                    createdAt,
-                  }) => {
-                    return (
-                      <ReservationCard
-                        id={id}
-                        key={id}
-                        status={status}
-                        AgencyProfilePhoto={
-                          travelOffice?.profilePhoto?.imageUrl
-                        }
-                        CreatedAt={createdAt}
-                        AgencyName={travelOffice.name}
-                        AgencyEmail={travelOffice.email}
-                        AgencyContact={travelOffice.phone}
-                        info1={service.name}
-                        info2={service.type}
-                        info3={service.description}
-                        ReservationDate={checkInDate}
-                        isAdmin={isAdmin.current}
-                      />
-                    );
-                  },
-                )}
+                reservations.data?.map((reservation) => {
+                  return (
+                    <ReservationCard
+                      Reservation={reservation}
+                      key={reservation.id}
+                      isAdmin={isAdmin.current}
+                    />
+                  );
+                })}
             </div>
           )}
         </Tab>
@@ -99,35 +78,17 @@ export default function Reservation() {
               <ClockLoader color="#36d7b7" size={100} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations.data?.map(
-                ({
-                  id,
-                  status,
-                  travelOffice,
-                  service,
-                  checkInDate,
-                  createdAt,
-                }) => {
+            <div className="grid grid-cols-1 gap-5 px-5 mt-5 lg:grid-cols-2">
+              {reservations &&
+                reservations.data?.map((reservation) => {
                   return (
                     <ReservationCard
-                      id={id}
-                      key={id}
-                      status={status}
-                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
-                      AgencyName={travelOffice.name}
-                      AgencyEmail={travelOffice.email}
-                      AgencyContact={travelOffice.phone}
-                      CreatedAt={createdAt}
-                      info1={service.name}
-                      info2={service.type}
-                      info3={service.description}
-                      ReservationDate={checkInDate}
+                      Reservation={reservation}
+                      key={reservation.id}
                       isAdmin={isAdmin.current}
                     />
                   );
-                },
-              )}
+                })}
             </div>
           )}
         </Tab>
@@ -144,35 +105,17 @@ export default function Reservation() {
               <ClockLoader color="#36d7b7" size={100} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations.data?.map(
-                ({
-                  id,
-                  status,
-                  travelOffice,
-                  service,
-                  checkInDate,
-                  createdAt,
-                }) => {
+            <div className="grid grid-cols-1 gap-5 px-5 mt-5 lg:grid-cols-2">
+              {reservations &&
+                reservations.data?.map((reservation) => {
                   return (
                     <ReservationCard
-                      id={id}
-                      key={id}
-                      status={status}
-                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
-                      AgencyName={travelOffice.name}
-                      AgencyEmail={travelOffice.email}
-                      CreatedAt={createdAt}
-                      AgencyContact={travelOffice.phone}
-                      info1={service.name}
-                      info2={service.type}
-                      info3={service.description}
-                      ReservationDate={checkInDate}
+                      Reservation={reservation}
+                      key={reservation.id}
                       isAdmin={isAdmin.current}
                     />
                   );
-                },
-              )}
+                })}
             </div>
           )}
         </Tab>
@@ -189,35 +132,17 @@ export default function Reservation() {
               <ClockLoader color="#36d7b7" size={100} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations.data?.map(
-                ({
-                  id,
-                  status,
-                  travelOffice,
-                  service,
-                  checkInDate,
-                  createdAt,
-                }) => {
+            <div className="grid grid-cols-1 gap-5 px-5 mt-5 lg:grid-cols-2">
+              {reservations &&
+                reservations.data?.map((reservation) => {
                   return (
                     <ReservationCard
-                      id={id}
-                      key={id}
-                      status={status}
-                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
-                      AgencyName={travelOffice.name}
-                      AgencyEmail={travelOffice.email}
-                      CreatedAt={createdAt}
-                      AgencyContact={travelOffice.phone}
-                      info1={service.name}
-                      info2={service.type}
-                      info3={service.description}
-                      ReservationDate={checkInDate}
+                      Reservation={reservation}
+                      key={reservation.id}
                       isAdmin={isAdmin.current}
                     />
                   );
-                },
-              )}
+                })}
             </div>
           )}
         </Tab>
@@ -234,35 +159,17 @@ export default function Reservation() {
               <ClockLoader color="#36d7b7" size={100} />
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5 px-5 mt-5">
-              {reservations.data?.map(
-                ({
-                  id,
-                  status,
-                  travelOffice,
-                  service,
-                  checkInDate,
-                  createdAt,
-                }) => {
+            <div className="grid grid-cols-1 gap-5 px-5 mt-5 lg:grid-cols-2">
+              {reservations &&
+                reservations.data?.map((reservation) => {
                   return (
                     <ReservationCard
-                      id={id}
-                      key={id}
-                      status={status}
-                      AgencyProfilePhoto={travelOffice?.profilePhoto?.imageUrl}
-                      AgencyName={travelOffice.name}
-                      AgencyEmail={travelOffice.email}
-                      CreatedAt={createdAt}
-                      AgencyContact={travelOffice.phone}
-                      info1={service.name}
-                      info2={service.type}
-                      info3={service.description}
-                      ReservationDate={checkInDate}
+                      Reservation={reservation}
+                      key={reservation.id}
                       isAdmin={isAdmin.current}
                     />
                   );
-                },
-              )}
+                })}
             </div>
           )}
         </Tab>

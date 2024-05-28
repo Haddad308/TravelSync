@@ -1,26 +1,30 @@
 /* eslint-disable no-unused-vars */
 import { LuClock3 } from "react-icons/lu";
-import { Avatar, Button, Card, CardHeader, Chip } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Chip,
+  Divider,
+} from "@nextui-org/react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdFileDownloadDone } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
 import { FaExclamationCircle } from "react-icons/fa";
+import StatusBadge from "./StatusBadge";
+import { FiUser } from "react-icons/fi";
+import { CiCalendar } from "react-icons/ci";
+import { GoTag } from "react-icons/go";
+import { useEffect } from "react";
+import { IoCartOutline } from "react-icons/io5";
 
-export default function ReservationCard({
-  id,
-  AgencyProfilePhoto,
-  AgencyName,
-  AgencyEmail,
-  AgencyContact,
-  CreatedAt,
-  status,
-  info1,
-  info2,
-  info3,
-  ReservationDate,
-  isAdmin,
-}) {
-  const formattedDate = formatDuration(new Date(CreatedAt), new Date());
+export default function ReservationCard({ Reservation, isAdmin }) {
+  const formattedDate = formatDuration(
+    new Date(Reservation?.updatedAt),
+    new Date(),
+  );
 
   function formatDuration(startDate, endDate) {
     const duration = endDate - startDate;
@@ -29,7 +33,9 @@ export default function ReservationCard({
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    if (days > 0) {
+    if (days > 7) {
+      return endDate.toDateString();
+    } else if (days > 0) {
       return `${days}d`;
     } else if (hours > 0) {
       return `${hours}h`;
@@ -39,101 +45,94 @@ export default function ReservationCard({
       return `${seconds}s`;
     }
   }
-  // const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   const navigate = useNavigate();
 
   const handleCheckInClick = () => {
     if (isAdmin) {
-      console.log("Admin");
-      navigate(`/Reservation/${id}`);
+      navigate(`/Reservation/${Reservation?.id}`);
     } else {
-      console.log("User");
-      navigate(`/user/ReservationUser/${id}`);
+      navigate(`/user/ReservationUser/${Reservation?.id}`);
     }
   };
 
   return (
-    <Card className=" flex flex-col mb-4 rounded-xl border-grey border-2 shadow-md">
+    <Card
+      key={Reservation.id}
+      className="flex flex-col mb-4 rounded-lg p-4 border shadow-md"
+    >
       <CardHeader className=" flex justify-between p-3">
-        {status === "pending" ? (
-          <Chip
-            variant="flat"
-            color={"warning"}
-            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-            startContent={<LuClock3 className="w-4 h-4" />}
-          >
-            Pending
-          </Chip>
-        ) : status === "canceled" ? (
-          <Chip
-            variant="flat"
-            color={"danger"}
-            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-            startContent={<ImCancelCircle className="w-4 h-4" />}
-          >
-            Canceled
-          </Chip>
-        ) : status === "action_required" ? (
-          <Chip
-            variant="flat"
-            color={"secondary"}
-            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-            startContent={<FaExclamationCircle className="w-4 h-4" />}
-          >
-            Action required
-          </Chip>
-        ) : (
-          <Chip
-            variant="flat"
-            color={"success"}
-            className="rounded-md h-6  px-2 gap-0 text-sm text-center"
-            startContent={<MdFileDownloadDone className="w-4 h-4" />}
-          >
-            Reserved
-          </Chip>
-        )}
-        <p>{formattedDate}</p>
+        <StatusBadge status={Reservation?.status} />
+        <div className="text-right text-sm text-gray-500">{formattedDate}</div>
       </CardHeader>
-      <div className="text-black flex justify-center items-center">
-        <div className="flex items-center justify-center w-[50%]">
-          <Avatar
-            isBordered
-            radius="full"
-            size="md"
-            alt="Agency Profile Photo"
-            src={AgencyProfilePhoto}
-          />
-          <div className="flex flex-col ml-5">
-            <h4 className="text-md font-semibold">
-              {AgencyName.slice(0, 20)}
-              {AgencyName.length > 20 ? "...." : ""}
-            </h4>
-            <h5 className="text-md text-gray-600">
-              {" "}
-              {AgencyEmail.slice(0, 20)}
-              {AgencyEmail.length > 20 ? "...." : ""}
-            </h5>
-            <h5 className="text-md text-gray-600">{AgencyContact}</h5>
+      <CardBody>
+        <div className="flex justify-center gap-5 items-center">
+          <div className="flex-shrink-0 ">
+            <Avatar
+              isBordered
+              radius="full"
+              size="md"
+              alt="Agency Profile Photo"
+              src={Reservation?.travelOffice?.profilePhoto?.imageUrl}
+            />
+          </div>
+          <div className="flex-1 min-w-0 rtl:text-right">
+            <p className="text-sm font-medium text-gray-900  truncate">
+              {Reservation?.travelOffice?.name}
+            </p>
+            <p className="text-sm text-gray-500 truncate">
+              {Reservation?.travelOffice?.email}
+            </p>
+            <p className="text-sm text-gray-500 truncate">
+              {Reservation?.travelOffice?.phone}
+            </p>
+          </div>
+
+          <div className="flex flex-col flex-shrink-0 space-y-2 rtl:text-right">
+            <div className="ltr:border-l-2 rtl:border-r-2 border-gray-200 ltr:pl-4 rtl:pr-4 w-60">
+              <h3 className="text-sm font-medium text-gray-900">
+                {Reservation?.service?.name}
+              </h3>
+              <p className="text-sm text-gray-500">
+                {Reservation?.service?.type}
+              </p>
+              <div className="flex items-center space-x-2 mt-2">
+                <IoCartOutline className="w-4 h-4 text-gray-500" />
+                <span className="text-sm text-gray-500">
+                  {Reservation?.quantity} Units
+                </span>
+              </div>
+              <div className="flex items-center space-x-2 mt-1">
+                <CiCalendar className="w-4 h-4 text-gray-500" />
+                <span className="text-sm text-gray-500">
+                  Check-in: {new Date(Reservation?.checkInDate).toDateString()}
+                </span>
+              </div>
+              <div className="flex items-center space-x-2 mt-1">
+                <CiCalendar className="w-4 h-4 text-gray-500" />
+                <span className="text-sm text-gray-500">
+                  Check-out:{" "}
+                  {Reservation?.checkOutDate
+                    ? new Date(Reservation?.checkOutDate).toDateString()
+                    : "-"}
+                </span>
+              </div>
+              <div className="flex items-center space-x-2 mt-1">
+                <GoTag className="w-4 h-4 text-gray-500" />
+                <span className="text-sm text-gray-500">
+                  ${Reservation?.totalPrice}
+                </span>
+              </div>
+            </div>
+            <Button
+              onClick={handleCheckInClick}
+              variant="solid"
+              className=" bg-slate-900 text-white rounded-lg justify-self-end"
+            >
+              Check In
+            </Button>
           </div>
         </div>
-        <div className="bg-gray-300 w-[.5%] h-16 mx-4 flex items-center">
-          <span className="text-gray-600">&nbsp;</span>
-        </div>
-        <div className="w-[50%]">
-          <h1 className="text-lg font-bold mb-2">{info1}</h1>
-          <p className="mb-2 text-sm">{info2}</p>
-          <p className="text-sm">{info3}</p>
-        </div>
-      </div>
-      <div className="flex justify-center mt-3 mb-5  ">
-        <Button
-          onClick={handleCheckInClick}
-          className="bg-black w-36 rounded-lg  text-white font-semibold"
-          size="md"
-        >
-          Check In
-        </Button>
-      </div>
+      </CardBody>
     </Card>
   );
 }

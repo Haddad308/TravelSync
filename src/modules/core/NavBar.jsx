@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import useAuth from "../auth/context/use-auth";
 
 const NavBar = () => {
-
   // !Handling title (Need Actions) .
   const location = useLocation();
   const { user, isLoaded } = useAuth();
@@ -11,11 +10,45 @@ const NavBar = () => {
   let { pathname } = location;
   pathname = pathname.slice(1);
 
+  // const formattedDate = new Date().toLocaleDateString("en-UK", {
+  //   day: "numeric",
+  //   month: "long",
+  //   year: "numeric",
+  // });
+
+  // i want do display the date in the following format : 12th, August 2021
+  // but the date is displayed in the following format : 12, August 2021
+
+  const formatDate = () => {
+    const date = new Date();
+
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+
+    let formattedDay;
+    if (day === 1 || day === 21 || day === 31) {
+      formattedDay = `${day}st`;
+    } else if (day === 2 || day === 22) {
+      formattedDay = `${day}nd`;
+    } else if (day === 3 || day === 23) {
+      formattedDay = `${day}rd`;
+    } else {
+      formattedDay = `${day}th`;
+    }
+
+    const formattedDate = `${formattedDay}, ${month} ${year}`;
+
+    return formattedDate;
+  };
+
+  const formattedDate = formatDate();
+
   return (
-    <div className="h-[80px] bg-second flex items-center justify-between">
-      <div className="flex flex-col items-start  ml-5">
+    <div className="h-[80px] bg-second flex items-center justify-between px-5">
+      <div className="flex flex-col items-start  ">
         <h1 className="text-2xl font-bold">{pathname}</h1>
-        <h1 className="text-small  text-[#8f9191] ">12th Aug, 2024</h1>
+        <h1 className="text-small  text-[#8f9191] ">{formattedDate}</h1>
       </div>
       <div className="text-black py-3 px-[20px] gap-4  flex flex-col justify-center items-start">
         {isLoaded ? (

@@ -14,11 +14,9 @@ import { useTranslation } from "react-i18next";
 
 const ICON_STYLE = "flex-shrink-0 w-6 h-6   ease-in-out";
 
-
-
 const SideBar = () => {
   const { t } = useTranslation();
-  const { user, } = useAuth();
+  const { user } = useAuth();
 
   const ADMIN_ITEMS = [
     {
@@ -72,14 +70,18 @@ const SideBar = () => {
     },
   ];
 
-
   return (
-    <div className="bg-main h-screen col-span-2  flex flex-col justify-between w-2/12 text-black">
+    <div className="bg-main h-screen col-span-2  flex flex-col justify-between  text-black">
       <div>
         <header
           className={`bg-main px-[20px] h-[80px] flex items-center justify-start gap-2 text-2xl font-bold`}
         >
-          <img width={50} height={50} src="https://static.thenounproject.com/png/62578-200.png" alt="logo" />
+          <img
+            width={50}
+            height={50}
+            src="https://static.thenounproject.com/png/62578-200.png"
+            alt="logo"
+          />
           <h1 className="text-2xl ">BookIt</h1>
         </header>
         <div>
@@ -110,7 +112,6 @@ const SideBar = () => {
           <ChangeLocale />
           <Logout />
         </div>
-
       </div>
     </div>
   );

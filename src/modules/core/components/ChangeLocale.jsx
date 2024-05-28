@@ -22,11 +22,9 @@ export default function ChangeLocale() {
   );
 
   return (
-    <Dropdown >
+    <Dropdown>
       <DropdownTrigger>
-        <div
-          className="w-[90%] capitalize p-2 mx-3 mb-2 flex items-center justify-start gap-2 text-slate-600 rounded-lg cursor-pointer transition-all duration-300 hover:bg-primary group-hover:bg-primary hover:text-black focus:text-black"
-        >
+        <div className="w-[90%] capitalize p-2 mx-3 mb-2 flex items-center justify-start gap-2 text-slate-600 rounded-lg cursor-pointer transition-all duration-300 hover:bg-[#AAC9FF] group-hover:bg-primary hover:text-black focus:text-black">
           <GrLanguage
             className={`flex-shrink-0 ${i18n.resolvedLanguage === "en" ? "ml-1" : ""} w-5 h-5 transition duration-75`}
           />
@@ -35,7 +33,6 @@ export default function ChangeLocale() {
           </p>
         </div>
       </DropdownTrigger>
-
 
       <DropdownMenu
         aria-label="Single selection example"
