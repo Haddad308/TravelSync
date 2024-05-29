@@ -8,21 +8,22 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Toaster } from "react-hot-toast";
 import Users from "./modules/users/Users";
-// import Reservation from "./modules/reservation/pages/Reservation";
-// import ReservationPage from "./modules/reservation/pages/ReservationPage";
-import UserAccount from "./modules/finance/pages/UserAccount";
+import UserAccount from "./modules/finance/pages/UserAccount.admin";
 import { RoleEnum } from "./enums/role-enum";
 import WithPageRequiredAuth from "./modules/auth/context/with-page-required-auth";
 import WithPageRequiredGuest from "./modules/auth/context/with-page-required-guest";
 import Services from "./modules/services/pages/Services.admin";
 import ServicesView from "./modules/services/pages/Services.user";
 import FinanceUser from "./modules/finance/pages/Finance.user";
-import ReservationUser from "./modules/reservation/pages/Reservation.user";
 import Agencies from "./modules/agencies/Agencies";
 import Finance from "./modules/finance/pages/Finance.admin";
-import Accounts from "./modules/finance/pages/Accounts";
+import Accounts from "./modules/finance/pages/Accounts.admin";
 import Reservation from "./modules/reservation/pages/Reservation.admin";
 import ReservationPage from "./modules/reservation/pages/ReservationPage.admin";
+import HotelsPage from "./modules/services/pages/Hotels.page";
+import ReserveService from "./modules/reservation/pages/ReserveService.user";
+import RoomsPage from "./modules/services/pages/Rooms.page";
+import ReservationPageUser from "./modules/reservation/pages/ReservationPage.user";
 
 function App() {
   const { i18n } = useTranslation();
@@ -64,7 +65,6 @@ function App() {
             <Route path="Services" element={<Services />} />
             <Route path="Reservations" element={<Reservation />} />
             <Route path="Reservation/:id" element={<ReservationPage />} />
-            {/* <Route path="Reservation" element={<Reservation />} /> */}
             <Route path="Finance" element={<Finance />} />
             <Route path="Accounts" element={<Accounts />} />
             <Route path="UserAccount/:id" element={<UserAccount />} />
@@ -81,7 +81,11 @@ function App() {
           >
             <Route path="Home" element={<ServicesView />} />
             <Route path="Finance" element={<FinanceUser />} />
-            <Route path="Reservations" element={<ReservationUser />} />
+            <Route path="Reservations" element={<Reservation />} />
+            <Route path="Reserve/:id" element={<ReserveService />} />
+            <Route path="hotels/:id" element={<HotelsPage />} />
+            <Route path="hotel-rooms/:id" element={<RoomsPage />} />
+            <Route path="ReservationUser/:id" element={<ReservationPageUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

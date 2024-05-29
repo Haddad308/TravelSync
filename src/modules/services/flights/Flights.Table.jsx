@@ -54,7 +54,6 @@ export default function FlightsTable({ data, isLoading, handleUpdate }) {
     { name: "ACTIONS", uid: "actions" },
   ];
 
-  console.log("daaaaataaa:", data);
 
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
@@ -109,7 +108,6 @@ export default function FlightsTable({ data, isLoading, handleUpdate }) {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback((service, columnKey) => {
-    console.log("service:", service);
     const cellValue = service[columnKey];
     switch (columnKey) {
       case "airline":

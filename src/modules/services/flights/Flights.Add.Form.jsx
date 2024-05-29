@@ -143,23 +143,7 @@ export default function FlightsForm({ handleUpdate }) {
                       />
                     </div>
 
-                    <div>
-                      <Textarea
-                        id="service.description"
-                        name="service.description"
-                        type="text"
-                        label="Description"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.service.description}
-                        isInvalid={
-                          formHandler.errors.service?.description &&
-                          formHandler.touched.service?.description
-                        }
-                        errorMessage={formHandler.errors.service?.description}
-                      />
-                    </div>
+
                     <div>
                       <Input
                         id="service.price"
@@ -261,25 +245,8 @@ export default function FlightsForm({ handleUpdate }) {
                       />
                     </div>
 
-                    <div>
-                      <Input
-                        id="service.cancellationPolicy"
-                        name="service.cancellationPolicy"
-                        type="text"
-                        label="Cancelation Policy"
-                        radius="lg"
-                        onChange={formHandler.handleChange}
-                        onBlur={formHandler.handleBlur}
-                        value={formHandler.values.service.cancellationPolicy}
-                        isInvalid={
-                          formHandler.errors.service?.cancellationPolicy &&
-                          formHandler.touched.service?.cancellationPolicy
-                        }
-                        errorMessage={
-                          formHandler.errors.service?.cancellationPolicy
-                        }
-                      />
-                    </div>
+
+
 
                     <div>
                       <Input
@@ -443,6 +410,25 @@ export default function FlightsForm({ handleUpdate }) {
                     </div>
 
                     <div>
+                      <Input
+                        id="service.cancellationPolicy"
+                        name="service.cancellationPolicy"
+                        type="text"
+                        label="Cancelation Policy"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.service.cancellationPolicy}
+                        isInvalid={
+                          formHandler.errors.service?.cancellationPolicy &&
+                          formHandler.touched.service?.cancellationPolicy
+                        }
+                        errorMessage={
+                          formHandler.errors.service?.cancellationPolicy
+                        }
+                      />
+                    </div>
+                    <div>
                       <Checkbox
                         id="serviceIsOffer"
                         name="flight.arrivalTime"
@@ -458,6 +444,27 @@ export default function FlightsForm({ handleUpdate }) {
                         Is Offer
                       </Checkbox>
                     </div>
+
+
+
+                    <div className="col-span-2">
+                      <Textarea
+                        id="service.description"
+                        name="service.description"
+                        type="text"
+                        label="Description"
+                        radius="lg"
+                        onChange={formHandler.handleChange}
+                        onBlur={formHandler.handleBlur}
+                        value={formHandler.values.service.description}
+                        isInvalid={
+                          formHandler.errors.service?.description &&
+                          formHandler.touched.service?.description
+                        }
+                        errorMessage={formHandler.errors.service?.description}
+                      />
+                    </div>
+
 
                     <div className="col-span-2">
                       {apiError ? <Alert text={apiError} /> : ""}

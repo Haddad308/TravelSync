@@ -1,25 +1,25 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Textarea } from "@nextui-org/react";
 import * as Yup from "yup"; // For validation.
 import { useFormik } from "formik";
-import { cancelReservation } from "../reservation.handlers";
+import { requestAction } from "../reservation.handlers";
 import { useState } from "react";
 
-export default function CancelReservation({ id, handleUpdate }) {
+export default function ActionRequired({ id, handleUpdate }) {
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState("");
 
     const formHandler = useFormik({
         initialValues: {
-            cancelReason: "",
+            comment: "",
         },
         validationSchema: () => {
             return Yup.object({
-                cancelReason: Yup.string().required("Required"),
+                comment: Yup.string().required("Required"),
             });
         },
 
         onSubmit: (values, { resetForm }) => {
-            cancelReservation(setIsLoading, values, id, handleUpdate).then(() => {
+            requestAction(setIsLoading, values, id, handleUpdate).then(() => {
                 onClose();
                 resetForm();
             });
@@ -28,24 +28,24 @@ export default function CancelReservation({ id, handleUpdate }) {
 
     return (
         <>
-            <Button onPress={onOpen} color="danger" variant="flat" className="font-semibold"  >Cancel</Button>
+            <Button onPress={onOpen} color="secondary" variant="flat" className="font-semibold">Change Request</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <form onSubmit={formHandler.handleSubmit}>
-                            <ModalHeader className="flex flex-col gap-1">Cancel reservation</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">Change Request</ModalHeader>
                             <ModalBody>
-                                Are you sure you wany to cancel this reservation?
+                                Please provide the reasons for the change.
                                 <div>
                                     <Textarea
-                                        id="cancelReason"
-                                        type="cancelReason"
+                                        id="comment"
+                                        type="comment"
                                         label="Cancel reason"
                                         placeholder="Please leave a comment with the reason of cancelation."
                                         onChange={formHandler.handleChange}
                                         onBlur={formHandler.handleBlur}
-                                        value={formHandler.values.cancelReason}
-                                        isInvalid={formHandler.touched.cancelReason && formHandler.errors.cancelReason}
+                                        value={formHandler.values.comment}
+                                        isInvalid={formHandler.touched.comment && formHandler.errors.comment}
                                         errorMessage="Please write the reason"
                                     />
                                 </div>
@@ -54,7 +54,7 @@ export default function CancelReservation({ id, handleUpdate }) {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Cancel
                                 </Button>
-                                <Button color="danger" type="submit" isLoading={isLoading}>
+                                <Button color="secondary" type="submit" isLoading={isLoading}>
                                     Confirm
                                 </Button>
                             </ModalFooter>

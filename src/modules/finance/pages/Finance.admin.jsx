@@ -4,28 +4,27 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { getAccounts, getTransactions } from "../Finance.handlers";
 import FinanceTable from "../components/FinanceTable";
+import useAuthTokens from "../../auth/context/use-auth-tokens";
 
 export default function Finance() {
   const [accounts, setAccounts] = useState([]);
   const [transitions, setTransitions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // ! We need to add loader here to the page. 
+  const [, setIsLoading] = useState(false);
+  const [isLoadingT, setIsLoadingT] = useState(false);
+
+  const tokenObj = useAuthTokens();
+  const token = tokenObj.tokensInfoRef.current.token;
 
   useEffect(() => {
-    getAccounts(setAccounts, setIsLoading);
-    getTransactions(setTransitions, setIsLoading);
-  }, []);
+    getAccounts(setAccounts, setIsLoading, "", false, token);
+    getTransactions(setTransitions, setIsLoadingT, "", token);
+  }, [token]);
 
-  useEffect(() => {
-    console.log("check", accounts);
-  }, [accounts]);
-
-  useEffect(() => {
-    console.log("check transitions", transitions);
-  }, [transitions]);
 
   return (
     <div>
-      <div className="m-6 bg-white rounded-3xl">
+      <div className="m-5 mt-1 bg-white rounded-lg">
         <div className="p-4">
           <div className="flex justify-between px-1">
             <h1 className="font-bold">Users Balance</h1>
@@ -54,9 +53,9 @@ export default function Finance() {
           </div>
         </div>
       </div>
-      <div className="m-6 p-6 bg-white rounded-3xl">
+      <div className="m-5 p-5 bg-white rounded-lg">
         <h1 className="text-xl font-bold mb-4">Last Transactions</h1>
-        <FinanceTable users={transitions} isLoading={isLoading} />
+        <FinanceTable users={transitions} isLoading={isLoadingT} isAdmin={false} />
       </div>
     </div>
   );

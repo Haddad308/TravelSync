@@ -30,7 +30,7 @@ const Agencies = () => {
 
   return (
     // ? we may take the container as a component.
-    <div className="m-5 p-5 rounded-lg bg-white ">
+    <div className="m-5 mt-1 p-5 rounded-lg bg-white ">
       <AgenciesTable
         users={agencies}
         columns={columns}

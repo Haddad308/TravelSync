@@ -2,14 +2,18 @@ import { Input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import UserBalance from "../components/UserBalance";
 import { getAccounts } from "../Finance.handlers";
+import useAuthTokens from "../../auth/context/use-auth-tokens";
 
 export default function Accounts() {
   const [accounts, setAccounts] = useState([]);
   const [, setIsLoading] = useState(false);
+  const tokenObj = useAuthTokens();
+  const token = tokenObj.tokensInfoRef.current.token;
+  // ! We need to add loader here to the page. 
 
   useEffect(() => {
-    getAccounts(setAccounts, setIsLoading);
-  }, []);
+    getAccounts(setAccounts, setIsLoading, "", false, token);
+  }, [token]);
 
   return (
     <div>
@@ -20,7 +24,6 @@ export default function Accounts() {
             <div className="w-full md:w-72 mt-3">
               <Input
                 label="Search"
-              // icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
           </div>

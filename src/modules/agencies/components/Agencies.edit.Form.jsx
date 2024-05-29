@@ -98,18 +98,14 @@ export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
                         id="name"
                         type="name"
                         label="Name"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.name}
+                        isInvalid={formHandler.touched.name && formHandler.errors.name}
+                        errorMessage={formHandler.errors.name}
                       />
-                      {formHandler.touched.name && formHandler.errors.name ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.name}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -117,18 +113,14 @@ export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
                         id="state"
                         type="state"
                         label="state"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.state}
+                        isInvalid={formHandler.touched.state && formHandler.errors.state}
+                        errorMessage={formHandler.errors.state}
                       />
-                      {formHandler.touched.state && formHandler.errors.state ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.state}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -136,36 +128,28 @@ export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
                         id="city"
                         type="city"
                         label="city"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.city}
+                        isInvalid={formHandler.touched.city && formHandler.errors.city}
+                        errorMessage={formHandler.errors.city}
                       />
-                      {formHandler.touched.city && formHandler.errors.city ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.city}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
                       <Input
                         id="email"
                         label="email"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.email}
+                        isInvalid={formHandler.touched.email && formHandler.errors.email}
+                        errorMessage={formHandler.errors.email}
                       />
-                      {formHandler.touched.email && formHandler.errors.email ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.email}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -173,58 +157,41 @@ export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
                         id="phone"
                         type="phone"
                         label="phone"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.phone}
+                        errorMessage={formHandler.errors.phone}
+                        isInvalid={formHandler.touched.phone && formHandler.errors.phone}
                       />
-                      {formHandler.touched.phone && formHandler.errors.phone ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.phone}
-                        </div>
-                      ) : null}
-                    </div>
 
+                    </div>
                     <div>
                       <Input
                         id="address"
                         type="address"
                         label="address"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.address}
+                        isInvalid={formHandler.touched.address && formHandler.errors.address}
+                        errorMessage={formHandler.errors.address}
                       />
-                      {formHandler.touched.address &&
-                      formHandler.errors.address ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.address}
-                        </div>
-                      ) : null}
                     </div>
-
                     <div>
                       <Input
                         id="country"
                         type="country"
                         label="country"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.country}
+                        isInvalid={formHandler.touched.country && formHandler.errors.country}
+                        errorMessage={formHandler.errors.country}
                       />
-                      {formHandler.touched.country &&
-                      formHandler.errors.country ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.country}
-                        </div>
-                      ) : null}
+
                     </div>
 
                     <div>
@@ -232,19 +199,13 @@ export default function AgenciesFormEdit({ handleUpdate, agencyId }) {
                         id="postalCode"
                         type="postalCode"
                         label="postalCode"
-                        variant="bordered"
-                        labelPlacement="outside"
                         radius="lg"
                         onChange={formHandler.handleChange}
                         onBlur={formHandler.handleBlur}
                         value={formHandler.values.postalCode}
+                        isInvalid={formHandler.touched.postalCode && formHandler.errors.postalCode}
+                        errorMessage={formHandler.errors.postalCode}
                       />
-                      {formHandler.touched.postalCode &&
-                      formHandler.errors.postalCode ? (
-                        <div className="text-red-600">
-                          {formHandler.errors.postalCode}
-                        </div>
-                      ) : null}
                     </div>
 
                     <div className="col-span-2">

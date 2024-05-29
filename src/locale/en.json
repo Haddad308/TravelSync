@@ -1,8 +1,14 @@
 {
   "Logout": "Logout",
   "WelcomeMessage": "Welcome Back",
-  "signin": "Sign In",
+  "signin": "Sign in",
   "email": "Email",
   "password": "Password",
-  "forgetPassword": "Forget Password ?"
+  "forgetPassword": "Forget your password?",
+  "Dashboard": "Dashboard",
+  "Users": "Users",
+  "Services": "Services",
+  "Reservations": "Reservations",
+  "Finance": "Finance",
+  "Agencies": "Agencies"
 }

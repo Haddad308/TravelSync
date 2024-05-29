@@ -17,7 +17,7 @@ import TransportationTable from "../transportation/Transportation.Table";
 import PackagesTable from "../packages/Packages.Table";
 
 export default function Services() {
-  const [selected, setSelected] = useState("flights");
+  const [selected, setSelected] = useState("hotels");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +30,7 @@ export default function Services() {
   }, [selected]);
 
   return (
-    <div className="m-5 p-5 rounded-lg bg-white ">
+    <div className="m-5 mt-1 p-5 rounded-lg bg-white ">
       {/* <div className="flex w-full flex-col"> */}
       <Tabs
         aria-label="Options"
@@ -42,7 +42,7 @@ export default function Services() {
         <Tab
           key="hotels"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "hotels" ? "text-black" : " "} `}>
               <FaHotel className="w-4 h-4" />
               <span>Hotels</span>
             </div>
@@ -57,7 +57,7 @@ export default function Services() {
         <Tab
           key="hotel-rooms"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "hotel-rooms" ? "text-black" : " "} `}>
               <RiHotelBedFill className="w-5 h-5" />
               <span>Rooms</span>
             </div>
@@ -72,7 +72,7 @@ export default function Services() {
         <Tab
           key="flights"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "flights" ? "text-black" : " "} `}>
               <BiSolidPlaneAlt className="w-5 h-5" />
               <span>Flights</span>
             </div>
@@ -87,7 +87,7 @@ export default function Services() {
         <Tab
           key="safari"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "safari" ? "text-black" : " "} `}>
               <FaHouseTsunami className="w-4 h-4" />
               <span>Safari</span>
             </div>
@@ -102,7 +102,7 @@ export default function Services() {
         <Tab
           key="cruises"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "cruises" ? "text-black" : " "} `}>
               <MdOutlineDirectionsBoat className="w-5 h-5" />
               <span>Cruises</span>
             </div>
@@ -117,7 +117,7 @@ export default function Services() {
         <Tab
           key="transportations"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "transportations" ? "text-black" : " "} `}>
               <FaCar className="w-4 h-4" />
               <span>Transportation</span>
             </div>
@@ -132,7 +132,7 @@ export default function Services() {
         <Tab
           key="standard-packages"
           title={
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center space-x-2  ${selected == "standard-packages" ? "text-black" : " "} `}>
               <FiPackage className="w-5 h-5" />
               <span>Packages</span>
             </div>

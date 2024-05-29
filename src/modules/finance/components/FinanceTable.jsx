@@ -16,20 +16,21 @@ import {
   Pagination,
   Spinner,
 } from "@nextui-org/react";
-import { FaRegFileAlt } from "react-icons/fa";
 import { SearchIcon } from "../../core/components/icons/SearchIcon";
 import { ChevronDownIcon } from "../../core/components/icons/ChevronDownIcon";
 import { capitalize } from "../../core/utils";
+import Transactions from "./Transaction";
 
-const INITIAL_VISIBLE_COLUMNS = ["type", "amount", "currency"];
+const INITIAL_VISIBLE_COLUMNS = ["amount", "currency", "Name"];
 
-export default function FinanceTable({ users = [], isLoading }) {
+export default function FinanceTable({ users = [], isLoading, handlechange, isAdmin }) {
+
   const columns = [
     { name: "ID", uid: "id", sortable: true },
+    { name: "NAME", uid: "Name", sortable: true },
     { name: "type", uid: "type", sortable: true },
     { name: "amount", uid: "amount", sortable: true },
     { name: "currency", uid: "currency" },
-    // { name: "Agency", uid: "agency", sortable: true },
   ];
 
   const [filterValue, setFilterValue] = React.useState("");
@@ -61,7 +62,7 @@ export default function FinanceTable({ users = [], isLoading }) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user?.type.toLowerCase().includes(filterValue.toLowerCase()),
+        user.account?.travelOffice?.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     return filteredUsers;
@@ -87,40 +88,19 @@ export default function FinanceTable({ users = [], isLoading }) {
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
     switch (columnKey) {
-      case "name":
-        return (
-          <div>
-            <h1>
-              {user.firstName} {user.lastName}
-            </h1>
-          </div>
-        );
-      case "phone":
-        return (
-          <div>
-            <h1>{user.mobilePhone}</h1>
-          </div>
-        );
-      case "file":
-        return (
-          <>
-            {user.files[0] && (
-              <div>
-                <FaRegFileAlt
-                  className="cursor-pointer"
-                  onClick={() => window.open(user.files[0]?.url)}
-                  width={40}
-                  height={40}
-                />
-              </div>
-            )}
-          </>
-        );
       case "Agency":
         return (
           <div>
             <h1>{user.account?.travelOffice?.name}</h1>
           </div>
+        );
+      case "amount":
+        return (
+          <h1 className={`${user.type === "deposit" ? "text-green-600" : "text-red-600"} flex `} ><p>{user.type === "deposit" ? "+" : "-"} </p>{user.amount}$</h1>
+        );
+      case "Name":
+        return (
+          <h1 >{user.account.travelOffice.name}</h1>
         );
       default:
         return cellValue;
@@ -187,6 +167,10 @@ export default function FinanceTable({ users = [], isLoading }) {
                 ))}
               </DropdownMenu>
             </Dropdown>
+            {/* Here */}
+            {isAdmin ?
+              <Transactions handlechange={handlechange} />
+              : null}
           </div>
         </div>
         <div className="flex justify-between items-center">

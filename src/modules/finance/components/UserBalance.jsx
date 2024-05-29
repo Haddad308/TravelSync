@@ -10,7 +10,7 @@ export default function UserBalance({
 }) {
   return (
     <Link to={`/UserAccount/${id}`}>
-      <div className="h-[100px] p-5 rounded-2xl border-2 transition-all duration-300 hover:shadow-md hover:border-gray-400  ">
+      <div className="h-[100px] p-5 rounded-lg border-2 transition-all duration-300 hover:shadow-md hover:border-gray-400  ">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="lg" src={AgencyProfilePhoto} />
           <div className="flex flex-col gap-1 items-start justify-center">

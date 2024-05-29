@@ -4,5 +4,11 @@
   "signin": "تسجيل الدخول",
   "email": "البريد الالكتروني",
   "password": "كلمة السر",
-  "forgetPassword": "هل نسيت كلمة السر ؟"
+  "forgetPassword": "هل نسيت كلمة السر ؟",
+  "Dashboard": "الرئيسية",
+  "Users": "المستخدمون",
+  "Services": "الخدمات",
+  "Reservations": "الحجوزات",
+  "Finance": "المالية",
+  "Agencies": "الوكالات"
 }

@@ -8,7 +8,7 @@ export default function AcceptReservation({ id, handleUpdate }) {
 
     return (
         <>
-            <Button onPress={onOpen} className="bg-[#415A77] text-white" >Accept</Button>
+            <Button onPress={onOpen} color="success" className="text-white font-semibold" >Accept</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (

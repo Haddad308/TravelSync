@@ -24,7 +24,7 @@ const Users = () => {
 
   return (
     // ? we may take the container as a component.
-    <div className="m-5 p-5 rounded-lg bg-white ">
+    <div className="m-5 mt-1 p-5 rounded-lg bg-white ">
       <UsersTable
         users={users}
         columns={columns}
