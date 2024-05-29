@@ -29,10 +29,6 @@ export default function Services() {
     getService(setData, setIsLoading, selected);
   }, [selected]);
 
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading])
-
   return (
     <div className="m-5 mt-1 p-5 rounded-lg bg-white ">
       {/* <div className="flex w-full flex-col"> */}

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 export default function ServiceCard({ img, hotelName, stars, numberOfRooms, id, type }) {
     const navigate = useNavigate();
     return (
-        <div className="flex justify-between gap-6 p-3 border-2 rounded-xl m-2 " >
+        <div className="flex justify-between gap-6 p-3 border-2 rounded-lg bg-slate-50 m-2 shadow-md" >
             <div className="flex  gap-6 justify-center  " >
                 <div className="w-64  h-44" >
                     <img
@@ -34,11 +34,11 @@ export default function ServiceCard({ img, hotelName, stars, numberOfRooms, id, 
                 </div>
             </div>
             <div id="right part" className="text-center w-1/6 flex flex-col justify-center " >
-                <div className="mb-4" >
+                {/* <div className="mb-4" >
                     <h1 className="font-semibold" >1500 EGP</h1>
                     <h1>Per Night</h1>
-                </div>
-                <Button onClick={() => { navigate(`/user/${type}/${id}`) }} className="bg-[#616CA8] text-white font-semibold" >Reserve Room</Button>
+                </div> */}
+                <Button onClick={() => { navigate(`/user/${type}/${id}`) }} className="bg-black text-white font-semibold" >Reserve Room</Button>
             </div>
         </div>
     )
