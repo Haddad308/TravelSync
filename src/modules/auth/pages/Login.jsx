@@ -1,6 +1,5 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import LoginVector from "../../../assets/system/LoginVector.svg";
 import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "../../core/components/icons/EyeSlashFilledIcon";
@@ -81,78 +80,92 @@ const Login = () => {
   });
 
   return (
-    <form onSubmit={formHandler.handleSubmit}>
-      <div className={`flex py-10 items-center  h-screen px-20`}>
-        <div className="w-1/2">
-          <img className="w-[500px]" src={LoginVector} alt="loginVector" />
-        </div>
+    <>
 
-        <div className={`border-2 rounded-lg  p-10 w-1/2 flex flex-col gap-2`}>
-          <h2 className="text-2xl font-semibold">{t("WelcomeMessage")}!</h2>
-          <h1 className="text-[32px] font-bold">{t("signin")}</h1>
+      <div className="relative h-full w-full bg-white"></div><div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
 
-          <div className="flex flex-col mt-5 items-start gap-5">
-            <div className="flex flex-col gap-3 w-full ">
-              <Input
-                isClearable
-                label={t("email")}
-                name="email"
-                placeholder="Enter your email"
-                onClear={() => formHandler.setFieldValue("email", "")}
-                onChange={formHandler.handleChange}
-                onBlur={formHandler.handleBlur}
-                value={formHandler.values.email.trim()}
-                isInvalid={
-                  formHandler.touched.email && formHandler.errors.email
-                }
-                errorMessage={
-                  formHandler.touched.email && formHandler.errors.email
-                }
+      <form onSubmit={formHandler.handleSubmit} className={'bg-slate-100'} >
+        <div className={`flex py-10 items-center justify-center  h-screen px-20`}>
+          <div className={`border-2 rounded-lg items-center  p-10 w-1/3 flex backdrop-blur-lg bg-white/90 shadow-md flex-col gap-2`}>
+            <div className="flex gap-1 items-center">
+
+              <img
+                width={50}
+                height={50}
+                src="https://static.thenounproject.com/png/62578-200.png"
+                alt="logo"
               />
-              <Input
-                label={t("password")}
-                name="password"
-                placeholder="Enter your password"
-                endContent={
-                  <button
-                    className="focus:outline-none"
-                    type="button"
-                    onClick={toggleVisibility}
-                  >
-                    {isVisible ? (
-                      <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                    ) : (
-                      <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                    )}
-                  </button>
-                }
-                type={isVisible ? "text" : "password"}
-                onChange={formHandler.handleChange}
-                onBlur={formHandler.handleBlur}
-                value={formHandler.values.password.trim()}
-                isInvalid={
-                  formHandler.touched.password && formHandler.errors.password
-                }
-                errorMessage={
-                  formHandler.touched.password && formHandler.errors.password
-                }
-              />
-              <ForgetPassword />
+              <h1 className="text-3xl font-bold text-center">BookIt</h1>
+
             </div>
-            <Button
-              className="bg-main text-white font-semibold w-full"
-              type="submit"
-              isLoading={isLoading}
-            >
-              {t("signin")}
-            </Button>
-            <div className="flex justify-center w-full">
-              {apiError ? <Alert text={"Wrong Email or Password."} /> : ""}
+            <h2 className="ltr:ml-3 rtl:mr-3 text-2xl font-semibold">{t("WelcomeMessage")}!</h2>
+            <h1 className=" text-gray-400">Sign in to manage your bookings</h1>
+
+            <div className="flex flex-col mt-5 items-start gap-5 w-full">
+              <div className="flex flex-col gap-3 w-full ">
+                <Input
+                  className='rounded-lg'
+                  isClearable
+                  label={t("email")}
+                  name="email"
+                  placeholder="Enter your email"
+                  onClear={() => formHandler.setFieldValue("email", "")}
+                  onChange={formHandler.handleChange}
+                  onBlur={formHandler.handleBlur}
+                  value={formHandler.values.email.trim()}
+                  isInvalid={
+                    formHandler.touched.email && formHandler.errors.email
+                  }
+                  errorMessage={
+                    formHandler.touched.email && formHandler.errors.email
+                  }
+                />
+                <Input
+                  className='rounded-lg'
+                  label={t("password")}
+                  name="password"
+                  placeholder="Enter your password"
+                  endContent={
+                    <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={toggleVisibility}
+                    >
+                      {isVisible ? (
+                        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                      ) : (
+                        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                      )}
+                    </button>
+                  }
+                  type={isVisible ? "text" : "password"}
+                  onChange={formHandler.handleChange}
+                  onBlur={formHandler.handleBlur}
+                  value={formHandler.values.password.trim()}
+                  isInvalid={
+                    formHandler.touched.password && formHandler.errors.password
+                  }
+                  errorMessage={
+                    formHandler.touched.password && formHandler.errors.password
+                  }
+                />
+                <ForgetPassword />
+              </div>
+              <Button
+                className="bg-black text-white font-semibold w-full rounded-lg"
+                type="submit"
+                isLoading={isLoading}
+              >
+                {t("signin")}
+              </Button>
+              <div className="flex justify-center w-full">
+                {apiError ? <Alert text={"Wrong Email or Password."} /> : ""}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
 

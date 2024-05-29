@@ -1,14 +1,14 @@
 import { Avatar, Skeleton } from "@nextui-org/react";
-import { useLocation } from "react-router-dom";
 import useAuth from "../auth/context/use-auth";
+import { useEffect } from "react";
 
 const NavBar = () => {
   // !Handling title (Need Actions) .
-  const location = useLocation();
   const { user, isLoaded } = useAuth();
 
-  let { pathname } = location;
-  pathname = pathname.slice(1);
+  useEffect(() => {
+    console.log("pathname", user);
+  }, [user])
 
   // const formattedDate = new Date().toLocaleDateString("en-UK", {
   //   day: "numeric",
@@ -47,8 +47,9 @@ const NavBar = () => {
   return (
     <div className="h-[80px] bg-second flex items-center justify-between px-5">
       <div className="flex flex-col items-start  ">
-        <h1 className="text-2xl font-bold">{pathname}</h1>
-        <h1 className="text-small  text-[#8f9191] ">{formattedDate}</h1>
+
+        <h1 className="text-2xl font-bold">Welcome, {user.firstName} </h1>
+        <h3 className="text-small  text-[#8f9191] ">Today is {formattedDate}</h3>
       </div>
       <div className="text-black py-3 px-[20px] gap-4  flex flex-col justify-center items-start">
         {isLoaded ? (

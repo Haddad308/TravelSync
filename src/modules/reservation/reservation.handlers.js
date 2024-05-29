@@ -40,6 +40,41 @@ async function getReservation(
   setIsLoading(false);
 }
 
+async function getAllReservations(
+  SetReservation,
+  setIsLoading,
+  status,
+  page = 1,
+  limit = 10,
+  filters = {},
+  sort = {},
+  token = "",
+) {
+  setIsLoading(true);
+  // i want to send the filters as a query string
+  status = status === "all" ? "" : status;
+  let data = await instance
+    .get(
+      `/api/reservations?limit=${limit}&page=${page}${status ? `&filters=${encodeURIComponent(JSON.stringify({ status: status }))}` : ""}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    .catch((error) => {
+      console.error(error);
+      setIsLoading(false);
+    });
+  if (data?.status === 200) {
+    SetReservation({
+      data: [...data.data.data.data],
+      count: data.data.count,
+    });
+  }
+  setIsLoading(false);
+}
+
 async function requestAction(setIsLoading, message, id = "", callback) {
   const cookie = Cookies.get("auth-token-data");
   const token = JSON.parse(cookie ? cookie : "null")?.token;
@@ -170,4 +205,5 @@ export {
   Reserve,
   requestAction,
   uploadFile,
+  getAllReservations
 };

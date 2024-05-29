@@ -24,7 +24,7 @@ export default function ForgetPassword() {
   return (
     <>
       <p
-        className="text-right cursor-pointer self-end font-normal text-sm mt-1 transition-all duration-400 hover:text-blue-800 "
+        className=" font-semibold text-right cursor-pointer self-end text-sm mt-1 transition-all duration-400 hover:text-blue-800 "
         onClick={() => handleOpen("blur")}
       >
         {t("forgetPassword")}
@@ -33,7 +33,7 @@ export default function ForgetPassword() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 ">
                 {t("forgetPassword")}!
               </ModalHeader>
               <ModalBody>

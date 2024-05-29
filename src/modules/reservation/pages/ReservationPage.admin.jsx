@@ -41,7 +41,7 @@ const ReservationPage = () => {
   }, [travelers]);
 
   return (
-    <div className="m-5 p-5 rounded-lg bg-white">
+    <div className="m-5 mt-1 p-5 rounded-lg bg-white">
       {isLoading ? (
         <div className="flex justify-center items-center h-96">
           <ClockLoader color="#36d7b7" size={100} />
@@ -120,7 +120,7 @@ const ReservationPage = () => {
               ) : (
                 ""
               )}
-              {status !== "confirmed" ? (
+              {status === "pending" ? (
                 <AcceptReservation id={id} handleUpdate={handleUpdate} />
               ) : (
                 ""

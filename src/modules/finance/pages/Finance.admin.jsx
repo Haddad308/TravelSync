@@ -24,7 +24,7 @@ export default function Finance() {
 
   return (
     <div>
-      <div className="m-6 bg-white rounded-3xl">
+      <div className="m-5 mt-1 bg-white rounded-lg">
         <div className="p-4">
           <div className="flex justify-between px-1">
             <h1 className="font-bold">Users Balance</h1>
@@ -53,7 +53,7 @@ export default function Finance() {
           </div>
         </div>
       </div>
-      <div className="m-6 p-6 bg-white rounded-3xl">
+      <div className="m-5 p-5 bg-white rounded-lg">
         <h1 className="text-xl font-bold mb-4">Last Transactions</h1>
         <FinanceTable users={transitions} isLoading={isLoadingT} isAdmin={false} />
       </div>

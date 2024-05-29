@@ -34,7 +34,7 @@ export default function Services() {
   }, [isLoading])
 
   return (
-    <div className="m-5 p-5 rounded-lg bg-white ">
+    <div className="m-5 mt-1 p-5 rounded-lg bg-white ">
       {/* <div className="flex w-full flex-col"> */}
       <Tabs
         aria-label="Options"
