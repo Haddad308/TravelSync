@@ -24,7 +24,7 @@ export default function ForgetPassword() {
   return (
     <>
       <p
-        className=" font-semibold text-right cursor-pointer self-end text-sm mt-1 transition-all duration-400 hover:text-blue-800 "
+        className=" font-semibold   text-center cursor-pointer  text-sm self-end transition-all duration-400 hover:text-blue-800 "
         onClick={() => handleOpen("blur")}
       >
         {t("forgetPassword")}

@@ -99,9 +99,9 @@ const Login = () => {
 
             </div>
             <h2 className="ltr:ml-3 rtl:mr-3 text-2xl font-semibold">{t("WelcomeMessage")}!</h2>
-            <h1 className=" text-gray-400">Sign in to manage your bookings</h1>
+            <h1 className=" text-gray-400 ">Sign in to manage your bookings</h1>
 
-            <div className="flex flex-col mt-5 items-start gap-5 w-full">
+            <div className="flex flex-col mt-5 items-start gap-5  w-full">
               <div className="flex flex-col gap-3 w-full ">
                 <Input
                   className='rounded-lg'
