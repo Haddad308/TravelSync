@@ -164,7 +164,6 @@ async function Reserve(setIsLoading, values) {
   }
 }
 
-import axios from "axios";
 
 async function uploadFile(file, isLoading, status, travellerIDs) {
   isLoading = true; // Set loading state to true
@@ -172,8 +171,8 @@ async function uploadFile(file, isLoading, status, travellerIDs) {
     const formData = new FormData();
     formData.append("files", file);
 
-    const result = await axios.post(
-      "http://localhost:3000/api/attatchments/upload",
+    const result = await instance.post(
+      "/api/attatchments/upload",
       formData,
       {
         headers: {
