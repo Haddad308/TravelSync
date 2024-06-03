@@ -52,7 +52,7 @@ function App() {
 
           {/* Admin View */}
           <Route
-            path="/"
+            path=""
             element={
               <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
                 <Layout />
@@ -85,7 +85,10 @@ function App() {
             <Route path="Reserve/:id" element={<ReserveService />} />
             <Route path="hotels/:id" element={<HotelsPage />} />
             <Route path="hotel-rooms/:id" element={<RoomsPage />} />
-            <Route path="ReservationUser/:id" element={<ReservationPageUser />} />
+            <Route
+              path="ReservationUser/:id"
+              element={<ReservationPageUser />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
