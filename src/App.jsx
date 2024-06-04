@@ -59,9 +59,9 @@ function App() {
               </WithPageRequiredAuth>
             }
           >
-            <Route path="Dashboard" element={<Dashboard />} />
-            <Route path="Agencies" element={<Agencies />} />
-            <Route path="Users" element={<Users />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="agencies" index element={<Agencies />} />
+            <Route path="users" element={<Users />} />
             <Route path="Services" element={<Services />} />
             <Route path="Reservations" element={<Reservation />} />
             <Route path="Reservation/:id" element={<ReservationPage />} />
