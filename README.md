@@ -1,13 +1,10 @@
 
 <h1 align="center">
-  <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Markdownify" width="200"></a>
-  <br>
-  Markdownify
+  TravelSync
   <br>
 </h1>
 
-<h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
+<h4 align="center">A streamlined Reservation System Web app designed for efficient booking and management.</h4>
 
 <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
@@ -24,35 +21,31 @@
 </p>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
+  <a href="https://travel-sync-six.vercel.app/">Live app</a> •
+ 
 </p>
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
 ## Key Features
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-* Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-* GitHub Flavored Markdown  
-* Syntax highlighting
-* [KaTeX](https://khan.github.io/KaTeX/) Support
-* Dark/Light mode
-* Toolbar for basic Markdown formatting
-* Supports multiple cursors
-* Save the Markdown preview as PDF
-* Emoji support in preview :tada:
-* App will keep alive in tray for quick usage
-* Full screen mode
-  - Write distraction free.
-* Cross platform
-  - Windows, macOS and Linux ready.
+* **Real-time Availability**
+  - Instantly view room or service availability in real-time as you create reservations.
+* **Sync Updates**
+  - Changes made to reservations automatically update across all devices and views.
+* **Comprehensive Booking Options**
+* **User-friendly Interface**
+* **Secure Payment Processing**
+* **Dark/Light Mode**
+* **Toolbar for Quick Actions**
+* **Multi-user Support**
+* **Export Booking Confirmations as PDF**
+* **Notification support for booking updates** :bell:
+* **Quick Access from System Tray**
+* **Full-screen Mode**
+  - Manage reservations without distractions.
+* **Cross-platform**
+  - Available on Windows, macOS, and Linux.
 
 ## How To Use
 
@@ -72,23 +65,21 @@ $ npm install
 $ npm start
 ```
 
+**Login:**
+   - Open the Reservation System Application.
+   - For admin access, log in with:
+     - **Email:** admin@example.com
+     - **Password:** secret
+   - For agent access, log in with:
+     - **Email:** agent@example.com
+     - **Password:** secret
+
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
 
-## Download
+owing open source packages:
 
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
-
-## Emailware
-
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
-
-## Credits
-
-This software uses the following open source packages:
-
-- [Electron](http://electron.atom.io/)
 - [Node.js](https://nodejs.org/)
 - [Marked - a markdown parser](https://github.com/chjj/marked)
 - [showdown](http://showdownjs.github.io/showdown/)
