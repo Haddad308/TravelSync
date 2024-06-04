@@ -8,7 +8,7 @@
 
 
 <p align="center">
-  <a href="https://travel-sync-six.vercel.app/">Live app</a> •
+  <a href="https://travel-sync-six.vercel.app/">Live app</a> 
  
 </p>
 
