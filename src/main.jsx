@@ -16,11 +16,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>,
 );
 
-//
-
-// TODO
-//* 1- Edit the color palette.
-//* 2- Prettier and Eslint config.
-
-// ? MY NOTES
-// * Login is done.

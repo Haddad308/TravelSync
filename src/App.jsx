@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./modules/auth/pages/Login";
 import UnAuthorized from "./modules/auth/pages/UnAuthorized";
 import NotFound from "./modules/auth/pages/NotFound";
@@ -28,6 +28,40 @@ import ReservationPageUser from "./modules/reservation/pages/ReservationPage.use
 function App() {
   const { i18n } = useTranslation();
 
+  const routers = createBrowserRouter([
+    {
+      path: "",
+      element: <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}><Layout /></WithPageRequiredAuth>,
+      children: [
+        { path: "dashboard", element: <Dashboard /> },
+        { path: "agencies", index: true, element: <Agencies /> },
+        { path: "users", element: <Users /> },
+        { path: "Services", element: <Services /> },
+        { path: "Reservations", element: <Reservation /> },
+        { path: "Reservation/:id", element: <ReservationPage /> },
+        { path: "Finance", element: <Finance /> },
+        { path: "Accounts", element: <Accounts /> },
+        { path: "UserAccount/:id", element: <UserAccount /> },
+      ]
+    },
+    {
+      path: "/user",
+      element: <WithPageRequiredAuth options={{ roles: [RoleEnum.travelAgent] }}><Layout /></WithPageRequiredAuth>,
+      children: [
+        { path: "Home", element: <ServicesView /> },
+        { path: "Finance", element: <FinanceUser /> },
+        { path: "Reservations", element: <Reservation /> },
+        { path: "Reserve/:id", element: <ReserveService /> },
+        { path: "hotels/:id", element: <HotelsPage /> },
+        { path: "hotel-rooms/:id", element: <RoomsPage /> },
+        { path: "ReservationUser/:id", element: <ReservationPageUser /> },
+      ]
+    },
+    { path: "login", element: <WithPageRequiredGuest><Login /></WithPageRequiredGuest> },
+    { path: "unauthorized", element: <UnAuthorized /> },
+    { path: "*", element: <NotFound /> }
+  ]);
+
   useEffect(() => {
     if (i18n.resolvedLanguage === "ar")
       document.getElementsByTagName("html")[0].setAttribute("dir", "rtl");
@@ -35,64 +69,7 @@ function App() {
   }, [i18n.resolvedLanguage]);
 
   return (
-    <>
-      <Toaster />
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="login"
-            element={
-              <WithPageRequiredGuest>
-                <Login />
-              </WithPageRequiredGuest>
-            }
-          />
-          <Route path="unauthorized" element={<UnAuthorized />} />
-          <Route path="*" element={<NotFound />} />
-
-          {/* Admin View */}
-          <Route
-            path=""
-            element={
-              <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
-                <Layout />
-              </WithPageRequiredAuth>
-            }
-          >
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="agencies" index element={<Agencies />} />
-            <Route path="users" element={<Users />} />
-            <Route path="Services" element={<Services />} />
-            <Route path="Reservations" element={<Reservation />} />
-            <Route path="Reservation/:id" element={<ReservationPage />} />
-            <Route path="Finance" element={<Finance />} />
-            <Route path="Accounts" element={<Accounts />} />
-            <Route path="UserAccount/:id" element={<UserAccount />} />
-          </Route>
-
-          {/* Users View */}
-          <Route
-            path="/user"
-            element={
-              <WithPageRequiredAuth options={{ roles: [RoleEnum.travelAgent] }}>
-                <Layout />
-              </WithPageRequiredAuth>
-            }
-          >
-            <Route path="Home" element={<ServicesView />} />
-            <Route path="Finance" element={<FinanceUser />} />
-            <Route path="Reservations" element={<Reservation />} />
-            <Route path="Reserve/:id" element={<ReserveService />} />
-            <Route path="hotels/:id" element={<HotelsPage />} />
-            <Route path="hotel-rooms/:id" element={<RoomsPage />} />
-            <Route
-              path="ReservationUser/:id"
-              element={<ReservationPageUser />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <RouterProvider router={routers} />
   );
 }
 
