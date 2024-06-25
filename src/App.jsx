@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./modules/auth/pages/Login";
 import UnAuthorized from "./modules/auth/pages/UnAuthorized";
 import NotFound from "./modules/auth/pages/NotFound";
