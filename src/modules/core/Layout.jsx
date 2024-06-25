@@ -1,10 +1,9 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SideBar from "./SideBar";
 import NavBar from "./NavBar";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 
-export default function Layout() {
-
+export default function Layout({ children }) {
   const location = useLocation();
 
   let { pathname } = location;
@@ -15,20 +14,17 @@ export default function Layout() {
       <div className="flex flex-col w-full">
         <NavBar />
         <div className="h-[calc(100vh-81.5px)] overflow-scroll overflow-x-hidden">
-          <Breadcrumbs size="lg" className="px-5 mx-1" >
+          <Breadcrumbs size="lg" className="px-5 mx-1">
             {breadcrumbs.map((crumb) => (
               <BreadcrumbItem href={`/${crumb}`} key={crumb}>
-                <p className="mb-1">
-                  {crumb}
-                </p>
+                <p className="mb-1">{crumb}</p>
               </BreadcrumbItem>
             ))}
           </Breadcrumbs>
-          <Outlet />
-
+          {children}
         </div>
       </div>
+      {/* hello world */}
     </div>
   );
 }
-
