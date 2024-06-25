@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./modules/auth/pages/Login";
 import UnAuthorized from "./modules/auth/pages/UnAuthorized";
 import NotFound from "./modules/auth/pages/NotFound";
@@ -28,39 +28,39 @@ import ReservationPageUser from "./modules/reservation/pages/ReservationPage.use
 function App() {
   const { i18n } = useTranslation();
 
-  const routers = createBrowserRouter([
-    {
-      path: "",
-      element: <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}><Layout /></WithPageRequiredAuth>,
-      children: [
-        { path: "dashboard", element: <Dashboard /> },
-        { path: "agencies", index: true, element: <Agencies /> },
-        { path: "users", element: <Users /> },
-        { path: "Services", element: <Services /> },
-        { path: "Reservations", element: <Reservation /> },
-        { path: "Reservation/:id", element: <ReservationPage /> },
-        { path: "Finance", element: <Finance /> },
-        { path: "Accounts", element: <Accounts /> },
-        { path: "UserAccount/:id", element: <UserAccount /> },
-      ]
-    },
-    {
-      path: "/user",
-      element: <WithPageRequiredAuth options={{ roles: [RoleEnum.travelAgent] }}><Layout /></WithPageRequiredAuth>,
-      children: [
-        { path: "Home", element: <ServicesView /> },
-        { path: "Finance", element: <FinanceUser /> },
-        { path: "Reservations", element: <Reservation /> },
-        { path: "Reserve/:id", element: <ReserveService /> },
-        { path: "hotels/:id", element: <HotelsPage /> },
-        { path: "hotel-rooms/:id", element: <RoomsPage /> },
-        { path: "ReservationUser/:id", element: <ReservationPageUser /> },
-      ]
-    },
-    { path: "login", element: <WithPageRequiredGuest><Login /></WithPageRequiredGuest> },
-    { path: "unauthorized", element: <UnAuthorized /> },
-    { path: "*", element: <NotFound /> }
-  ]);
+  // const routers = createBrowserRouter([
+  //   {
+  //     path: "",
+  //     element: <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}><Layout /></WithPageRequiredAuth>,
+  //     children: [
+  //       { path: "dashboard", element: <Dashboard /> },
+  //       { path: "agencies", index: true, element: <Agencies /> },
+  //       { path: "users", element: <Users /> },
+  //       { path: "Services", element: <Services /> },
+  //       { path: "Reservations", element: <Reservation /> },
+  //       { path: "Reservation/:id", element: <ReservationPage /> },
+  //       { path: "Finance", element: <Finance /> },
+  //       { path: "Accounts", element: <Accounts /> },
+  //       { path: "UserAccount/:id", element: <UserAccount /> },
+  //     ]
+  //   },
+  //   {
+  //     path: "/user",
+  //     element: <WithPageRequiredAuth options={{ roles: [RoleEnum.travelAgent] }}><Layout /></WithPageRequiredAuth>,
+  //     children: [
+  //       { path: "Home", element: <ServicesView /> },
+  //       { path: "Finance", element: <FinanceUser /> },
+  //       { path: "Reservations", element: <Reservation /> },
+  //       { path: "Reserve/:id", element: <ReserveService /> },
+  //       { path: "hotels/:id", element: <HotelsPage /> },
+  //       { path: "hotel-rooms/:id", element: <RoomsPage /> },
+  //       { path: "ReservationUser/:id", element: <ReservationPageUser /> },
+  //     ]
+  //   },
+  //   { path: "login", element: <WithPageRequiredGuest><Login /></WithPageRequiredGuest> },
+  //   { path: "unauthorized", element: <UnAuthorized /> },
+  //   { path: "*", element: <NotFound /> }
+  // ]);
 
   useEffect(() => {
     if (i18n.resolvedLanguage === "ar")
