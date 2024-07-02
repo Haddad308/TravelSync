@@ -32,7 +32,11 @@ function App() {
   // const routers = createBrowserRouter([
   //   {
   //     path: "",
-  //     element: <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}><Layout /></WithPageRequiredAuth>,
+  //     element: (
+  //       <WithPageRequiredAuth options={{ roles: [RoleEnum.admin] }}>
+  //         <Layout />
+  //       </WithPageRequiredAuth>
+  //     ),
   //     children: [
   //       { path: "dashboard", element: <Dashboard /> },
   //       { path: "agencies", index: true, element: <Agencies /> },
@@ -43,11 +47,15 @@ function App() {
   //       { path: "Finance", element: <Finance /> },
   //       { path: "Accounts", element: <Accounts /> },
   //       { path: "UserAccount/:id", element: <UserAccount /> },
-  //     ]
+  //     ],
   //   },
   //   {
   //     path: "/user",
-  //     element: <WithPageRequiredAuth options={{ roles: [RoleEnum.travelAgent] }}><Layout /></WithPageRequiredAuth>,
+  //     element: (
+  //       <WithPageRequiredAuth options={{ roles: [RoleEnum.travelAgent] }}>
+  //         <Layout />
+  //       </WithPageRequiredAuth>
+  //     ),
   //     children: [
   //       { path: "Home", element: <ServicesView /> },
   //       { path: "Finance", element: <FinanceUser /> },
@@ -56,11 +64,18 @@ function App() {
   //       { path: "hotels/:id", element: <HotelsPage /> },
   //       { path: "hotel-rooms/:id", element: <RoomsPage /> },
   //       { path: "ReservationUser/:id", element: <ReservationPageUser /> },
-  //     ]
+  //     ],
   //   },
-  //   { path: "login", element: <WithPageRequiredGuest><Login /></WithPageRequiredGuest> },
+  //   {
+  //     path: "login",
+  //     element: (
+  //       <WithPageRequiredGuest>
+  //         <Login />
+  //       </WithPageRequiredGuest>
+  //     ),
+  //   },
   //   { path: "unauthorized", element: <UnAuthorized /> },
-  //   { path: "*", element: <NotFound /> }
+  //   { path: "*", element: <NotFound /> },
   // ]);
 
   useEffect(() => {
