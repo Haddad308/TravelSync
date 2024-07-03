@@ -8,6 +8,7 @@ import {
   Select,
   SelectItem,
 } from "@nextui-org/react";
+import TravellerFileUploader from "../reservation/components/TravellerFileUploader";
 
 const VisaApplicationForm = () => {
   const formHandler = useFormik({
@@ -298,6 +299,13 @@ const VisaApplicationForm = () => {
               {...formHandler.getFieldProps("placesOfPreciousResidenceInIraq")}
             />
           </div>
+
+          <TravellerFileUploader
+            key={2}
+            TravellerFiles={[1, 2]}
+            idx={2}
+            setIsUploading={formHandler.setFieldValue}
+          />
         </div>
         <Button className="bg-foreground text-background mt-2" size="lg">
           طلب التأشيرة

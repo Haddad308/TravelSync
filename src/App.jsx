@@ -284,6 +284,18 @@ function App() {
               </WithPageRequiredAuth>
             }
           />
+          <Route
+            path="/visa/applications"
+            element={
+              <WithPageRequiredAuth
+                options={{ roles: [RoleEnum.admin, RoleEnum.travelAgent] }}
+              >
+                <Layout>
+                  <Reservation />
+                </Layout>
+              </WithPageRequiredAuth>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>
