@@ -8,25 +8,19 @@ const edited = () => toast.success("The agency edited successfully.");
 
 const cookie = Cookies.get("auth-token-data");
 const token = JSON.parse(cookie ? cookie : "null")?.token;
-// const token = Cookies.get("authUserToken");
 
-async function getAgencies(SetAgencies, setIsLoading) {
-  setIsLoading(true);
-  let data = await instance
-    .get("/api/v1/travel-offices", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .catch((error) => {
-      console.error(error);
-      setIsLoading(false);
-    });
-
-  if (data?.status === 200) {
-    SetAgencies(data.data);
-    setIsLoading(false);
+async function getAgencies() {
+  const cookie = Cookies.get("auth-token-data");
+  const token = JSON.parse(cookie ? cookie : "null")?.token;
+  const { data, status } = await instance.get("/api/v1/travel-offices", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (status !== 200) {
+    return [];
   }
+  return data;
 }
 
 async function DeleteAgency(id, callback) {

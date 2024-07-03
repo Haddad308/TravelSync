@@ -25,6 +25,8 @@ import ReserveService from "./modules/reservation/pages/ReserveService.user";
 import RoomsPage from "./modules/services/pages/Rooms.page";
 import ReservationPageUser from "./modules/reservation/pages/ReservationPage.user";
 import VisaApplicationForm from "./modules/visa/VisaApplicatoin";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 function App() {
   const { i18n } = useTranslation();
@@ -84,8 +86,10 @@ function App() {
     else document.getElementsByTagName("html")[0].setAttribute("dir", "ltr");
   }, [i18n.resolvedLanguage]);
 
+  const queryClient = new QueryClient();
+
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Toaster />
 
       <BrowserRouter>
@@ -298,7 +302,8 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
