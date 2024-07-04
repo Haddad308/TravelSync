@@ -112,9 +112,10 @@ export default function AgenciesTable({
       case "actions":
         return (
           <div className="relative flex items-center gap-2">
-            <Tooltip content="Edit user">
+            <Tooltip content="Edit agency">
               <AgenciesFormEdit
                 handleUpdate={handleUpdate}
+                agency={user}
                 agencyId={user.id}
               />
             </Tooltip>
