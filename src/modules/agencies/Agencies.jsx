@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import AgenciesTable from "./components/Agencies.Table";
-import { getAgencies } from "./Agencies.handlers";
+import { useGetAgencies } from "./Agencies.handlers";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { instance } from "../../network/axios";
+import useFetch from "../../network/use-fetch";
 
 // import withPageRequiredAuth from "../auth/context/with-page-required-auth";
 // import { RoleEnum } from "../../enums/role-enum";
@@ -32,25 +33,28 @@ const Agencies = () => {
   // useEffect(() => {
   //   getAgencies(SetAgencies, setIsLoading);
   // }, []);
+  const fetch = useFetch();
 
-  const {
-    data: agencies,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data: agencies, isLoading } = useQuery({
     queryKey: ["agencies"],
     queryFn: async () => {
-      const cookie = Cookies.get("auth-token-data");
-      const token = JSON.parse(cookie ? cookie : "null")?.token;
-      const { data, status } = await instance.get("/api/v1/travel-offices", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      // const cookie = Cookies.get("auth-token-data");
+      // const token = JSON.parse(cookie ? cookie : "null")?.token;
+      // const { data, status } = await instance.get("/api/v1/travel-offices", {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // });
+      // console.log("hmmmmmm", data);
+      // if (status !== 200) {
+      //   return [];
+      // }
+      // return data;
+      const res = await fetch("http://localhost:3000/api/v1/travel-offices", {
+        method: "GET",
       });
+      const data = await res.json();
       console.log("hmmmmmm", data);
-      if (status !== 200) {
-        return [];
-      }
       return data;
     },
   });

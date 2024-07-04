@@ -18,24 +18,26 @@ import ImagesUploader from "../../core/components/ImageUploader/ImageUploader";
 import { useEffect, useState } from "react";
 import { uploadImage } from "../../core/core.handlers";
 import { addUser } from "../Users.handlers";
-import { getAgencies } from "../../agencies/Agencies.handlers";
+import { useGetAgencies } from "../../agencies/Agencies.handlers";
 import Alert from "../../core/components/Alert";
 
 export default function UsersForm({ handleUpdate }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [userImage, setUserImage] = useState([]);
-  const [isLoading, setIsLoading] = useState("");
+  // const [isLoading, setIsLoading] = useState("");
   const [apiError, setApiError] = useState("");
 
-  const [agencies, setAgencies] = useState([]);
+  // const [agencies, setAgencies] = useState([]);
 
-  useEffect(() => {
-    getAgencies(setAgencies, setIsLoading);
-  }, []);
+  const { data: agencies, isLoading } = useGetAgencies();
+
+  // useEffect(() => {
+  //   getAgencies(setAgencies, setIsLoading);
+  // }, []);
 
   const handleUpdateAgencies = () => {
-    getAgencies(setAgencies, setIsLoading);
-    console.log("Agencies:", agencies);
+    // getAgencies(setAgencies, setIsLoading);
+    // console.log("Agencies:", agencies);
   };
 
   const formHandler = useFormik({
@@ -111,7 +113,6 @@ export default function UsersForm({ handleUpdate }) {
                         }
                         errorMessage={formHandler.errors.firstName}
                       />
-
                     </div>
 
                     <div>
@@ -128,9 +129,7 @@ export default function UsersForm({ handleUpdate }) {
                           formHandler.touched.lastName
                         }
                         errorMessage={formHandler.errors.lastName}
-
                       />
-
                     </div>
 
                     <div>
@@ -146,7 +145,6 @@ export default function UsersForm({ handleUpdate }) {
                           formHandler.touched.travelOfficeId
                         }
                         errorMessage={formHandler.errors.travelOfficeId}
-
                       >
                         {agencies.map(({ id, name }) => (
                           <SelectItem key={id} value={id}>
@@ -169,7 +167,6 @@ export default function UsersForm({ handleUpdate }) {
                           formHandler.errors.email && formHandler.touched.email
                         }
                         errorMessage={formHandler.errors.email}
-
                       />
                     </div>
 
@@ -186,7 +183,6 @@ export default function UsersForm({ handleUpdate }) {
                           formHandler.touched.password
                         }
                         errorMessage={formHandler.errors.password}
-
                       />
                     </div>
                     <div className="col-span-2">

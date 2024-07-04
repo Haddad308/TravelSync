@@ -101,7 +101,7 @@ export default function AgenciesTable({
               src: user.profilePhoto?.imageUrl,
             }}
             classNames={{
-              description: "text-default-500"
+              description: "text-default-500",
             }}
             description={user.email}
             name={cellValue}

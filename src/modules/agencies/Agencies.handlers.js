@@ -1,6 +1,8 @@
 import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import useFetch from "../../network/use-fetch";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 const deleted = () => toast.success("The agency deleted successfully.");
 const added = () => toast.success("The agency added successfully.");
@@ -10,17 +12,34 @@ const cookie = Cookies.get("auth-token-data");
 const token = JSON.parse(cookie ? cookie : "null")?.token;
 
 async function getAgencies() {
-  const cookie = Cookies.get("auth-token-data");
-  const token = JSON.parse(cookie ? cookie : "null")?.token;
-  const { data, status } = await instance.get("/api/v1/travel-offices", {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  let data = await instance
+    .get("/api/v1/travel-offices", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((error) => {
+      console.error(error.message);
+    });
+
+  return data?.data;
+}
+
+async function useGetAgencies() {
+  const fetch = useFetch();
+  const ag = useQuery({
+    queryKey: ["agencies"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:3000/api/v1/travel-offices", {
+        method: "GET",
+      });
+      const data = await res.json();
+      console.log("hmmmmmm", data);
+      return data;
     },
   });
-  if (status !== 200) {
-    return [];
-  }
-  return data;
+
+  return ag;
 }
 
 async function DeleteAgency(id, callback) {
@@ -90,4 +109,4 @@ async function editAgency(values, id, setIsLoading, callback) {
   }
 }
 
-export { getAgencies, DeleteAgency, addAgency, editAgency };
+export { useGetAgencies, DeleteAgency, addAgency, editAgency };
