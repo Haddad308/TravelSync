@@ -2,7 +2,6 @@ import { instance } from "../../network/axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import useFetch from "../../network/use-fetch";
-import { useQueries, useQuery } from "@tanstack/react-query";
 
 const deleted = () => toast.success("The agency deleted successfully.");
 const added = () => toast.success("The agency added successfully.");
@@ -109,4 +108,4 @@ async function editAgency(values, id, setIsLoading, callback) {
   }
 }
 
-export { useGetAgencies, DeleteAgency, addAgency, editAgency };
+export { useGetAgencies, getAgencies, DeleteAgency, addAgency, editAgency };

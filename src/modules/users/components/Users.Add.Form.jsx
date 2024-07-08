@@ -18,24 +18,30 @@ import ImagesUploader from "../../core/components/ImageUploader/ImageUploader";
 import { useEffect, useState } from "react";
 import { uploadImage } from "../../core/core.handlers";
 import { addUser } from "../Users.handlers";
-import { useGetAgencies } from "../../agencies/Agencies.handlers";
+import { getAgencies } from "../../agencies/Agencies.handlers";
 import Alert from "../../core/components/Alert";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function UsersForm({ handleUpdate }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [userImage, setUserImage] = useState([]);
-  // const [isLoading, setIsLoading] = useState("");
+  const [isLoading, setIsLoading] = useState("");
   const [apiError, setApiError] = useState("");
 
   // const [agencies, setAgencies] = useState([]);
 
-  const { data: agencies, isLoading } = useGetAgencies();
+  const queryClient = useQueryClient();
+  const { data: agencies, isLoading: isAgenciesLoading } = useQuery({
+    queryKey: ["agencies"],
+    queryFn: getAgencies,
+  });
 
   // useEffect(() => {
   //   getAgencies(setAgencies, setIsLoading);
   // }, []);
 
   const handleUpdateAgencies = () => {
+    queryClient.invalidateQueries({ queryKey: ["agencies"] });
     // getAgencies(setAgencies, setIsLoading);
     // console.log("Agencies:", agencies);
   };

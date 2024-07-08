@@ -70,10 +70,33 @@ async function DeleteUser(id, callback) {
   }
 }
 
-async function addUser(values, setIsLoading, callback) {
+// async function addUser(values, setIsLoading, callback) {
+//   console.log(values);
+//   // Set loading state to true
+//   setIsLoading(true);
+//   values["role"] = { id: 4 };
+
+//   try {
+//     // Make POST request to add a user
+//     await instance.post("/api/v1/users", values, {
+//       headers: {
+//         Authorization: "Bearer " + token, // Include bearer token in the header
+//       },
+//     });
+//     callback();
+//     added();
+//   } catch (error) {
+//     // If error occurs, log error response data, set API error state, and throw the error
+//     console.error(error.response.data?.message);
+//     throw error; // Throw the error for further handling if needed
+//   } finally {
+//     // Set loading state to false regardless of success or failure
+//     setIsLoading(false);
+//   }
+// }
+async function addUser(values) {
   console.log(values);
   // Set loading state to true
-  setIsLoading(true);
   values["role"] = { id: 4 };
 
   try {
@@ -83,7 +106,6 @@ async function addUser(values, setIsLoading, callback) {
         Authorization: "Bearer " + token, // Include bearer token in the header
       },
     });
-    callback();
     added();
   } catch (error) {
     // If error occurs, log error response data, set API error state, and throw the error
@@ -91,7 +113,6 @@ async function addUser(values, setIsLoading, callback) {
     throw error; // Throw the error for further handling if needed
   } finally {
     // Set loading state to false regardless of success or failure
-    setIsLoading(false);
   }
 }
 
